@@ -1,0 +1,96 @@
+
+body{
+	background-color:#e3e3e3;
+}
+.first{
+	background-color:#555;
+	margin-bottom:10px;
+	border-radius:20px;
+	border:5px solid black; 
+	height:100px;
+	margin:5px;
+	width:50%;
+}
+.navbarul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+.navbarli {
+  float: left;
+   border-right: 1px solid #bbb;
+   
+}
+
+li a {
+  display: block;
+  color: #e3e3e3;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #222;
+  color:white;
+   text-decoration: none;
+}
+
+
+ .form-group button:hover {
+  background-color: royalblue;
+}
+
+.search {
+    float:right;
+	padding:10px;
+	margin: 5px 10px 5px 0;
+}
+.col-md-2{
+	float:left;
+	border:1px solid black;
+	height:200px;
+	padding:5px;
+	margin:5px;
+
+}
+.col-md-2 h3{
+	border-bottom:1px solid black;
+	width:100%;
+}
+.col-md-9{
+	 width:82%;
+	 margin-left:5px;
+}
+.top button a{
+	color:white;
+}
+
+
+
+
+
+
+
+/*select * from product JOIN category ON product.cat_id=category.cat_id
+
+ $query = "select * from product";
+
+ 		if($cat_id) 
+ 		{
+ 			       $this->db->select()
+                            ->where('cat_id','$cat_id')
+ 			                ->get('product')
+ 			                ->result();
+ 			               // print_r($res); exit;
+
+ */		
+
+
+
+ 
+                 
