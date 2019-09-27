@@ -6,7 +6,7 @@ class Products extends CI_Controller
 
    public function product($offset=0,$cat_id=0)
    {
-     
+      
    	  $search = $this->input->get('search');
 
    	  $cat_id = $this->input->get('category_id');
@@ -50,7 +50,9 @@ class Products extends CI_Controller
      {  
           $data = []; 
           $this->load->model('Mcategory');//model load
-          
+          $d['category'] = $this->Mcategory->cgetcategory();
+         // $this->load->library('Template');
+          //$this->template->load('vtemplate', 'addpro', $data);
           $data['allcat'] = $this->Mcategory->all_category(); 
           
                $this->load->library('form_validation');//form validation load
@@ -78,32 +80,32 @@ class Products extends CI_Controller
                     {
                      $this->form_validation->set_message('required', '{image} is required <- Error Message');
                    }
-                   $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
+                     $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
                      $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
                      $config['max_size']  = '1000000';
-                       $config['max_width'] = '1024';
-                       $config['max_height'] = '768';
-                   $this->load->library('upload', $config);
+                     $config['max_width'] = '1024';
+                     $config['max_height'] = '768';
+                     $this->load->library('upload', $config);
                             
                       if(!$this->upload->do_upload('image'))//$add['image'] = $this->input->post('image');
                        { 
                          $error = array('error' => $this->upload->display_errors());
                            //print_r($error);die; 
-                          $this->session->set_flashdata('error',$error['error']);
+                         $this->session->set_flashdata('error',$error['error']);
                          redirect(base_url('products/addproduct')); 
                        }
          
                    $data = $this->upload->data(); 
                  //echo '<pre>'; print_r($data); die;
-                  $add['image'] = $data['file_name'];
+                   $add['image'] = $data['file_name'];
                  // print_r($add['file_name']);die;
                    $add['stock'] = $this->input->post('stock');
                   //print_r($add);die;
-                $this->load->model('Mproduct');
+                   $this->load->model('Mproduct');
                    $this->Mproduct->add_product($add);
                   
-                 $this->session->set_flashdata('success','product inerted successfully');
-               redirect(base_url('products/product')); 
+                   $this->session->set_flashdata('success','product inerted successfully');
+                   redirect(base_url('products/product')); 
               
                }
             
@@ -161,7 +163,7 @@ class Products extends CI_Controller
                      redirect(base_url('products/product')); 
            } // update product end
           $d['header'] = 'header...';
-          $this->load->library('Template');
+           $this->load->library('Template');
            $this->template->load('vtemplate', 'addpro', $data);
      }
     
@@ -212,6 +214,14 @@ class Products extends CI_Controller
                  $this->template->load('vtemplate', 'addpro', $data);       
      }
    
+          function get_category()
+          {
+             $this->load->model('Mcategory');
+              $res = $this->input->post('catid');
+              //echo $this->input->post('catid');die;
+              $data['category'] = $this->Mcategory->getsub_category($res);
+              echo json_encode($data);
+         }
 }
 
 ?>

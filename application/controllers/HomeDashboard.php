@@ -6,7 +6,9 @@ class HomeDashboard extends CI_Controller
    public function index($offset=0)
    {
    	  //$search = $this->input->get('search');
-
+       $this->load->helper('common_helper');
+        echo test();
+        
    	   $cat_id = $this->input->get('category_id');
    	  // $this->input->get is equivalent to $_GET
 

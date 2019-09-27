@@ -86,7 +86,7 @@
              var cat_id = $(this).val();
 
              var request = $.ajax({
-                 url: "<?php echo base_url('Subcatejs/get_category') ?>",
+                 url: "<?php echo base_url('products/get_category') ?>",
                  type: "POST",
                  data :{catid : cat_id},
                  dataType: "json"

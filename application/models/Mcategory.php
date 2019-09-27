@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  class Mcategory extends CI_Model
  {
     
-     public function all_category()  //fetch all category in table row//Fetchcategorytable.php
+     public function all_category()  //fetch all category in table row
      { 
         return $this->db->get('category')
                       ->result();
@@ -18,13 +18,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                       //print_r($data);die;
     }
 
-    public function cgetcategory() //all get category list//Sideallcategory.php
+    public function cgetcategory() //all get category list
     {
     	 return $this->db->select()
                         //->where('cat_id','$cat_id')
                         ->get('category')  
     	                ->result();
-     }   
+     }  
+
  }
 
  ?>
