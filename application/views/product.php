@@ -6,6 +6,14 @@
   }
 ?>
 
+<?php if($this->session->flashdata('error')){
+  	echo '<div class="alert alert-danger">
+  	      <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+  	      <strong>Error!</strong>'.$this->session->flashdata("Error").'
+  	       </div>';
+  }
+?>
+
 
 <section class="content-header">
             <h1>
@@ -62,12 +70,12 @@
 		                if($status == 0)
 		                	{ 
 		                ?>
-                            <a href="product_status?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-success">Active</a>
+                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-success">Active</a>
 		                <?php 
 		                    }
 		                    else{
 		                     ?>
-                            <a href="product_status?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-danger">InActive</a>
+                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-danger">InActive</a>
 		                 <?php 
 		                    } 
 		                  ?>

@@ -11,8 +11,8 @@ class HomeDashboard extends CI_Controller
    	  // $this->input->get is equivalent to $_GET
 
    	   $this->load->model('Dashboard');
-   	   $this->load->model('Sideallcategory');
-       $data['category'] = $this->Sideallcategory->cgetcategory();
+   	   $this->load->model('Mcategory');
+       $data['category'] = $this->Mcategory->cgetcategory();
        $data['pcount'] = $this->Dashboard->dashboardproduct();
        $data['count'] = $this->Dashboard->dashboardcategory();
    	  

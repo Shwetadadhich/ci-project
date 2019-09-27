@@ -367,14 +367,14 @@
             </ul>
           </li>
           <li class="treeview <?php $this->uri->segment(1) == 'Add product' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>">
-            <a href="<?php echo base_url('cproducts'); ?>">
+            <a href="<?php echo base_url('products'); ?>">
               <i class="fa fa-product-hunt"></i> <span>Product</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?php echo base_url('cproducts/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
+              <li class="active" name="add" value="add"><a href="<?php echo base_url('products/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
 
               <!--<li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
             </ul>

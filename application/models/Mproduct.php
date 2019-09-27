@@ -42,11 +42,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       ->result();
      }*/
 
-     /*public function del_product($id)//delete product//Deleteproduct.php
+     public function del_product($id)//delete product//Deleteproduct.php
      {
         return $this->db->where('id',$id)
                         ->delete('product');
-     }*/
+     }
 
      public function product_status()//product status//Statusproduct.php
      {
@@ -95,7 +95,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  		            ->result();
                    //print_r($res);
                     //die;
- 	
+ 	}
 
 
     /*public function cgetcategory() //all get category list//Sideallcategory.php

@@ -13,7 +13,7 @@ class Products extends CI_Controller
    	  
    	  // $this->input->get is equivalent to $_GET
         $this->load->model('Mproduct');//model load
-        $this->load->model('Sideallcategory');
+        $this->load->model('Mcategory');
    	  $this->load->library('pagination');//pagination load
 
    	  //pagination style
@@ -31,13 +31,13 @@ class Products extends CI_Controller
       $config['cur_tag_close']='</a></li>';
  
       $config['base_url'] = base_url('/Products/product');
-      $config['total_rows'] = $this->Mproduct->ProductCount();
+      $config['total_rows'] = $this->Mproduct->getProductCount();
       $limit=$config['per_page']=4;
       $this->pagination->initialize($config);
 
       $d['pagination'] = $this->pagination->create_links();
-   	$d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$search,$cat_id);
-      $d['category'] = $this->Sideallcategory->cgetcategory();
+      $d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$search,$cat_id);
+      $d['category'] = $this->Mcategory->cgetcategory();
    	   
    	   //print_r($d['category']);exit;
    	   $d['body'] = 'Body ...';
@@ -49,14 +49,14 @@ class Products extends CI_Controller
     public function addproduct($id=FALSE)  //insert product with validation start
      {  
           $data = []; 
-          $this->load->model('Fetchcategorytable');//model load
-
-          $data['allcat'] = $this->Fetchcategorytable->all_category(); 
+          $this->load->model('Mcategory');//model load
+          
+          $data['allcat'] = $this->Mcategory->all_category(); 
           
                $this->load->library('form_validation');//form validation load
               
                $this->form_validation->set_rules('id','categoryid','required');
-               $this->form_validation->set_rules('title','product title', 'required|max_length[12]|is_unique[product.title]');
+               $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
                $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
@@ -80,7 +80,7 @@ class Products extends CI_Controller
                    }
                    $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
                      $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
-                     $config['max_size']  = '100000';
+                     $config['max_size']  = '1000000';
                        $config['max_width'] = '1024';
                        $config['max_height'] = '768';
                    $this->load->library('upload', $config);
@@ -90,7 +90,7 @@ class Products extends CI_Controller
                          $error = array('error' => $this->upload->display_errors());
                            //print_r($error);die; 
                           $this->session->set_flashdata('error',$error['error']);
-                         redirect(base_url('cproducts/addproduct')); 
+                         redirect(base_url('products/addproduct')); 
                        }
          
                    $data = $this->upload->data(); 
@@ -103,7 +103,7 @@ class Products extends CI_Controller
                    $this->Mproduct->add_product($add);
                   
                  $this->session->set_flashdata('success','product inerted successfully');
-               redirect(base_url('cproducts/product')); 
+               redirect(base_url('products/product')); 
               
                }
             
@@ -112,6 +112,7 @@ class Products extends CI_Controller
 
            if($id)   // fetch product by one row in input box using id
           {
+             $this->load->model('Mproduct');
              $data['get_edit'] = $this->Mproduct->edit_getproduct($id);
           }
 
@@ -137,7 +138,7 @@ class Products extends CI_Controller
                    
                    $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
                    $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
-                   $config['max_size']  = '1000';
+                   $config['max_size']  = '1000000';
                    $config['max_width'] = '1024';
                    $config['max_height'] = '768';
                    $this->load->library('upload', $config);
@@ -157,14 +158,59 @@ class Products extends CI_Controller
                         //print_r($update);die;
                       $this->Mproduct->update_order($id,$update);
                         $this->session->set_flashdata('success','product Updated successfully');
-                     redirect(base_url('cproducts/product')); 
+                     redirect(base_url('products/product')); 
            } // update product end
           $d['header'] = 'header...';
           $this->load->library('Template');
            $this->template->load('vtemplate', 'addpro', $data);
      }
     
+   public function Statusproduct()
+     {
+       if(isset($_REQUEST['sval']))
+       {
+          $this->load->model('Mproduct');
+          $res = $this->Mproduct->product_status();
+          //print_r($res);
+          if($res>0)
+           {
+            $this->session->set_flashdata('success',"product status updated sucessfully");
+            //$this->session->set_flashdata('msg_class','alert-success');
+           }
+           else
+           {
+             $this->session->set_flashdata('error',"product status not updated sucessfully");
+             //$this->session->set_flashdata('msg_class','alert-danger');
+           }
+           return redirect('products/product');
+       }
+     }
 
+   public function delete($id)
+     {
+                 $this->load->model('Mproduct');
+                 $data = $this->Mproduct->del_product($id);
+                 //print_r($data);die;
+                 $this->session->set_flashdata('success','product deleted successfully');
+                 redirect(base_url('products/product')); 
+                 
+                 /*$check=$_FILES['image']['name'];
+               //print_r($imgcheck);die;
+                if(!empty($check))
+                { 
+            
+                  $res = $this->db->query("delete image from product where id=$id")->row('image');
+                    if(!empty($res))
+                    {
+                      $path = FCPATH ."assests/image/$res";
+                      unlink($path);
+                      //print_r($path);die;
+                    }
+                  }*/  
+
+                  $this->load->library('Template');
+                 $this->template->load('vtemplate', 'addpro', $data);       
+     }
    
 }
 
