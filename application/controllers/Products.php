@@ -13,8 +13,8 @@ class Products extends CI_Controller
    	  
    	  // $this->input->get is equivalent to $_GET
         $this->load->model('Mproduct');//model load
-        $this->load->model('Mcategory');
-   	  $this->load->library('pagination');//pagination load
+        $this->load->model('Mcategory');//model load
+   	    $this->load->library('pagination');//pagination load
 
    	  //pagination style
       $config['first_tag_open']='<li>';
@@ -37,22 +37,26 @@ class Products extends CI_Controller
 
       $d['pagination'] = $this->pagination->create_links();
       $d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$search,$cat_id);
-      $d['category'] = $this->Mcategory->cgetcategory();
+      //$d['category'] = $this->Mcategory->cgetcategory();
+      //print_r($d['category']); die;
+      $this->load->helper('common_helper');
+      getCatergoryList();
+      //print_r($category); die;
    	   
    	   //print_r($d['category']);exit;
    	   $d['body'] = 'Body ...';
        $this->load->library('Template');
        
-	   $this->template->load('vtemplate', 'product', $d);
+	     $this->template->load('vtemplate', 'product', $d);
     }
 
     public function addproduct($id=FALSE)  //insert product with validation start
      {  
           $data = []; 
           $this->load->model('Mcategory');//model load
-          $d['category'] = $this->Mcategory->cgetcategory();
-         // $this->load->library('Template');
-          //$this->template->load('vtemplate', 'addpro', $data);
+          //$d['category'] = $this->Mcategory->cgetcategory();
+          $this->load->helper('common_helper');
+          getCatergoryList();
           $data['allcat'] = $this->Mcategory->all_category(); 
           
                $this->load->library('form_validation');//form validation load
@@ -63,7 +67,7 @@ class Products extends CI_Controller
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
             
-                  $this->form_validation->set_message('required', '{field} is required <- Error Message');
+               $this->form_validation->set_message('required', '{field} is required <- Error Message');
              
            if($this->input->post('add'))
            { //insert start
@@ -83,8 +87,8 @@ class Products extends CI_Controller
                      $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
                      $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
                      $config['max_size']  = '1000000';
-                     $config['max_width'] = '1024';
-                     $config['max_height'] = '768';
+                     //$config['max_width'] = '1024';
+                     //$config['max_height'] = '768';
                      $this->load->library('upload', $config);
                             
                       if(!$this->upload->do_upload('image'))//$add['image'] = $this->input->post('image');
@@ -141,8 +145,8 @@ class Products extends CI_Controller
                    $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
                    $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
                    $config['max_size']  = '1000000';
-                   $config['max_width'] = '1024';
-                   $config['max_height'] = '768';
+                   //$config['max_width'] = '1024';
+                   //$config['max_height'] = '768';
                    $this->load->library('upload', $config);
                           
                     if(!$this->upload->do_upload('image'))//$add['image'] = $this->input->post('image');
@@ -159,10 +163,10 @@ class Products extends CI_Controller
                       $update['stock']=$this->input->post('stock');
                         //print_r($update);die;
                       $this->Mproduct->update_order($id,$update);
-                        $this->session->set_flashdata('success','product Updated successfully');
-                     redirect(base_url('products/product')); 
+                      $this->session->set_flashdata('success','product Updated successfully');
+                      redirect(base_url('products/product')); 
            } // update product end
-          $d['header'] = 'header...';
+           $d['header'] = 'header...';
            $this->load->library('Template');
            $this->template->load('vtemplate', 'addpro', $data);
      }
@@ -217,10 +221,11 @@ class Products extends CI_Controller
           function get_category()
           {
              $this->load->model('Mcategory');
-              $res = $this->input->post('catid');
-              //echo $this->input->post('catid');die;
-              $data['category'] = $this->Mcategory->getsub_category($res);
-              echo json_encode($data);
+             $res = $this->input->post('catid');
+             //echo $this->input->post('catid');die;
+             $data['category'] = $this->Mcategory->getsub_category($res);
+             //print_r($data['category']);die;
+             echo json_encode($data);
          }
 }
 

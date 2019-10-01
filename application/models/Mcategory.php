@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       ->result();
      }
 
-     public function getsub_category($res)//Subcategory.php
+     public function getsub_category($res)//sub category using jquery
     {
         return $this->db->where('category_id',$res)
                                      ->get('sub_category')
@@ -22,10 +22,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     {
     	 return $this->db->select()
                         //->where('cat_id','$cat_id')
-                        ->get('category')  
+                      ->get('category')  
     	                ->result();
      }  
 
+    /*public function category_list($cat_id)
+    {
+        return $this->db->where('cat_id',$cat_id)
+                      ->get('product')
+                       //print_r($q);die;
+                       ->result();
+    }*/
  }
 
  ?>

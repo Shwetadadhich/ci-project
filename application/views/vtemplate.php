@@ -4,7 +4,7 @@
 
     <!--<link rel="stylesheet" type="text/css" href="<?php echo base_url('assests/css/vcss.css') ?>">-->
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
      <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
 
   <meta charset="utf-8">
@@ -332,8 +332,8 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
-          <?php $this->uri->segment(1) == 'Dashboard v1'? 'class="active"' : '' ?>
-          <li class="treeview">
+          
+          <li class="treeview <?php echo ($this->uri->segment(1) == 'HomeDashboard') ? 'menu-open active' : '' ?>">
             <a href="<?php echo base_url('HomeDashboard'); ?>">
               <i class="fa fa-dashboard"></i> <span>Dashboard</span>
               <span class="pull-right-container">
@@ -341,32 +341,37 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?php echo base_url('HomeDashboard'); ?>"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+              <li class="<?php echo ($this->router->fetch_method() == 'index') ? 'active' : '' ?>"><a href="<?php echo base_url('HomeDashboard'); ?>"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
               <!--<li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
             </ul>
           </li>
 
-          <li class="treeview <?php $this->uri->segment(1) == 'mobile' || $this->uri->segment(1) == 'headphoneAndspeaker' || $this->uri->segment(1) == 'Health Care Applicance' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>">
-            <a href="<?php echo base_url('Products'); ?>">
+          <li class="treeview <?php echo ($this->uri->segment(1) == 'Categories') ? 'menu-open active' : '' ?>">
+            <a href="<?php echo base_url('Categories'); ?>">
               <i class="fa fa-list-alt"></i> <span>Categories</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <?php 
-              if(!empty($category))  
-              {
-                 foreach ($category as $ind => $cat) { 
-              ?>
-                <li><a href="<?php echo base_url("Products/product/$cat->cat_id");?>"><i class="fa fa-circle-o"></i><?php echo $cat->cat_title;?></a></li>
-              <?php 
-                }
-              }
-              ?> 
+                <?php 
+                 
+                $categories = getCatergoryList();
+                // getCatergoryList should be a function in helper file, which returns the list of categories from database*/
+                  if(!empty($categories))  
+                  {
+                     foreach ($categories as $ind => $cat) { 
+                  ?>
+                     <li><a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><?php echo $cat->cat_title; ?></a></li>
+                    
+                  <?php 
+                    }
+                  }
+                ?>
+
             </ul>
           </li>
-          <li class="treeview <?php $this->uri->segment(1) == 'Add product' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>">
+          <li class="treeview <?php echo ($this->uri->segment(1) == 'products') ? 'menu-open active' : '' ?>">
             <a href="<?php echo base_url('products'); ?>">
               <i class="fa fa-product-hunt"></i> <span>Product</span>
               <span class="pull-right-container">
@@ -374,9 +379,8 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active" name="add" value="add"><a href="<?php echo base_url('products/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
-
-              <!--<li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
+              <li class="<?php echo ($this->router->fetch_method() == 'addproduct') ? 'active' : '' ?>" name="add" value="add"><a href="<?php echo base_url('products/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
+              <li class="<?php echo ($this->router->fetch_method() == 'product') ? 'active' : '' ?>"><a href="<?php echo base_url('products/product'); ?>"><i class="fa fa-circle-o"></i>All products</a></li>
             </ul>
           </li>
 
@@ -432,26 +436,24 @@
 
 <!--<header>
 <div class="container">
-      <div style="text-align:center;"><h1>ONLINE SHOPPING</h1></div>
-    <div class="row">
-      <div class="first">
-	      <div class="col-md-4">
-    	  	  <ul class="navbarul">
-    			  <li class="navbarli"><a href="<?php echo base_url('cproducts'); ?>" class="active ">Home</a></li>
-    			  <li><a href="<?php echo base_url('cproducts/product'); ?>">Products</a></li>
-    			  <li><a href="#Login">Login & Signup</a></li>
-            <li><a href="#Login">Cart</a></li>
-    			  </ul>
-	      </div>
         <div class="col-md-3" class="search">
 		     <form method="GET" class="form-group" action="">
              <input type="text" name="search" value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>" placeholder="Enter any text here"><hr>
              <input type="submit" value="search" class="btn btn-primary">
 		     </form>
 	      </div>
-	   </div>
-    </div>
   </div>
+
+  <?php 
+              if(!empty($category))  
+              {
+                 foreach ($category as $ind => $cat) { 
+              ?>
+                <li><a href="<?php echo base_url("Products/product/$cat->cat_id");?>"><i class="fa fa-circle-o"></i><?php echo $cat->cat_title;?></a></li>
+              <?php 
+                }
+              }
+              ?>
 </header>-->
 
      
