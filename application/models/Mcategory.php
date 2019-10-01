@@ -26,13 +26,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     	                ->result();
      }  
 
-    /*public function category_list($cat_id)
+    public function category_product($cat_id)
     {
         return $this->db->where('cat_id',$cat_id)
                       ->get('product')
                        //print_r($q);die;
                        ->result();
-    }*/
+    }
  }
 
  ?>

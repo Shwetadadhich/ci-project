@@ -17,7 +17,10 @@ class HomeDashboard extends CI_Controller
        $data['category'] = $this->Mcategory->cgetcategory();
        $data['pcount'] = $this->Dashboard->dashboardproduct();
        $data['count'] = $this->Dashboard->dashboardcategory();
-   	  
+
+   	   $this->load->helper('common_helper');
+       getCatergoryList();
+       
    	   $d['body'] = 'Body ...';
        $this->load->library('Template');
    	   $this->template->load('vtemplate', 'home', $data);

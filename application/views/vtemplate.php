@@ -346,7 +346,8 @@
             </ul>
           </li>
 
-          <li class="treeview <?php echo ($this->uri->segment(1) == 'Categories') ? 'menu-open active' : '' ?>">
+          <li class="treeview <?php echo ($this->uri->segment(1) == 'categories') ? 'menu-open active' : '' ?>">
+          
             <a href="<?php echo base_url('Categories'); ?>">
               <i class="fa fa-list-alt"></i> <span>Categories</span>
               <span class="pull-right-container">
@@ -355,14 +356,13 @@
             </a>
             <ul class="treeview-menu">
                 <?php 
-                 
-                $categories = getCatergoryList();
-                // getCatergoryList should be a function in helper file, which returns the list of categories from database*/
+                  $categories = getCatergoryList();
                   if(!empty($categories))  
                   {
                      foreach ($categories as $ind => $cat) { 
                   ?>
-                     <li><a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><?php echo $cat->cat_title; ?></a></li>
+                     <li class="<?php echo ($this->router->fetch_method() == 'allcategory' && $cat->cat_id == $this->uri->segment(3)) ? 'active' : '' ?>">
+                     <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><?php echo $cat->cat_title; ?></a></li>
                     
                   <?php 
                     }
