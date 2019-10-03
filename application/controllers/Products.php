@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller 
 {
 
-   public function product($offset=0,$cat_id=0)
+   public function product($limit=10,$offset=0,$search='',$cat_id=0)
    {
       
    	  $search = $this->input->get('search');
@@ -13,22 +13,25 @@ class Products extends CI_Controller
    	  
    	  // $this->input->get is equivalent to $_GET
         $this->load->model('Mproduct');//model load
-        $this->load->model('Mcategory');//model load
+        //$this->load->model('Mcategory');//model load
    	    $this->load->library('pagination');//pagination load
 
    	  //pagination style
+      $config['num_tag_open']='<li>';
+      $config['num_tag_close']='</li>';
+      $config['cur_tag_open']='<li class="active"><a href="javascript:void(0);">';
+      $config['cur_tag_close']='</a></li>';
+      $config['num_tag_close']='</li>';
+      $config['next_link']='next';
+      $config['prev_link']='prev';
+      $config['next_tag_open']='<li class"pg-next">';
+      $config['next_tag_close']='</li>';
+      $config['prev_tag_open']='<li class="pg-prev">';
+      $config['prev_tag_close']='</li>';
       $config['first_tag_open']='<li>';
       $config['first_tag_close']='</li>';
       $config['last_tag_open']='<li>';
       $config['last_tag_close']='</li>';
-      $config['prev_tag_open']='<li>';
-      $config['prev_tag_close']='</li>';
-      $config['next_tag_open']='<li>';
-      $config['next_tag_close']='</li>';
-      $config['num_tag_open']='<li>';
-      $config['num_tag_close']='</li>';
-      $config['cur_tag_open']='<li class="active"><a>';
-      $config['cur_tag_close']='</a></li>';
  
       $config['base_url'] = base_url('/Products/product');
       $config['total_rows'] = $this->Mproduct->getProductCount();
@@ -41,13 +44,11 @@ class Products extends CI_Controller
       //print_r($d['category']); die;
       $this->load->helper('common_helper');
       getCatergoryList();
-      //print_r($category); die;
    	   
-   	   //print_r($d['category']);exit;
-   	   $d['body'] = 'Body ...';
-       $this->load->library('Template');
+   	  $d['body'] = 'Body ...';
+      $this->load->library('Template');
        
-	     $this->template->load('vtemplate', 'product', $d);
+	    $this->template->load('vtemplate', 'product', $d);
     }
 
     public function addproduct($id=FALSE)  //insert product with validation start

@@ -33,18 +33,19 @@
                <div class="row">
                <div class="col-sm-6">
                <div class="dataTables_length" id="example1_length"><label>Show 
-               <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">10</option>
-               <option value="25">25</option>
-               <option value="50">50</option>
-               <option value="100">100</option></select> entries</label></div></div>
+               <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">4</option>
+               <option value="25">10</option>
+               <option value="50">20</option>
+               <option value="100">50</option></select> entries</label></div></div>
                
-               <div class="col-sm-6">
-               <div id="example1_filter" class="dataTables_filter">
-               <input type="text" name="search" autocomplete="off" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
-		            <span class="input-group-btn">
-		                <button type="submit" value="search" name="search" class="btn btn-flat"><i class="fa fa-search"></i>
-		                </button>
-		            </span></div></div>
+        <form action="<?php echo base_url('products/product'); ?>" method="GET" >
+	          <div>
+	            <input type="search" name="search" autocomplete="off" class="form-control" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
+	            <span class="input-group-btn">
+	                <button type="submit" value="search" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+	            </span>
+	          </div>
+        </form>
 		              
 
               <div class="row">
@@ -122,7 +123,9 @@
               </table></div></div>
               <div class="row">
               <div class="col-sm-5">
-              <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div></div>
+              	<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+              </div>
+              
               <div class="col-sm-7">
 	              <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
 	                 <div class="pagination"><?php echo $pagination; ?></div>

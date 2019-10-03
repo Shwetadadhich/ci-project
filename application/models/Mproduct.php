@@ -107,7 +107,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      }*/
 
     
- 	public function getProductCount()//Getproductcount.php
+ 	public function getProductCount()
  	{
  		return $this->db->select('COUNT(id) total')
  		                ->get('product')
