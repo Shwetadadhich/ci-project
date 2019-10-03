@@ -11,7 +11,7 @@
                   {
                      foreach ($catproduct as $ind => $category) { 
                   ?>
-                    <li><a href="<?php echo base_url("Categories/allcategory/$category->cat_id");?>"><i class="fa fa-circle-o"></i><?php echo $category->title;?></a></li>
+                    <li><a href="<?php echo base_url("Categories/allcategory/$category->cat_id");?>"><?php echo $category->title;?></a></li>
                   <?php 
                     }
                   }

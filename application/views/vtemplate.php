@@ -319,15 +319,14 @@
           </div>
         </div>
         <!-- search form -->
-        <form action="<?php echo base_url('HomeDashboard/product'); ?>" method="get" class="sidebar-form">
+        <!--<form action="<?php echo base_url('products/product'); ?>" method="get" class="sidebar-form">
           <div class="input-group">
             <input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
             <span class="input-group-btn">
-                  <button type="submit" value="search" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                  </button>
+                <button type="submit" value="search" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
             </span>
           </div>
-        </form>
+        </form>-->
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
