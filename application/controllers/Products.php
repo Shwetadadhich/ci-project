@@ -4,17 +4,74 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller 
 {
 
-   public function product($limit=10,$offset=0,$search='',$cat_id=0)
-   {
-      
-   	  $search = $this->input->get('search');
+   public function product($rowno=0,$cat_id=FALSE)
+   { 
+        
+        $search_text = "";
+        if($this->input->get('submit') != NULL )
+        {
+        $search_text = $this->input->get('search');
+        $this->load->library('session');
+        $this->session->set_userdata(array("search"=>$search_text));
+        }
+    else
+      {
+        if($this->session->userdata('search') != NULL)
+        {
+         $search_text = $this->session->userdata('search');
+        }
+      }
 
-   	  $cat_id = $this->input->get('category_id');
+    // Row per page
+    $rowperpage = 3;
+
+    // Row position
+    if($rowno != 0)
+    {
+      $rowno = ($rowno-1) * $rowperpage;
+    }
+ 
+    // All records count
+    $this->load->model('Mproduct');
+    $allcount = $this->Mproduct->getrecordCount($search_text);
+    $this->Mproduct->getproduct($cat_id);
+    // Get records
+    $users_record = $this->Mproduct->getData($rowno,$rowperpage,$search_text);
+ 
+    // Pagination Configuration
+    $this->load->library('pagination');
+    $config['base_url'] = base_url().'/products/product';
+    $config['use_page_numbers'] = TRUE;
+    $config['total_rows'] = $allcount;
+    $config['per_page'] = $rowperpage;
+
+    // Initialize
+    $this->pagination->initialize($config);
+ 
+    $data['pagination'] = $this->pagination->create_links();
+    $data['result'] = $users_record;
+    $data['row'] = $rowno;
+    $data['search'] = $search_text;
+
+    // Load view
+     $this->load->helper('common_helper');
+     getCatergoryList();
+      
+     $this->load->library('Template');
+       
+     $this->template->load('vtemplate', 'product', $data);
+ 
+  }
+
+   
+
+
+   	  /*$cat_id = $this->input->get('category_id');
    	  
    	  // $this->input->get is equivalent to $_GET
-        $this->load->model('Mproduct');//model load
+      $this->load->model('Mproduct');//model load
         //$this->load->model('Mcategory');//model load
-   	    $this->load->library('pagination');//pagination load
+   	  $this->load->library('pagination');//pagination load
 
    	  //pagination style
       $config['num_tag_open']='<li>';
@@ -39,7 +96,16 @@ class Products extends CI_Controller
       $this->pagination->initialize($config);
 
       $d['pagination'] = $this->pagination->create_links();
-      $d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$search,$cat_id);
+      
+      $d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$cat_id);
+
+      if(isset($_GET['search']))
+      {
+         $d['products_l'] = '';
+         $data['pro']  = $this->Mproduct->searchpro($search);
+         print_r($data['pro']);
+         exit();
+      }
       //$d['category'] = $this->Mcategory->cgetcategory();
       //print_r($d['category']); die;
       $this->load->helper('common_helper');
@@ -49,7 +115,9 @@ class Products extends CI_Controller
       $this->load->library('Template');
        
 	    $this->template->load('vtemplate', 'product', $d);
-    }
+    }*/
+    
+    
 
     public function addproduct($id=FALSE)  //insert product with validation start
      {  
@@ -77,7 +145,7 @@ class Products extends CI_Controller
                if($this->form_validation->run() != FALSE)
                {
 
-                   $add['cat_id'] = $this->input->post('id');
+                    $add['cat_id'] = $this->input->post('id');
                     $add['title'] = $this->input->post('title');
                     $add['description']=$this->input->post('description');
                 

@@ -3,21 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
  class Mproduct extends CI_Model
  {
-
-     /*public function dashboardproduct()//Dashboard.php
-     {
-          return $this->db->get('product')
-                          ->num_rows();
-                          //->result();
-     }*/
-
-     /*public function dashboardcategory()//Dashboard.php
-     {
-          return $this->db->get('category')
-                          ->num_rows();
-                          //->result();
-    }*/
-
      public function add_product($data)//insert query//Insetproduct.php
      {
      	 $this->db->insert('product', $data);
@@ -35,12 +20,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          return $this->db->where('id', $id)
                          ->update('product', $update);
      }
-
-     /*public function all_category()  //fetch all category in table row//Fetchcategorytable.php
-     { 
-        return $this->db->get('category')
-                      ->result();
-     }*/
 
      public function del_product($id)//delete product//Deleteproduct.php
      {
@@ -66,16 +45,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->where('id',$id);
         return $this->db->update('product',$data);
      }
-    
-    /*public function getsub_category($res)//Subcategory.php
-    {
-        return $this->db->where('category_id',$res)
-                                     ->get('sub_category')
-                                      ->result();
-                                      //print_r($data);die;
-    }*/
 
- 	public function getproduct($limit,$offset,$search,$cat_id) //get all product list//Allproduct.php
+ 	public function getproduct($cat_id) //get all product list//Allproduct.php
  	{   
 
  		$result = $this->db->select();
@@ -89,30 +60,63 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     ->join('category', 'category.cat_id = product.cat_id', 'left')
  		            //->where ('id',$cat_id)
  		            //->order_by('cat_id','DESC')
- 		            ->like('title',$search)
- 		            ->limit($limit,$offset)
+ 		            //->like('title',$search)
+ 		            //->limit($limit,$offset)
  		            ->get('product')
  		            ->result();
-                   //print_r($res);
-                    //die;
  	}
 
-
-    /*public function cgetcategory() //all get category list//Sideallcategory.php
+    /*public function searchpro($search)
     {
-    	 return $this->db->select()
-                        //->where('cat_id','$cat_id')
-                        ->get('category')  
-    	                ->result();
-     }*/
+        
+       $res = $this->db->like('title',$search)->get('product')->result();
+                        
+                        echo'<pre>';print_r($res);die;
+                        
+    }*/
+
+     public function getData($rowno,$rowperpage,$search="") {
+ 
+    $this->db->select('*');
+    $this->db->from('product');
+
+    if($search != ''){
+      $this->db->like('title', $search);
+      $this->db->or_like('cat_id', $search);
+    }
+
+    $this->db->limit($rowperpage, $rowno); 
+    $query = $this->db->get();
+ 
+    return $query->result_array();
+  }
+
+  // Select total records
+  public function getrecordCount($search = '') 
+  {
+
+    $this->db->select('count(*) as allcount');
+    $this->db->from('product');
+ 
+    if($search != ''){
+      $this->db->like('title', $search);
+      $this->db->or_like('cat_id', $search);
+    }
+
+    $query = $this->db->get();
+    $result = $query->result_array();
+ 
+    return $result[0]['allcount'];
+  }
+
 
     
- 	public function getProductCount()
+ 	/*public function getProductCount()
  	{
  		return $this->db->select('COUNT(id) total')
  		                ->get('product')
  		                ->row('total');
- 	} 
+ 	} */
  	
  }
 

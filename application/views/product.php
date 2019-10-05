@@ -38,15 +38,24 @@
                <option value="50">20</option>
                <option value="100">50</option></select> entries</label></div></div>
                
-        <form action="<?php echo base_url('products/product'); ?>" method="GET" >
-	          <div>
-	            <input type="search" name="search" autocomplete="off" class="form-control" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
-	            <span class="input-group-btn">
-	                <button type="submit" value="search" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-	            </span>
-	          </div>
-        </form>
-		              
+               <div class="col-sm-6">
+			     <div class="dataTables_filter" id="example1_filter">
+			      <label>
+			        <form action="<?php echo base_url('products/product'); ?>" method="GET" >
+				        <div>
+
+				            <input type='text' name='search' autocomplete='off' value='<?php $search ?>'>
+				            <input type='submit' name='submit'>
+
+				           <!--<input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search Product.." value="<?php echo isset($_GET['search']);?>">
+				           <span>
+				              <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+				           </span>
+				        </div>
+			        </form>
+			      </label>
+			     </div>
+		       </div>       
 
               <div class="row">
               <div class="col-sm-12">
@@ -65,7 +74,38 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if(!empty($products_l)) {
+
+                <?php 
+					    $sno = $row+1;
+					    foreach($result as $data)
+					    {
+					      echo "<tr>";
+					      echo "<td>".$sno."</td>";
+					      echo "<td>".$data['cat_id']."</td>";
+					      echo "<td><a href='target='_blank'>".$data['title']."</a></td>";
+					      echo "<td>".$data['description']."</td>";
+					      echo "<td><img src='<?php echo base_url('assests/image')".$data['image']." ?></td>";
+		                  
+					      echo "<td>".$data['stock']."</td>";
+					      /*<td>
+		                   <a href="<?php echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
+		                   </a></td>
+		                  <td>
+		                    <a href="<?php echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
+		                    </a></td>*/
+ 
+					      echo "</tr>";
+					      $sno++;
+
+					    }
+					    if(count($result) == 0){
+					      echo "<tr>";
+					      echo "<td colspan='3'>No record found.</td>";
+					      echo "</tr>";
+					    }
+					    ?>
+ 
+                <!--<?php if(!empty($products_l)) {
 				foreach ($products_l as $ind => $val) { ?> 
 					<tr>
 					<td><?php echo $val->id;?></td>
@@ -106,7 +146,7 @@
 		           <tr>
 		           	 <td colspan="6">OOPS! NO RECORD FOUND</td>
 		           </tr>
-				<?php } ?>
+				<?php } ?>-->
 			</tbody>
               <tfoot>
                 <tr>

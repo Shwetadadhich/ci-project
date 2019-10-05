@@ -319,7 +319,7 @@
           </div>
         </div>
         <!-- search form -->
-        <!--<form action="<?php echo base_url('products/product'); ?>" method="get" class="sidebar-form">
+        <!--<form action="<?php echo base_url('products/searchproduct'); ?>" method="get" class="sidebar-form">
           <div class="input-group">
             <input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
             <span class="input-group-btn">
