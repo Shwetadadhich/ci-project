@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         return $this->db->update('product',$data);
      }
 
- 	public function getproduct($cat_id) //get all product list//Allproduct.php
+ 	public function getproduct($cat_id=0) //get all product list//Allproduct.php
  	{   
 
  		$result = $this->db->select();

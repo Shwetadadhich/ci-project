@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller 
 {
 
-   public function product($rowno=0,$cat_id=FALSE)
+   public function product($rowno=0,$cat_id=0)
    { 
         
         $search_text = "";
@@ -34,7 +34,7 @@ class Products extends CI_Controller
     // All records count
     $this->load->model('Mproduct');
     $allcount = $this->Mproduct->getrecordCount($search_text);
-    $this->Mproduct->getproduct($cat_id);
+    
     // Get records
     $users_record = $this->Mproduct->getData($rowno,$rowperpage,$search_text);
  
@@ -56,11 +56,11 @@ class Products extends CI_Controller
     // Load view
      $this->load->helper('common_helper');
      getCatergoryList();
-      
+      //$d['products_l'] = $this->Mproduct->getproduct($cat_id);
      $this->load->library('Template');
        
      $this->template->load('vtemplate', 'product', $data);
- 
+     //$this->template->load('vtemplate', 'product', $d);
   }
 
    

@@ -75,8 +75,8 @@
             </thead>
             <tbody>
 
-                <?php 
-					    $sno = $row+1;
+                  
+					    <!--$sno = $row+1;
 					    foreach($result as $data)
 					    {
 					      echo "<tr>";
@@ -84,15 +84,15 @@
 					      echo "<td>".$data['cat_id']."</td>";
 					      echo "<td><a href='target='_blank'>".$data['title']."</a></td>";
 					      echo "<td>".$data['description']."</td>";
-					      echo "<td><img src='<?php echo base_url('assests/image')".$data['image']." ?></td>";
+					      echo "<td><img src='<?php //echo base_url('assests/image')".$data['image']." ?></td>";
 		                  
 					      echo "<td>".$data['stock']."</td>";
 					      /*<td>
-		                   <a href="<?php echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
+		                   <a href="<?php //echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
 		                   </a></td>
 		                  <td>
-		                    <a href="<?php echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
-		                    </a></td>*/
+		                    <a href="<?php //echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
+		                    </a></td>
  
 					      echo "</tr>";
 					      $sno++;
@@ -102,40 +102,40 @@
 					      echo "<tr>";
 					      echo "<td colspan='3'>No record found.</td>";
 					      echo "</tr>";
-					    }
-					    ?>
+					    }-->
+					    
  
-                <!--<?php if(!empty($products_l)) {
-				foreach ($products_l as $ind => $val) { ?> 
+                <?php if(!empty($result)) {
+				foreach ($result as $data) { ?> 
 					<tr>
-					<td><?php echo $val->id;?></td>
+					<td><?php echo $data['id'];?></td>
 							
-					<td><?php echo $val->cat_title;?></td>
+					<td><?php echo $data['cat_title'];?></td>
 					          
-					<td><?php echo $val->title;?></td>
-		          	<td><?php echo $val->description;?></td>
-		          	<?php if(!empty($val->image)){ ?>
-                       <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/'.$val->image)?>" alt=""></td> <?php } else { ?>
-                    <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/default.png'.$val->image)?>" alt=""></td> <?php } ?>
-		            <td><?php echo $val->stock;?></td>
+					<td><?php echo $data['title'];?></td>
+		          	<td><?php echo $data['description'];?></td>
+		          	<?php if(!empty($data['image'])){ ?>
+                       <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/'.$data['image'])?>" alt=""></td> <?php } else { ?>
+                    <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/default.png'.$data['image'])?>" alt=""></td> <?php } ?>
+		            <td><?php echo $data['stock'];?></td>
 		            
 		            <td>
-		              <a href="<?php echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
+		              <a href="<?php echo base_url('products/addproduct/'.$data['id'])?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
 		              </a></td>
 		            <td>
-		              <a href="<?php echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
+		              <a href="<?php echo base_url('products/delete/'.$data['id'])?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
 		              </a></td>
 		              <td>
-		                <?php $status = $val->status; 
+		                <?php $status = $data['status']; 
 		                if($status == 0)
 		                	{ 
 		                ?>
-                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-success">Active</a>
+                            <a href="Statusproduct?sid=<?php echo $data['id'];?>&sval=<?php echo $data['status'];?>" class="btn btn-success">Active</a>
 		                <?php 
 		                    }
 		                    else{
 		                     ?>
-                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-danger">InActive</a>
+                            <a href="Statusproduct?sid=<?php echo $data['id'];?>&sval=<?php echo $data['status'];?>" class="btn btn-danger">InActive</a>
 		                 <?php 
 		                    } 
 		                  ?>
@@ -146,7 +146,7 @@
 		           <tr>
 		           	 <td colspan="6">OOPS! NO RECORD FOUND</td>
 		           </tr>
-				<?php } ?>-->
+				<?php } ?>
 			</tbody>
               <tfoot>
                 <tr>
