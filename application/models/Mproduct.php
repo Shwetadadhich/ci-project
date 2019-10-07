@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         return $this->db->update('product',$data);
      }
 
- 	public function getproduct($cat_id=0) //get all product list//Allproduct.php
+ 	/*public function getproduct($cat_id=0) //get all product list//Allproduct.php
  	{   
 
  		$result = $this->db->select();
@@ -64,7 +64,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  		            //->limit($limit,$offset)
  		            ->get('product')
  		            ->result();
- 	}
+ 	}*/
 
     /*public function searchpro($search)
     {
@@ -75,21 +75,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         
     }*/
 
-     public function getData($rowno,$rowperpage,$search="") {
- 
-    $this->db->select('*');
-    $this->db->from('product');
+     public function getData($rowno,$rowperpage,$search="")
+    {
+       $this->db->select('*');
 
-    if($search != ''){
-      $this->db->like('title', $search);
-      $this->db->or_like('cat_id', $search);
+           // if($cat_id) 
+            //{   
+              //  $this->db->where('cat_id', $cat_id);
+                
+            //}
+       
+        $this->db->join('category', 'category.cat_id = product.cat_id', 'left');
+        $this->db->from('product');
+
+        if($search != '')
+        {
+          $this->db->like('title', $search);
+          $this->db->or_like('product.cat_id', $search);
+        }
+
+        $this->db->limit($rowperpage, $rowno); 
+        $query = $this->db->get();
+     
+        return $query->result_array();
     }
-
-    $this->db->limit($rowperpage, $rowno); 
-    $query = $this->db->get();
- 
-    return $query->result_array();
-  }
 
   // Select total records
   public function getrecordCount($search = '') 

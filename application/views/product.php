@@ -45,7 +45,7 @@
 				        <div>
 
 				            <input type='text' name='search' autocomplete='off' value='<?php $search ?>'>
-				            <input type='submit' name='submit'>
+				            <input type='submit'>
 
 				           <!--<input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search Product.." value="<?php echo isset($_GET['search']);?>">
 				           <span>

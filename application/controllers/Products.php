@@ -4,18 +4,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Products extends CI_Controller 
 {
 
-   public function product($rowno=0,$cat_id=0)
+   public function product($rowno=0)
    { 
         
         $search_text = "";
-        if($this->input->get('submit') != NULL )
+        if($this->input->get('search') !==NULL)
         {
-        $search_text = $this->input->get('search');
-        $this->load->library('session');
-        $this->session->set_userdata(array("search"=>$search_text));
+          $search_text = $this->input->get('search');
+          //$this->load->library('session');
+          //$this->session->set_userdata(array("search"=>$search_text));
         }
     else
-      {
+     {
         if($this->session->userdata('search') != NULL)
         {
          $search_text = $this->session->userdata('search');
@@ -33,6 +33,7 @@ class Products extends CI_Controller
  
     // All records count
     $this->load->model('Mproduct');
+    //$this->Mproduct->getproduct($cat_id);
     $allcount = $this->Mproduct->getrecordCount($search_text);
     
     // Get records
@@ -56,9 +57,8 @@ class Products extends CI_Controller
     // Load view
      $this->load->helper('common_helper');
      getCatergoryList();
-      //$d['products_l'] = $this->Mproduct->getproduct($cat_id);
+    
      $this->load->library('Template');
-       
      $this->template->load('vtemplate', 'product', $data);
      //$this->template->load('vtemplate', 'product', $d);
   }
