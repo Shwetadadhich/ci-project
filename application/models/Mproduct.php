@@ -77,14 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      public function getData($rowno,$rowperpage,$search="")
     {
-       $this->db->select('*');
-
-           // if($cat_id) 
-            //{   
-              //  $this->db->where('cat_id', $cat_id);
-                
-            //}
-       
+        $this->db->select('*');
         $this->db->join('category', 'category.cat_id = product.cat_id', 'left');
         $this->db->from('product');
 

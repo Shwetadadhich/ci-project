@@ -11,16 +11,16 @@ class Products extends CI_Controller
         if($this->input->get('search') !==NULL)
         {
           $search_text = $this->input->get('search');
-          //$this->load->library('session');
+         // $this->load->library('session');
           //$this->session->set_userdata(array("search"=>$search_text));
         }
-    else
-     {
-        if($this->session->userdata('search') != NULL)
-        {
-         $search_text = $this->session->userdata('search');
-        }
-      }
+   // else
+     //{
+       // if($this->session->userdata('search') != NULL)
+        //{
+         //$search_text = $this->session->userdata('search');
+        //}
+      //}
 
     // Row per page
     $rowperpage = 3;
@@ -60,7 +60,6 @@ class Products extends CI_Controller
     
      $this->load->library('Template');
      $this->template->load('vtemplate', 'product', $data);
-     //$this->template->load('vtemplate', 'product', $d);
   }
 
    

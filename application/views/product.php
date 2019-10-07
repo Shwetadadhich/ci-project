@@ -44,8 +44,8 @@
 			        <form action="<?php echo base_url('products/product'); ?>" method="GET" >
 				        <div>
 
-				            <input type='text' name='search' autocomplete='off' value='<?php $search ?>'>
-				            <input type='submit'>
+				            <input type='text' name='search' placeholder='Search Product..' autocomplete='off' value='<?php $search ?>'>
+				              <button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>
 
 				           <!--<input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search Product.." value="<?php echo isset($_GET['search']);?>">
 				           <span>
@@ -106,13 +106,14 @@
 					    
  
                 <?php if(!empty($result)) {
-				foreach ($result as $data) { ?> 
+                  $sno = $row+1;
+  				foreach ($result as $data) { ?> 
 					<tr>
-					<td><?php echo $data['id'];?></td>
+					<td><?php echo $sno++;?></td>
 							
 					<td><?php echo $data['cat_title'];?></td>
 					          
-					<td><?php echo $data['title'];?></td>
+					<td><a href='target='_blank'><?php echo $data['title'];?></td>
 		          	<td><?php echo $data['description'];?></td>
 		          	<?php if(!empty($data['image'])){ ?>
                        <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/'.$data['image'])?>" alt=""></td> <?php } else { ?>
@@ -148,18 +149,7 @@
 		           </tr>
 				<?php } ?>
 			</tbody>
-              <tfoot>
-                <tr>
-	                <th rowspan="1" colspan="1">S.No</th>
-	                <th rowspan="1" colspan="1">Title</th>
-	                <th rowspan="1" colspan="1">Product Name</th>
-	                <th rowspan="1" colspan="1">Description</th>
-	                <th rowspan="1" colspan="1">Image</th>
-	                <th rowspan="1" colspan="1">Stock</th>
-	                <th rowspan="1" colspan="2" style="text-align:center;">Action</th>
-	                <th rowspan="1" colspan="1">Status</th>
-                </tr>
-             </tfoot>
+             
               </table></div></div>
               <div class="row">
               <div class="col-sm-5">
