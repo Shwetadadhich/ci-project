@@ -23,36 +23,74 @@
             </ol>
 </section>  
 
-<div class="box">
-            <!--<div class="box-header">
-              <h3 class="box-title"></h3>
-            </div>-->
-            <!-- /.box-header -->
-            <div class="box-body">
+
+<!--<div class="container">
+        <h1 style="font-size:20pt">Simple Serverside Datatable Codeigniter</h1>
+ 
+        <h3>Customers Data</h3>
+        <br />
+
+        <div class="box-body">
               <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                <div class="row">
                <div class="col-sm-6">
+            <form action="<?php echo base_url('products/product'); ?>" method="POST" >
                <div class="dataTables_length" id="example1_length"><label>Show 
-               <select name="example1_length" aria-controls="example1" class="form-control input-sm"><option value="10">4</option>
-               <option value="25">10</option>
-               <option value="50">20</option>
-               <option value="100">50</option></select> entries</label></div></div>
-               
+               <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+               <option value="10">10</option>
+               <option value="15">15</option>
+               <option value="30">30</option>
+               <option value="50">50</option></select> entries</label></div></div>
                <div class="col-sm-6">
 			     <div class="dataTables_filter" id="example1_filter">
 			      <label>
-			        <form action="<?php echo base_url('products/product'); ?>" method="GET" >
 				        <div>
+                            <input type='text' name='search' value="search" placeholder='Search Product..' autocomplete='off'>
+				            <!--<button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
+				            
+       <div class="content">
+        <div class="row">
+        <table id="table" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Cat_id</th>
+                    <th>title</th>
+                    <th>Description</th>
+                    <th>image</th>
+                    <th>stock</th>
+                    <th id="status">status</th>
+                    <th id="delete">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    </div>
+ 
 
-				            <input type='text' name='search' placeholder='Search Product..' autocomplete='off' value='<?php $search ?>'>
-				              <button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>
-
-				           <!--<input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search Product.." value="<?php echo isset($_GET['search']);?>">
-				           <span>
-				              <button type="submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
-				           </span>
+	
+		
+           <!-- <div class="box-body">
+              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+               <div class="row">
+               <div class="col-sm-6">
+            <form action="<?php echo base_url('products/product'); ?>" method="GET" >
+               <div class="dataTables_length" id="example1_length"><label>Show 
+               <select name="example1_length" aria-controls="example1" class="form-control input-sm">
+               <option value="10">10</option>
+               <option value="15">15</option>
+               <option value="30">30</option>
+               <option value="50">50</option></select> entries</label></div></div>
+               <div class="col-sm-6">
+			     <div class="dataTables_filter" id="example1_filter">
+			      <label>
+				        <div>
+                            <input type='text' name='search' placeholder='Search Product..' autocomplete='off' value='<?php $search ?>'>
+				            <button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>
 				        </div>
-			        </form>
+			</form>
 			      </label>
 			     </div>
 		       </div>       
@@ -68,43 +106,11 @@
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 56px;">Description</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Image</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Stock</th>
-                <!--<th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Added</th>-->
                 <th colspan="2" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" aria-label="CSS grade: activate to sort column ascending" style="width:36px;text-align:center;">Action</th>
                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Status</th>
                 </tr>
             </thead>
             <tbody>
-
-                  
-					    <!--$sno = $row+1;
-					    foreach($result as $data)
-					    {
-					      echo "<tr>";
-					      echo "<td>".$sno."</td>";
-					      echo "<td>".$data['cat_id']."</td>";
-					      echo "<td><a href='target='_blank'>".$data['title']."</a></td>";
-					      echo "<td>".$data['description']."</td>";
-					      echo "<td><img src='<?php //echo base_url('assests/image')".$data['image']." ?></td>";
-		                  
-					      echo "<td>".$data['stock']."</td>";
-					      /*<td>
-		                   <a href="<?php //echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i>
-		                   </a></td>
-		                  <td>
-		                    <a href="<?php //echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i>
-		                    </a></td>
- 
-					      echo "</tr>";
-					      $sno++;
-
-					    }
-					    if(count($result) == 0){
-					      echo "<tr>";
-					      echo "<td colspan='3'>No record found.</td>";
-					      echo "</tr>";
-					    }-->
-					    
- 
                 <?php if(!empty($result)) {
                   $sno = $row+1;
   				foreach ($result as $data) { ?> 
@@ -116,8 +122,8 @@
 					<td><a href='target='_blank'><?php echo $data['title'];?></td>
 		          	<td><?php echo $data['description'];?></td>
 		          	<?php if(!empty($data['image'])){ ?>
-                       <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/'.$data['image'])?>" alt=""></td> <?php } else { ?>
-                    <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/default.png'.$data['image'])?>" alt=""></td> <?php } ?>
+                       <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/DataTables/images/'.$data['image'])?>" alt=""></td> <?php } else { ?>
+                    <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/DataTables/images/default.png'.$data['image'])?>" alt=""></td> <?php } ?>
 		            <td><?php echo $data['stock'];?></td>
 		            
 		            <td>
@@ -140,7 +146,7 @@
 		                 <?php 
 		                    } 
 		                  ?>
-		                </td>
+		               </td>
 		           
 		           </tr> 
 				<?php } } else { ?> 
@@ -159,9 +165,9 @@
               <div class="col-sm-7">
 	              <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
 	                 <div class="pagination"><?php echo $pagination; ?></div>
-				  </div>
-            <!-- /.box-body -->
-             </div>
+				 </div>
+            
+             </div>-->
 
 
 

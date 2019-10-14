@@ -3,24 +3,64 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Products extends CI_Controller 
 {
+   public function index()
+   {
+      $this->load->helper('common_helper');
+      getCatergoryList();
+       
+      $this->load->library('Template');
+       
+      $this->template->load('vtemplate', 'product');
+   }
 
-   public function product($rowno=0)
+   public function product()
    { 
+      $this->load->model('Mproduct');
+      $list = $this->Mproduct->get_datatables();
+      //echo'<pre>';print_r($list);die;
+      $data = array();
+      $no = $_POST["start"];
+        foreach ($list as $Mproduct) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $Mproduct->cat_id;
+            $row[] = $Mproduct->title;
+            $row[] = $Mproduct->description;
+            $row[] = '<img src="'.base_url().'assests/DataTables/images/'.$Mproduct->image.'" width="50" height="35" class="img-thumbnail" />';
+            $row[] = $Mproduct->stock;
+            $row[] = '<button type="button" name="status" sid="'.$Mproduct->status.'" class="btn btn-warning btn-xs">Status</button>';
+            $row[] = '<a href="'.base_url("products/addproduct").'?id='.$Mproduct->id.'"<i style="font-size:25px;padding-right:10px;" class="fa fa-pencil" aria-hidden="true"></i></a>
+                     <a href="'.base_url("products/delete").'?id='.$Mproduct->id.'"<i style="font-size:25px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" => $_POST["draw"],
+                        "recordsTotal" => $this->Mproduct->count_all(),
+                        "recordsFiltered" => $this->Mproduct->count_filtered(),
+                        "data" => $data,
+                );
+        //output to json format
+        echo json_encode($output);
+    
+    }
+ 
         
-        $search_text = "";
+        /*$search_text = "";
         if($this->input->get('search') !==NULL)
         {
           $search_text = $this->input->get('search');
-         // $this->load->library('session');
-          //$this->session->set_userdata(array("search"=>$search_text));
+         $this->load->library('session');
+         $this->session->set_userdata(array("search"=>$search_text));
         }
-   // else
-     //{
-       // if($this->session->userdata('search') != NULL)
-        //{
-         //$search_text = $this->session->userdata('search');
-        //}
-      //}
+    else
+     {
+        if($this->session->userdata('search') != NULL)
+        {
+         $search_text = $this->session->userdata('search');
+        }
+      }
 
     // Row per page
     $rowperpage = 3;
@@ -65,7 +105,7 @@ class Products extends CI_Controller
    
 
 
-   	  /*$cat_id = $this->input->get('category_id');
+   	  $cat_id = $this->input->get('category_id');
    	  
    	  // $this->input->get is equivalent to $_GET
       $this->load->model('Mproduct');//model load
@@ -127,32 +167,29 @@ class Products extends CI_Controller
           getCatergoryList();
           $data['allcat'] = $this->Mcategory->all_category(); 
           
-               $this->load->library('form_validation');//form validation load
+           $this->load->library('form_validation');//form validation load
               
-               $this->form_validation->set_rules('id','categoryid','required');
-               $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
-               $this->form_validation->set_rules('description','descriptoin','required');
+           //$this->form_validation->set_rules('id','categoryid','required');
+           $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
+           $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
             
-               $this->form_validation->set_message('required', '{field} is required <- Error Message');
+           $this->form_validation->set_message('required', '{field} is required <- Please fill the Box');
              
            if($this->input->post('add'))
            { //insert start
-             
-              
-               if($this->form_validation->run() != FALSE)
+              if($this->form_validation->run() != FALSE)
                {
-
                     $add['cat_id'] = $this->input->post('id');
                     $add['title'] = $this->input->post('title');
                     $add['description']=$this->input->post('description');
                 
                    if(empty($this->input->post('image')))
                     {
-                     $this->form_validation->set_message('required', '{image} is required <- Error Message');
+                     $this->form_validation->set_message('required', '{image} is required <- Please Select image');
                    }
-                     $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
+                     $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
                      $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
                      $config['max_size']  = '1000000';
                      //$config['max_width'] = '1024';
@@ -204,13 +241,13 @@ class Products extends CI_Controller
                   $res = $this->db->query("select image from product where id=$id")->row('image');
                     if(!empty($res))
                     {
-                      $path = FCPATH ."assests/image/$res";
+                      $path = FCPATH ."assests/DataTables/images/$res";
                       unlink($path);
                       //print_r($path);die;
                     }
                
                    
-                   $config['upload_path'] = FCPATH ."assests/image";// upload the image upload library insert
+                   $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
                    $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
                    $config['max_size']  = '1000000';
                    //$config['max_width'] = '1024';
@@ -234,7 +271,7 @@ class Products extends CI_Controller
                       $this->session->set_flashdata('success','product Updated successfully');
                       redirect(base_url('products/product')); 
            } // update product end
-           $d['header'] = 'header...';
+           //$d['header'] = 'header...';
            $this->load->library('Template');
            $this->template->load('vtemplate', 'addpro', $data);
      }
@@ -260,15 +297,22 @@ class Products extends CI_Controller
        }
      }
 
-   public function delete($id)
+   public function delete()
      {
+                $id = NULL;
+              
                  $this->load->model('Mproduct');
+                   if(isset($_GET['id']))
+                    {
+                     $id = $_GET['id'];
+                    }
+                  
                  $data = $this->Mproduct->del_product($id);
                  //print_r($data);die;
                  $this->session->set_flashdata('success','product deleted successfully');
-                 redirect(base_url('products/product')); 
+                 redirect(base_url('products/')); 
                  
-                 /*$check=$_FILES['image']['name'];
+                 $check=$_FILES['image']['name'];
                //print_r($imgcheck);die;
                 if(!empty($check))
                 { 
@@ -276,11 +320,11 @@ class Products extends CI_Controller
                   $res = $this->db->query("delete image from product where id=$id")->row('image');
                     if(!empty($res))
                     {
-                      $path = FCPATH ."assests/image/$res";
+                      $path = FCPATH ."assests/DataTables/images/$res";
                       unlink($path);
                       //print_r($path);die;
                     }
-                  }*/  
+                  }
 
                   $this->load->library('Template');
                  $this->template->load('vtemplate', 'addpro', $data);       
@@ -290,7 +334,6 @@ class Products extends CI_Controller
           {
              $this->load->model('Mcategory');
              $res = $this->input->post('catid');
-             //echo $this->input->post('catid');die;
              $data['category'] = $this->Mcategory->getsub_category($res);
              //print_r($data['category']);die;
              echo json_encode($data);

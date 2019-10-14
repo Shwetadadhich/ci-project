@@ -1,8 +1,6 @@
 <?php 
 
-   
-
-	 function getCatergoryList()
+function getCatergoryList()
 	 {
         //return "this is helper file";
        

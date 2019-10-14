@@ -5,7 +5,8 @@
 <?php 
   if($this->session->flashdata('error')){
   	echo '<div class="alert alert-danger">
-  	       <strong>Error!</strong>'.$this->session->flashdata("error").'
+  	       <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+           <strong>Error!</strong>'.$this->session->flashdata("error").'
   	       </div>';
   }
 
@@ -18,6 +19,7 @@
 
  if(validation_errors()){
   	echo '<div class="alert alert-danger">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a> 
   	      <strong>Error!</strong>'.validation_errors().'
   	       </div>';
   }
@@ -38,8 +40,7 @@
 					foreach ($allcat as $ind => $cat) { 
 						$select=($cat->cat_id == $get_edit->cat_id)? "selected": "" 
 						?> 
-
-						<option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title; ?></option>
+             <option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title; ?></option>
             
 			    <?php } }  ?>
   	 			</select>
@@ -51,21 +52,21 @@
 
   	 		<div class="form-group">
   	 			<label for="Title">Title</label>
-  	 			<input type="text" name="title" placeholder="Title name" id="title" class="form-control" autocomplete="off" value="<?php echo (empty($get_edit))? "" : $get_edit->title; ?>">
+  	 			<input type="text" name="title" placeholder="Title name" id="title" class="form-control" autocomplete="off" value="<?php echo set_value('title'); ?>">
   	 		</div><br>
   	 		<div class="form-group">
   	 			<label for="Description">Description</label>
-  	 			<input type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo (empty($get_edit))? "" : $get_edit->description; ?>">
+  	 			<input type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo set_value('description'); ?>">
   	 		</div>
   	 		<div class="form-group">
   	 			<label for="image">Image</label>
   	 	        <?php if(!empty($get_edit->image)){?>
-  	 	        <img style="max-width:100px;" src="<?php echo base_url('assests/image/'.$get_edit->image); ?>"> <?php } ?>
+  	 	        <img style="max-width:100px;" src="<?php echo base_url('assests/DataTables/images/'.$get_edit->image); ?>"> <?php } ?>
   	 			<input type="file" name="image" class="form-control" value="">
   	 		</div>
   	 		<div class="form-group">
   	 			<label for="stock">Stock</label>
-  	 			<input type="number" name="stock" class="form-control" value="<?php echo (empty($get_edit))? "" : $get_edit->stock; ?>">
+  	 			<input type="number" name="stock" class="form-control" value="<?php echo set_Value('stock'); ?>">
   	 		</div>
   	 		<div class="form-group">
   	 		    <?php $save=(empty($get_edit))? "add": "update" ?>

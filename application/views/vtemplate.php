@@ -2,17 +2,10 @@
 <html>
  <head>
 
-    <!--<link rel="stylesheet" type="text/css" href="<?php echo base_url('assests/css/vcss.css') ?>">-->
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
-
-  <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Admin Store | Dashboard</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+    <link href="<?php echo base_url('assests/DataTables/css/jquery.dataTables.min.css')?>" rel="stylesheet">
+   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/font-awesome/css/font-awesome.min.css">
@@ -74,7 +67,7 @@
                     <li><!-- start message -->
                       <a href="#">
                         <div class="pull-left">
-                          <img src="<?php echo base_url('assests/image/gohan.jpg'); ?>" class="img-circle" alt="">
+                          <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="">
                         </div>
                         <h4>
                           Support Team
@@ -87,7 +80,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <img src="dist/img/user1-128x128.jpg" class="img-circle" alt="">
+                          <img src="<?php echo base_url('assests/theme/dist/img/user1-128x128.jpg'); ?>" class="img-circle" alt="">
                         </div>
                         <h4>
                           AdminLTE Design Team
@@ -99,7 +92,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <img src="dist/img/user2-128x128.jpg" class="img-circle" alt="User Image">
+                          <img src="<?php echo base_url('assests/theme/dist/img/user2-160x160.jpg'); ?>" class="img-circle" alt="User Image">
                         </div>
                         <h4>
                           Developers
@@ -111,7 +104,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                          <img src="<?php echo base_url('assests/theme/dist/img/user3-128x128.jpg'); ?>" class="img-circle" alt="User Image">
                         </div>
                         <h4>
                           Sales Department
@@ -123,7 +116,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                          <img src="<?php echo base_url('assests/theme/dist/img/user4-128x128.jpg'); ?>" class="img-circle" alt="User Image">
                         </div>
                         <h4>
                           Reviewers
@@ -256,13 +249,13 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<?php echo base_url('assests/image/gohan.jpg'); ?>" class="user-image" alt="User Image">
+                <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="user-image" alt="User Image">
                 <span class="hidden-xs">Shweta Dadhich</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <img src="<?php echo base_url('assests/image/gohan.jpg'); ?>" class="img-circle" alt="User Image">
+                  <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
 
                   <p>
                     Shweta Dadhich - Web Developer
@@ -311,24 +304,14 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
-            <img src="<?php echo base_url('assests/image/gohan.jpg'); ?>" class="img-circle" alt="User Image">
+            <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
             <p>Shweta Dadhich</p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
-        <!-- search form -->
-        <!--<form action="<?php echo base_url('products/searchproduct'); ?>" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="search" autocomplete="off" class="form-control" placeholder="Search..." value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>">
-            <span class="input-group-btn">
-                <button type="submit" value="search" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-          </div>
-        </form>-->
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
           
@@ -360,7 +343,7 @@
                   {
                      foreach ($categories as $ind => $cat) { 
                   ?>
-                     <li class="<?php echo ($this->router->fetch_method() == 'allcategory' && $cat->cat_id == $this->uri->segment(3)) ? 'active' : '' ?>">
+                     <li class="<?php echo ($this->router->fetch_method() == 'allcategory'&& $cat->cat_id == $this->uri->segment(3)) ? 'active' : '' ?>">
                      <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><?php echo $cat->cat_title; ?></a></li>
                     
                   <?php 
@@ -379,7 +362,7 @@
             </a>
             <ul class="treeview-menu">
               <li class="<?php echo ($this->router->fetch_method() == 'addproduct') ? 'active' : '' ?>" name="add" value="add"><a href="<?php echo base_url('products/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
-              <li class="<?php echo ($this->router->fetch_method() == 'product') ? 'active' : '' ?>" name="all"><a href="<?php echo base_url('products/product'); ?>"><i class="fa fa-circle-o"></i>All products</a></li>
+              <li class="<?php echo ($this->router->fetch_method() == 'index') ? 'active' : '' ?>" name="all"><a href="<?php echo base_url('products/index'); ?>"><i class="fa fa-circle-o"></i>All products</a></li>
             </ul>
           </li>
 
@@ -394,9 +377,19 @@
     </div>
 
  </div>
-    <!-- jQuery 3 -->
+     
+<footer class="main-footer">
+    <div class="pull-right hidden-xs">
+      <b>Version</b> 2.4.18
+    </div>
+    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+    reserved.
+</footer>
+
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
+
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
@@ -431,38 +424,10 @@
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/demo.js"></script>
+    <!--<script src="<?php echo base_url('assests/jquery/jquery-3.4.1.min.js')?>"></script>-->
+    <script src="<?php echo base_url('assests/DataTables/js/jquery.dataTables.min.js')?>"></script>
 
-
-<!--<header>
-<div class="container">
-        <div class="col-md-3" class="search">
-		     <form method="GET" class="form-group" action="">
-             <input type="text" name="search" value="<?php echo isset($_GET['search'])?$_GET['search']:"";?>" placeholder="Enter any text here"><hr>
-             <input type="submit" value="search" class="btn btn-primary">
-		     </form>
-	      </div>
-  </div>
-
-  <?php 
-              if(!empty($category))  
-              {
-                 foreach ($category as $ind => $cat) { 
-              ?>
-                <li><a href="<?php echo base_url("Products/product/$cat->cat_id");?>"><i class="fa fa-circle-o"></i><?php echo $cat->cat_title;?></a></li>
-              <?php 
-                }
-              }
-              ?>
-</header>-->
-
-     
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.18
-    </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
-    reserved.
-</footer>
+    <script src="<?php echo base_url('assests/DataTables/js/datatable_maual.js')?>"></script>
  
  </body>
 </html>

@@ -89,6 +89,18 @@ switch (ENVIRONMENT)
 		exit(1); // EXIT_ERROR
 }
 
+  function p($p, $exit = 1)
+   {
+       echo '<pre>';
+       print_r($p);
+       echo '</pre>';
+       if ($exit == 1)
+       {
+           exit;
+       }
+   } 
+set_time_limit(0); 
+
 /*
  *---------------------------------------------------------------
  * SYSTEM DIRECTORY NAME
