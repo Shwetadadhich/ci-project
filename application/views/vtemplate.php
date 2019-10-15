@@ -428,6 +428,7 @@
     <script src="<?php echo base_url('assests/DataTables/js/jquery.dataTables.min.js')?>"></script>
 
     <script src="<?php echo base_url('assests/DataTables/js/datatable_maual.js')?>"></script>
+     <script src="<?php echo base_url('assests/DataTables/js/cat_status_update.js')?>"></script>
  
  </body>
 </html>

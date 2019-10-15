@@ -59,8 +59,8 @@
                     <th>Description</th>
                     <th>image</th>
                     <th>stock</th>
-                    <th id="status">status</th>
-                    <th id="delete">Action</th>
+                    <th>status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +69,13 @@
     </div>
     </div>
  
+
+
+
+
+
+
+
 
 	
 		

@@ -30,11 +30,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           return $return;
      }
 
-     public function product_status()//product status
-     {
-        $id = $_REQUEST['sid'];
-        $sval = $_REQUEST['sval'];
-        if($sval == 0)
+     public function product_status($id,$status)//product status
+     {  
+        //p($id);
+        if($status == 0)
         {
              $status = 1;
         }
@@ -46,7 +45,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       'status' => $status,
                      );
         $this->db->where('id',$id);
-        return $this->db->update('product',$data);
+        $return = $this->db->update('product',$data);
+        $this->db->trans_complete();
+
+        if ($this->db->affected_rows() >0)
+        {
+          return 1; //add your code here
+        }
+        else
+        {
+          return 0; //add your code here
+        }
      }
 
  	/*public function getproduct($cat_id=0) //get all product list//Allproduct.php
@@ -69,41 +78,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  		            ->result();
  	}*/
 
-     /*public function getData($rowno,$rowperpage,$search="")
-    {
-        $this->db->select('*');
-        $this->db->join('category', 'category.cat_id = product.cat_id', 'left');
-        $this->db->from('product');
-
-        if($search != '')
-        {
-          $this->db->like('title', $search);
-          $this->db->or_like('product.cat_id', $search);
-        }
-
-        $this->db->limit($rowperpage, $rowno); 
-        $query = $this->db->get();
      
-        return $query->result_array();
-    }
-
-  // Select total records
-  public function getrecordCount($search = '') 
-  {
-
-    $this->db->select('count(*) as allcount');
-    $this->db->from('product');
- 
-    if($search != ''){
-      $this->db->like('title', $search);
-      $this->db->or_like('cat_id', $search);
-    }
-
-    $query = $this->db->get();
-    $result = $query->result_array();
- 
-    return $result[0]['allcount'];
-  }*/
     var $table = 'product';
     var $column_order = array(null, 'cat_id','title','description','image','stock','status',null,null); //set column field database for datatable orderable
     var $column_search = array('id','cat_id','title','description','image','stock','status'); //set column field database for datatable searchable 

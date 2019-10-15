@@ -20,6 +20,7 @@ class Products extends CI_Controller
       //echo'<pre>';print_r($list);die;
       $data = array();
       $no = $_POST["start"];
+      $status = '';
         foreach ($list as $Mproduct) {
             $no++;
             $row = array();
@@ -29,7 +30,21 @@ class Products extends CI_Controller
             $row[] = $Mproduct->description;
             $row[] = '<img src="'.base_url().'assests/DataTables/images/'.$Mproduct->image.'" width="50" height="35" class="img-thumbnail" />';
             $row[] = $Mproduct->stock;
-            $row[] = '<button type="button" name="status" sid="'.$Mproduct->status.'" class="btn btn-warning btn-xs">Status</button>';
+            
+
+            $status_cat =$Mproduct->status;
+                    
+                    if($Mproduct->status == 0)
+                      { 
+                        $status = '<a onclick="changestatus('.$Mproduct->id.','.$status_cat.')" class="btn btn-danger">Active</a>';
+                      }
+                      else
+                      {
+                        $status = '<a onclick="changestatus('.$Mproduct->id.','.$status_cat.')" class="btn btn-success">InActive</a>';
+                     }
+
+            $row[] = $status; 
+
             $row[] = '<a href="'.base_url("products/addproduct").'?id='.$Mproduct->id.'"<i style="font-size:25px;padding-right:10px;" class="fa fa-pencil" aria-hidden="true"></i></a>
                      <a href="'.base_url("products/delete").'?id='.$Mproduct->id.'"<i style="font-size:25px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i></a>';
             $data[] = $row;
@@ -190,8 +205,9 @@ class Products extends CI_Controller
                      $this->form_validation->set_message('required', '{image} is required <- Please Select image');
                    }
                      $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
-                     $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
-                     $config['max_size']  = '1000000';
+                     $config['allowed_types'] = 'jpg|jpeg|jpe|gif|png|zip|svg|bmp';
+                     $config['max_size']  = '100000000';
+                     //p('$config');
                      //$config['max_width'] = '1024';
                      //$config['max_height'] = '768';
                      $this->load->library('upload', $config);
@@ -214,7 +230,7 @@ class Products extends CI_Controller
                    $this->Mproduct->add_product($add);
                   
                    $this->session->set_flashdata('success','product inerted successfully');
-                   redirect(base_url('products/product')); 
+                   redirect(base_url('products/')); 
               
                }
             
@@ -243,13 +259,13 @@ class Products extends CI_Controller
                     {
                       $path = FCPATH ."assests/DataTables/images/$res";
                       unlink($path);
-                      //print_r($path);die;
+                      //p($path);die;
                     }
                
                    
                    $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
-                   $config['allowed_types'] = 'gif|jpg|png|bmp|jpeg';
-                   $config['max_size']  = '1000000';
+                   $config['allowed_types'] = 'jpg|jpeg|jpe|gif|png|zip|svg|bmp';
+                   $config['max_size']  = '100000000';
                    //$config['max_width'] = '1024';
                    //$config['max_height'] = '768';
                    $this->load->library('upload', $config);
@@ -269,7 +285,7 @@ class Products extends CI_Controller
                         //print_r($update);die;
                       $this->Mproduct->update_order($id,$update);
                       $this->session->set_flashdata('success','product Updated successfully');
-                      redirect(base_url('products/product')); 
+                      redirect(base_url('products/')); 
            } // update product end
            //$d['header'] = 'header...';
            $this->load->library('Template');
@@ -278,22 +294,29 @@ class Products extends CI_Controller
     
    public function Statusproduct()
      {
-       if(isset($_REQUEST['sval']))
+
+       if(isset($_POST['id']))
        {
+       // p('dfdf');
+          $id=$_POST['id'];
+          $status=$_POST['status'];
           $this->load->model('Mproduct');
-          $res = $this->Mproduct->product_status();
+          $res = $this->Mproduct->product_status($id,$status);
           //print_r($res);
+         // p($res);
           if($res>0)
            {
             $this->session->set_flashdata('success',"product status updated sucessfully");
+            return true;
             //$this->session->set_flashdata('msg_class','alert-success');
            }
            else
            {
              $this->session->set_flashdata('error',"product status not updated sucessfully");
+             return FALSE;
              //$this->session->set_flashdata('msg_class','alert-danger');
            }
-           return redirect('products/product');
+           //return redirect('products/product');
        }
      }
 
