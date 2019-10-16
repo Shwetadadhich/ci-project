@@ -31,22 +31,21 @@ class Products extends CI_Controller
             $row[] = '<img src="'.base_url().'assests/DataTables/images/'.$Mproduct->image.'" width="50" height="35" class="img-thumbnail" />';
             $row[] = $Mproduct->stock;
             
-
             $status_cat =$Mproduct->status;
                     
-                    if($Mproduct->status == 0)
-                      { 
-                        $status = '<a onclick="changestatus('.$Mproduct->id.','.$status_cat.')" class="btn btn-danger">Active</a>';
+                if($Mproduct->status == 0)
+                   { 
+                      $status = '<a onclick="changestatus('.$Mproduct->id.','.$status_cat.')" class="btn btn-danger">Active</a>';
                       }
                       else
                       {
                         $status = '<a onclick="changestatus('.$Mproduct->id.','.$status_cat.')" class="btn btn-success">InActive</a>';
-                     }
+                      }
 
             $row[] = $status; 
 
             $row[] = '<a href="'.base_url("products/addproduct").'?id='.$Mproduct->id.'"<i style="font-size:25px;padding-right:10px;" class="fa fa-pencil" aria-hidden="true"></i></a>
-                     <a href="'.base_url("products/delete").'?id='.$Mproduct->id.'"<i style="font-size:25px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i></a>';
+                     <a onclick="return confirm(\'Are You Sure To Delete\');" href="'.base_url("products/delete").'?id='.$Mproduct->id.'"<i style="font-size:25px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i></a>';
             $data[] = $row;
         }
  
@@ -237,10 +236,12 @@ class Products extends CI_Controller
            } 
         //eND insert work
 
-           if($id)   // fetch product by one row in input box using id
+           if(isset($_GET['id']))   // fetch product by one row in input box using id
           {
+             $id=$_GET['id'];
              $this->load->model('Mproduct');
              $data['get_edit'] = $this->Mproduct->edit_getproduct($id);
+             //p($data['get_edit']);
           }
 
            if($this->input->post('update')) //update product with image start
@@ -283,6 +284,7 @@ class Products extends CI_Controller
                 }
                       $update['stock']=$this->input->post('stock');
                         //print_r($update);die;
+                      $this->load->model('Mproduct');
                       $this->Mproduct->update_order($id,$update);
                       $this->session->set_flashdata('success','product Updated successfully');
                       redirect(base_url('products/')); 
@@ -308,13 +310,11 @@ class Products extends CI_Controller
            {
             $this->session->set_flashdata('success',"product status updated sucessfully");
             return true;
-            //$this->session->set_flashdata('msg_class','alert-success');
            }
            else
            {
              $this->session->set_flashdata('error',"product status not updated sucessfully");
              return FALSE;
-             //$this->session->set_flashdata('msg_class','alert-danger');
            }
            //return redirect('products/product');
        }
@@ -324,7 +324,7 @@ class Products extends CI_Controller
      {
                 $id = NULL;
               
-                 $this->load->model('Mproduct');
+                $this->load->model('Mproduct');
                    if(isset($_GET['id']))
                     {
                      $id = $_GET['id'];

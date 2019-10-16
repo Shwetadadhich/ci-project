@@ -10,9 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
      public function edit_getproduct($id)//edit product one row
      { //get one row in EDIT click
-        return $this->db->where('id', $id)
-                        ->get('product')
-                        ->row();
+        $return = $this->db->where('id', $id)->get('product')->row();
+
+                  //$ch = $this->db->last_query();
+                  return $return;
+
      }
 
      public function update_order($id,$update)//update all product

@@ -362,7 +362,7 @@
             </a>
             <ul class="treeview-menu">
               <li class="<?php echo ($this->router->fetch_method() == 'addproduct') ? 'active' : '' ?>" name="add" value="add"><a href="<?php echo base_url('products/addproduct');?>"><i class="fa fa-circle-o"></i>Add Products</a></li>
-              <li class="<?php echo ($this->router->fetch_method() == 'index') ? 'active' : '' ?>" name="all"><a href="<?php echo base_url('products/index'); ?>"><i class="fa fa-circle-o"></i>All products</a></li>
+              <li class="<?php echo ($this->router->fetch_method() == '') ? 'active' : '' ?>" name="all"><a href="<?php echo base_url('products/'); ?>"><i class="fa fa-circle-o"></i>All products</a></li>
             </ul>
           </li>
 

@@ -52,11 +52,11 @@
 
   	 		<div class="form-group">
   	 			<label for="Title">Title</label>
-  	 			<input type="text" name="title" placeholder="Title name" id="title" class="form-control" autocomplete="off" value="<?php echo set_value('title'); ?>">
+  	 			<input type="text" name="title" placeholder="Product name" id="title" class="form-control" autocomplete="off" value="<?php echo isset($get_edit->title)? $get_edit->title : ''; ?>">
   	 		</div><br>
   	 		<div class="form-group">
   	 			<label for="Description">Description</label>
-  	 			<input type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo set_value('description'); ?>">
+  	 			<input type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo isset($get_edit->description)? $get_edit->description : ''; ?>">
   	 		</div>
   	 		<div class="form-group">
   	 			<label for="image">Image</label>
@@ -66,7 +66,7 @@
   	 		</div>
   	 		<div class="form-group">
   	 			<label for="stock">Stock</label>
-  	 			<input type="number" name="stock" class="form-control" value="<?php echo set_Value('stock'); ?>">
+  	 			<input type="number" name="stock" class="form-control" value="<?php echo isset($get_edit->stock)? $get_edit->stock : ''; ?>">
   	 		</div>
   	 		<div class="form-group">
   	 		    <?php $save=(empty($get_edit))? "add": "update" ?>

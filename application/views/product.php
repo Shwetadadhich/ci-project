@@ -22,34 +22,9 @@
               <li class="active">Products</li>
             </ol>
 </section>  
-
-
-<!--<div class="container">
-        <h1 style="font-size:20pt">Simple Serverside Datatable Codeigniter</h1>
- 
-        <h3>Customers Data</h3>
-        <br />
-
-        <div class="box-body">
-              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-               <div class="row">
-               <div class="col-sm-6">
-            <form action="<?php echo base_url('products/product'); ?>" method="POST" >
-               <div class="dataTables_length" id="example1_length"><label>Show 
-               <select name="example1_length" aria-controls="example1" class="form-control input-sm">
-               <option value="10">10</option>
-               <option value="15">15</option>
-               <option value="30">30</option>
-               <option value="50">50</option></select> entries</label></div></div>
-               <div class="col-sm-6">
-			     <div class="dataTables_filter" id="example1_filter">
-			      <label>
-				        <div>
-                            <input type='text' name='search' value="search" placeholder='Search Product..' autocomplete='off'>
-				            <!--<button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
 				            
-       <div class="content">
-        <div class="row">
+ <div class="content">
+    <div class="row">
         <table id="table" class="display" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -67,7 +42,7 @@
             </tbody>
         </table>
     </div>
-    </div>
+</div>
  
 
 
@@ -79,46 +54,8 @@
 
 	
 		
-           <!-- <div class="box-body">
-              <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-               <div class="row">
-               <div class="col-sm-6">
-            <form action="<?php echo base_url('products/product'); ?>" method="GET" >
-               <div class="dataTables_length" id="example1_length"><label>Show 
-               <select name="example1_length" aria-controls="example1" class="form-control input-sm">
-               <option value="10">10</option>
-               <option value="15">15</option>
-               <option value="30">30</option>
-               <option value="50">50</option></select> entries</label></div></div>
-               <div class="col-sm-6">
-			     <div class="dataTables_filter" id="example1_filter">
-			      <label>
-				        <div>
-                            <input type='text' name='search' placeholder='Search Product..' autocomplete='off' value='<?php $search ?>'>
-				            <button type="submit" class="btn btn-flat"><i class="fa fa-search"></i></button>
-				        </div>
-			</form>
-			      </label>
-			     </div>
-		       </div>       
-
-              <div class="row">
-              <div class="col-sm-12">
-              <table id="example1" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="example1_info">
-            <thead>
-                <tr role="row">
-                <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column descending" style="width: 69px;" aria-sort="ascending">S.no</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 89px;">Title</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 77px;">product Name</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 56px;">Description</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Image</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Stock</th>
-                <th colspan="2" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" aria-label="CSS grade: activate to sort column ascending" style="width:36px;text-align:center;">Action</th>
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending" style="width: 36px;">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if(!empty($result)) {
+         
+                <!--<?php if(!empty($result)) {
                   $sno = $row+1;
   				foreach ($result as $data) { ?> 
 					<tr>
@@ -218,71 +155,4 @@
 
 
 
-
-<!--<div class="container">
-	<div class="row"> 
-      <div class="col-md-9">
-	    <table border="1" class="table table-striped table-hover">
-		   <thead>
-			<tr>
-			    <th>S.No</th>
-				<th>Category_title</th>
-				<th>Title</th>
-				<th>Description</th>
-				<th>Image</th>
-				<th>Stock</th>
-				<th>Added</th>
-				<th colspan="2" style="text-align:center;">Action</th>
-				<th>Status</th>
-			</tr> 
-		   </thead>
-
-			<?php if(!empty($products_l)) {
-				foreach ($products_l as $ind => $val) { ?> 
-					<tr>
-					<td><?php echo $val->id;?></td>
-							
-					<td><?php echo $val->cat_title;?></td>
-					          
-					<td><?php echo $val->title;?></td>
-		          	<td><?php echo $val->description;?></td>
-		          	<?php if(!empty($val->image)){ ?>
-                       <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/'.$val->image)?>" alt=""></td> <?php } else { ?>
-                    <td><img style="width:150px; height:150px;" src="<?php echo base_url('./assests/image/default.png'.$val->image)?>" alt=""></td> <?php } ?>
-		            <td><?php echo $val->stock;?></td>
-		            <td><?php echo $val->added;?></td>
-		            <td><a href="<?php echo base_url('products/addproduct/'.$val->id)?>"><i style="font-size:30px;" class="fa fa-pencil" aria-hidden="true"></i></a></td>
-		            <td><a href="<?php echo base_url('products/delete/'.$val->id)?>"><i style="font-size:30px; color:red;" class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-		              <td>
-		                <?php $status = $val->status; 
-		                if($status == 0)
-		                	{ 
-		                ?>
-                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-success">Active</a>
-		                <?php 
-		                    }
-		                    else{
-		                     ?>
-                            <a href="Statusproduct?sid=<?php echo $val->id;?>&sval=<?php echo $val->status;?>" class="btn btn-danger">InActive</a>
-		                 <?php 
-		                    } 
-		                  ?>
-		                </td>
-		           
-		           </tr> 
-				<?php } } else { ?> 
-		           <tr>
-		           	 <td colspan="6">OOPS! NO RECORD FOUND</td>
-		           </tr>
-				<?php } ?>
-		</table>
-	   </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="pagination"><?php echo $pagination; ?></div>
-  </div>
-</div>-->
 
