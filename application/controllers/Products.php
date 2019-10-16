@@ -201,27 +201,28 @@ class Products extends CI_Controller
                 
                    if(empty($this->input->post('image')))
                     {
-                     $this->form_validation->set_message('required', '{image} is required <- Please Select image');
-                   }
+                      $this->form_validation->set_message('required', '{image} is required <- Please Select image');
+                    }
                      $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
                      $config['allowed_types'] = 'jpg|jpeg|jpe|gif|png|zip|svg|bmp';
                      $config['max_size']  = '100000000';
                      //p('$config');
                      //$config['max_width'] = '1024';
                      //$config['max_height'] = '768';
-                     $this->load->library('upload', $config);
-                            
-                      if(!$this->upload->do_upload('image'))//$add['image'] = $this->input->post('image');
-                       { 
-                         $error = array('error' => $this->upload->display_errors());
-                           //print_r($error);die; 
-                         $this->session->set_flashdata('error',$error['error']);
-                         redirect(base_url('products/addproduct')); 
-                       }
-         
-                   $data = $this->upload->data(); 
+                    $this->load->library('upload', $config);
+
+                       if (!$this->upload->do_upload('image')) // <input name="image"/>
+                        {
+                           $add['image'] = 'default.png';
+                        }
+                       else
+                        {
+                           $data = array('upload_data' => $this->upload->data());
+                           $add['image'] = $data['file_name'];
+                        } 
+                   //$data = $this->upload->data(); 
                  //echo '<pre>'; print_r($data); die;
-                   $add['image'] = $data['file_name'];
+                   //$add['image'] = $data['file_name'];
                  // print_r($add['file_name']);die;
                    $add['stock'] = $this->input->post('stock');
                   //print_r($add);die;
@@ -243,7 +244,18 @@ class Products extends CI_Controller
              $data['get_edit'] = $this->Mproduct->edit_getproduct($id);
              //p($data['get_edit']);
           }
+           
 
+            $this->load->library('form_validation');//form validation load
+              
+           //$this->form_validation->set_rules('id','categoryid','required');
+           $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
+           $this->form_validation->set_rules('description','descriptoin','required');
+              //$this->form_validation->set_rules('image','image','required');
+              //$this->form_validation->set_rules('stock','stock','required');
+            
+           $this->form_validation->set_message('required', '{field} is required <- Please fill the Box');
+           
            if($this->input->post('update')) //update product with image start
            { 
                 //echo 'dfdf';die;
