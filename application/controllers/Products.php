@@ -337,19 +337,20 @@ class Products extends CI_Controller
                  
                  $check=$_FILES['image']['name'];
                //print_r($imgcheck);die;
-                if(!empty($check))
-                { 
-            
-                  $res = $this->db->query("delete image from product where id=$id")->row('image');
-                    if(!empty($res))
-                    {
-                      $path = FCPATH ."assests/DataTables/images/$res";
-                      unlink($path);
-                      //print_r($path);die;
+                  if(!empty($check))
+                  { 
+              
+                    $res = $this->db->query("delete image from product where id=$id")->row('image');
+                    //ap($res);
+                      if(!empty($res))
+                      {
+                        $path = FCPATH ."assests/DataTables/images";
+                        unlink($path);
+                        //print_r($path);die;
+                      }
                     }
-                  }
 
-                  $this->load->library('Template');
+                 $this->load->library('Template');
                  $this->template->load('vtemplate', 'addpro', $data);       
      }
    
