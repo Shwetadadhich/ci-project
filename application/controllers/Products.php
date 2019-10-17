@@ -217,13 +217,11 @@ class Products extends CI_Controller
                         }
                        else
                         {
-                           $data = array('upload_data' => $this->upload->data());
+                           $data = $this->upload->data(); 
                            $add['image'] = $data['file_name'];
                         } 
                    //$data = $this->upload->data(); 
-                 //echo '<pre>'; print_r($data); die;
                    //$add['image'] = $data['file_name'];
-                 // print_r($add['file_name']);die;
                    $add['stock'] = $this->input->post('stock');
                   //print_r($add);die;
                    $this->load->model('Mproduct');
@@ -249,7 +247,7 @@ class Products extends CI_Controller
             $this->load->library('form_validation');//form validation load
               
            //$this->form_validation->set_rules('id','categoryid','required');
-           $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
+            $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
            $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
@@ -258,17 +256,20 @@ class Products extends CI_Controller
            
            if($this->input->post('update')) //update product with image start
            { 
-                //echo 'dfdf';die;
-              $update['cat_id'] = $this->input->post('id');
-              $update['title'] = $this->input->post('title');
-              $update['description']=$this->input->post('description');
+
+             if($this->form_validation->run() != FALSE)
+              {
+              
+                $update['cat_id'] = $this->input->post('id');
+                $update['title'] = $this->input->post('title');
+                $update['description']=$this->input->post('description');
                 //$update['image']=$this->input->post('image');
-               $imgcheck=$_FILES['image']['name'];
+                $imgcheck=$_FILES['image']['name'];
                //print_r($imgcheck);die;
-               if(!empty($imgcheck))
-               {
-                  $res = $this->db->query("select image from product where id=$id")->row('image');
-                    if(!empty($res))
+                 if(!empty($imgcheck))
+                  {
+                    $res = $this->db->query("select image from product where id=$id")->row('image');
+                      if(!empty($res))
                     {
                       $path = FCPATH ."assests/DataTables/images/$res";
                       unlink($path);
@@ -300,6 +301,7 @@ class Products extends CI_Controller
                       $this->Mproduct->update_order($id,$update);
                       $this->session->set_flashdata('success','product Updated successfully');
                       redirect(base_url('products/')); 
+              }
            } // update product end
            //$d['header'] = 'header...';
            $this->load->library('Template');

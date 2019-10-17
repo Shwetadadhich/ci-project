@@ -32,6 +32,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       ->get('product')
                        ->result();
     }
+
+    public function add_category($data)//insert category in mysql
+     {
+           //p($data);
+           $this->db->insert('category', $data);   
+           $cat_id = $this->db->insert_id();
+           return $cat_id;
+     }
+
  }
 
  ?>

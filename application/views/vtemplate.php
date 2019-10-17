@@ -344,7 +344,8 @@
                      foreach ($categories as $ind => $cat) { 
                   ?>
                      <li class="<?php echo ($this->router->fetch_method() == 'allcategory'&& $cat->cat_id == $this->uri->segment(3)) ? 'active' : '' ?>">
-                     <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><?php echo $cat->cat_title; ?></a></li>
+
+                     <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><i class="fa fa-female" aria-hidden="true"></i><?php echo $cat->cat_title; ?></a></li>
                     
                   <?php 
                     }

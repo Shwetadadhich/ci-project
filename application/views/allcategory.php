@@ -4,7 +4,8 @@
 	<title></title>
 </head>
 <body>
-   <h1>categories</h1>
+   <h1>Categories</h1>
+    <a href="<?php echo base_url('Categories/add_category'); ?>" style="margin-right:20px;" class='btn btn-primary pull-right'>Add Category</a>
       <div class="content-wrapper" style="min-height: 926px;">
          <?php 
                   if(!empty($catproduct))  
