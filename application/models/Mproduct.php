@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
  class Mproduct extends CI_Model
  {
-     public function add_product($data)//insert query//Insetproduct.php
+     public function add_product($data)//insert query
      {
      	 $this->db->insert('product', $data);
      }
@@ -60,7 +60,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         }
      }
 
- 	/*public function getproduct($cat_id=0) //get all product list//Allproduct.php
+ 	/*public function getproduct($cat_id=0) //get all product list
  	{   
 
  		$result = $this->db->select();
@@ -88,12 +88,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
    
    public function get_datatables_query()
     {
-        //$this->db->join('category', 'category.cat_id = product.cat_id', 'left');
         $this->db->select($this->column_search); 
         $this->db->from($this->table);
- 
+       
         $i = 0;
-     
+        
         foreach ($this->column_search as $item) // loop column 
         {
             if($_POST["search"]["value"]) // if datatable send POST for search
@@ -146,9 +145,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  
     public function count_all()
     {
-        $this->db->select("*");
+        //$this->db->select("*");
         $this->db->from($this->table);
-        return $this->db->count_all_results();
+        $this->db->count_all_results();
+    }
+
+    public function get_categorynamebyid($cat_id)
+    {
+                  $this->db->select('cat_title');
+                  $this->db->from('category');
+                         $this->db->where('cat_id',$cat_id);
+                        $query = $this->db->get();
+
+                        if($query)
+                        {
+
+                         $result = $query->row_array();
+                         return $result['cat_title'];
+                        }
+                        else
+                        {
+                          return '';
+                        }
     }
 
 }

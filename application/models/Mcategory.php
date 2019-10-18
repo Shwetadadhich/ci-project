@@ -12,10 +12,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      public function getsub_category($res)//sub category using jquery
     {
-        return $this->db->where('category_id',$res)
-                                     ->get('sub_category')
-                                      ->result();
-                                      //print_r($data);die;
+        $return = $this->db->where('category_id',$res)
+                        ->get('sub_category')
+                        ->result();
+                        //$ch =$this->db->last_query();
+                        return $return;
     }
 
     public function cgetcategory() //all get category list

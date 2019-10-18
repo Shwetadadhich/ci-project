@@ -17,15 +17,17 @@ class Products extends CI_Controller
    { 
       $this->load->model('Mproduct');
       $list = $this->Mproduct->get_datatables();
-      //echo'<pre>';print_r($list);die;
+      
       $data = array();
       $no = $_POST["start"];
       $status = '';
         foreach ($list as $Mproduct) {
+            //print_r($Mproduct);
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $Mproduct->cat_id;
+            $ss=$this->get_categorynamebyid($Mproduct->cat_id);
+            $row[] = $ss;
             $row[] = $Mproduct->title;
             $row[] = $Mproduct->description;
             $row[] = '<img src="'.base_url().'assests/DataTables/images/'.$Mproduct->image.'" width="50" height="35" class="img-thumbnail" />';
@@ -60,6 +62,11 @@ class Products extends CI_Controller
     
     }
  
+    public function get_categorynamebyid($cat_id)
+    {
+        $this->load->model('Mproduct');
+        return $this->Mproduct->get_categorynamebyid($cat_id);
+    }
         
         /*$search_text = "";
         if($this->input->get('search') !==NULL)

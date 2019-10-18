@@ -38,7 +38,7 @@
   	 				<option>select one</option>
 		  	 	<?php if(!empty($allcat)) {
 					foreach ($allcat as $ind => $cat) { 
-						$select=($cat->cat_id == $get_edit->cat_id)? "selected": "" 
+						$select=($cat->cat_title == $get_edit->cat_title)? "selected": "" 
 						?> 
              <option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title; ?></option>
             
@@ -87,9 +87,9 @@
              var cat_id = $(this).val();
 
              var request = $.ajax({
-                 url: "<?php echo base_url('products/get_category') ?>",
+                 url: "products/get_category",
                  type: "POST",
-                 data :{catid : cat_id},
+                 data :{cat_id : cat_id},
                  dataType: "json"
              });
 

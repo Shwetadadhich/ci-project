@@ -13,7 +13,7 @@
                      foreach ($catproduct as $ind => $category) { 
                   ?>
                     <li style="list-style-type: none;"><a href="<?php echo base_url("Categories/allcategory/$category->cat_id");?>"><?php echo $category->title;?></a></li>
-                    <li style="list-style-type: none;"><img style="width:150px; height:200px;" src="<?php echo base_url('assests/DataTables/images/'.$category->image); ?>"></li>
+                    <li style="list-style-type: none;"><img class="img-thumnail" style="width:200px; height:250px;border-radius:8px;border:2px solid black;" src="<?php echo base_url('assests/DataTables/images/'.$category->image); ?>"></li>
                   <?php 
                     }
                   }
