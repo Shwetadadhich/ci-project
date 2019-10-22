@@ -26,29 +26,25 @@
 
 ?>
 
-
-
 <div class="container" style="margin:10px; padding:15px;">
   <div class="row">
   	 <div class="col-md-7">
   	 	<form action="" method="POST" enctype="multipart/form-data">
   	 		<div class="form-group">
   	 			<label for="id">Category Title</label>
-  	 			<select class="form-control" id="id" name="id">
+  	 			<select class="form-control" id="id" name="id" value="<?php echo isset($get_edit->cat_id)? $get_edit->cat_id : ''; ?>">
   	 				<option>select one</option>
 		  	 	<?php if(!empty($allcat)) {
 					foreach ($allcat as $ind => $cat) { 
-						$select=($cat->cat_title == $get_edit->cat_title)? "selected": "" 
-						?> 
-             <option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title; ?></option>
-            
-			    <?php } }  ?>
+						$select=($cat->cat_title == $cat->cat_id)? "selected": "" ?> 
+             <option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title;?></option>
+          <?php } }  ?>
   	 			</select>
   	 		</div>
   	 		
   	 		<div id="category" class="form-group">
-  	 		  	
-  	 		</div>
+  	 		  
+        </div>
 
   	 		<div class="form-group">
   	 			<label for="Title">Title</label>
@@ -78,41 +74,6 @@
   </div>
 	
 </div>
-
- <script>
-      $(document).ready(function(){
-         $("#id").on("change",function(){
-         	//console.log('fdgdggg');
-         	//alert('dfsdfffd').val();
-             var cat_id = $(this).val();
-
-             var request = $.ajax({
-                 url: "products/get_category",
-                 type: "POST",
-                 data :{cat_id : cat_id},
-                 dataType: "json"
-             });
-
-             request.done(function(data){
-                //console.log(data);
-                $("#category").html('');
-
-                if(data.category.length){
-                	var listItems = '';
-                	$(data.category).each(function(key,value){
-                       console.log(value);
-                       listItems  += "<option value='"+value.category_id+"'>"+value.cname+"</option>";
-                	});
-                	$("#category").html('<label for="cat">Sub category</label><select class="form-control" id="category" name="category">'+listItems+'</select>');
-                }
-             });
-
-                request.fail(function(jqXHR, error){
-             	alert("request failed: "+ error );
-             });
-         });
-      });
- </script>
 
 
 

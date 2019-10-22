@@ -15,7 +15,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $return = $this->db->where('category_id',$res)
                         ->get('sub_category')
                         ->result();
-                        //$ch =$this->db->last_query();
                         return $return;
     }
 
@@ -27,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     	                ->result();
      }  
 
-    public function category_product($cat_id)
+    public function category_product($cat_id)//category show using helper
     {
         return $this->db->where('cat_id',$cat_id)
                       ->get('product')
@@ -41,7 +40,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            $cat_id = $this->db->insert_id();
            return $cat_id;
      }
+}
 
- }
-
- ?>
+?>

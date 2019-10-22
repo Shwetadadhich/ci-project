@@ -16,6 +16,10 @@
 		  	 		<label for="Title">Title</label>
 		        	<input type="text" name="cat_title" placeholder="Category name" id="title" class="form-control" autocomplete="off" value="">
 		  		</div><br>
+		  		<div class="form-group">
+		  	 		<label for="icon">Icon Code</label>
+		        	<input type="text" name="icon" placeholder="Icon Code Here" id="icon" class="form-control" autocomplete="off" value="">
+		  		</div><br>
 		  		<div class="from-group">
 		  			<input type="submit" name="submit" class="form-control btn btn-info">
 		  		</div>

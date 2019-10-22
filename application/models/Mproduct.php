@@ -10,7 +10,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
      public function edit_getproduct($id)//edit product one row
      { //get one row in EDIT click
-        $return = $this->db->where('id', $id)->get('product')->row();
+        $return = $this->db->where('id', $id)
+                          ->get('product') 
+                          ->row();
 
                   //$ch = $this->db->last_query();
                   return $return;
@@ -82,8 +84,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
      
     var $table = 'product';
-    var $column_order = array(null, 'cat_id','title','description','image','stock','status',null,null); //set column field database for datatable orderable
-    var $column_search = array('id','cat_id','title','description','image','stock','status'); //set column field database for datatable searchable 
+    var $column_order = array(null, 'cat_id','sub_category','title','description','image','stock','status',null,null); //set column field database for datatable orderable
+    var $column_search = array('id','cat_id','sub_category','title','description','image','stock','status'); //set column field database for datatable searchable 
     var $order = array('id' => 'DESC'); // default order 
    
    public function get_datatables_query()
@@ -95,12 +97,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         
         foreach ($this->column_search as $item) // loop column 
         {
-            if($_POST["search"]["value"]) // if datatable send POST for search
+            if($_POST["search"]["value"]) //if datatable send POST for search
             {
                  
                 if($i===0) // first loop
                 {
-                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->group_start(); // open bracket.query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
                     $this->db->like($item, $_POST["search"]["value"]);
                 }
                 else
@@ -133,7 +135,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $this->db->limit($_POST["length"], $_POST["start"]);
         }
         $query = $this->db->get();
+        //P($query->result());
         return $query->result();
+
     }
  
     public function count_filtered()
@@ -150,23 +154,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         $this->db->count_all_results();
     }
 
-    public function get_categorynamebyid($cat_id)
+    public function get_categorynamebyid($cat_id)//category name show by id in product list
     {
-                  $this->db->select('cat_title');
-                  $this->db->from('category');
-                         $this->db->where('cat_id',$cat_id);
-                        $query = $this->db->get();
+      $this->db->select('cat_title');
+      $this->db->from('category');
+      $this->db->where('cat_id',$cat_id);
+      $query = $this->db->get();
 
-                        if($query)
-                        {
+       if($query)
+        {
 
-                         $result = $query->row_array();
-                         return $result['cat_title'];
-                        }
-                        else
-                        {
-                          return '';
-                        }
+          $result = $query->row_array();
+          return $result['cat_title'];
+        }
+       else
+       {
+         return '';
+       }
+    }
+
+    public function get_subcategorynamebyid($id)//sub category name show by id in product list
+    {
+      $this->db->select('cname');
+      $this->db->from('sub_category');
+      $this->db->where('id',$id);
+      $query = $this->db->get();
+
+       if($query)
+        {
+          //p($result);
+          $result = $query->row_array();
+          return $result['cname'];
+        }
+       else
+       {
+         return '';
+       }
     }
 
 }

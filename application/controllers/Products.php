@@ -26,8 +26,10 @@ class Products extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $ss=$this->get_categorynamebyid($Mproduct->cat_id);
+            $ss = $this->get_categorynamebyid($Mproduct->cat_id);
             $row[] = $ss;
+            $sd = $this->get_subcategorynamebyid($Mproduct->sub_category);
+            $row[] = $sd;
             $row[] = $Mproduct->title;
             $row[] = $Mproduct->description;
             $row[] = '<img src="'.base_url().'assests/DataTables/images/'.$Mproduct->image.'" width="50" height="35" class="img-thumbnail" />';
@@ -62,136 +64,31 @@ class Products extends CI_Controller
     
     }
  
-    public function get_categorynamebyid($cat_id)
+    public function get_categorynamebyid($cat_id)//category title name show in productlist
     {
         $this->load->model('Mproduct');
         return $this->Mproduct->get_categorynamebyid($cat_id);
     }
-        
-        /*$search_text = "";
-        if($this->input->get('search') !==NULL)
-        {
-          $search_text = $this->input->get('search');
-         $this->load->library('session');
-         $this->session->set_userdata(array("search"=>$search_text));
-        }
-    else
-     {
-        if($this->session->userdata('search') != NULL)
-        {
-         $search_text = $this->session->userdata('search');
-        }
-      }
 
-    // Row per page
-    $rowperpage = 3;
+    public function get_subcategorynamebyid($id)//subcategory title name show in productlist
+    { 
 
-    // Row position
-    if($rowno != 0)
-    {
-      $rowno = ($rowno-1) * $rowperpage;
+        $this->load->model('Mproduct');
+        return $this->Mproduct->get_subcategorynamebyid($id);
     }
- 
-    // All records count
-    $this->load->model('Mproduct');
-    //$this->Mproduct->getproduct($cat_id);
-    $allcount = $this->Mproduct->getrecordCount($search_text);
-    
-    // Get records
-    $users_record = $this->Mproduct->getData($rowno,$rowperpage,$search_text);
- 
-    // Pagination Configuration
-    $this->load->library('pagination');
-    $config['base_url'] = base_url().'/products/product';
-    $config['use_page_numbers'] = TRUE;
-    $config['total_rows'] = $allcount;
-    $config['per_page'] = $rowperpage;
-
-    // Initialize
-    $this->pagination->initialize($config);
- 
-    $data['pagination'] = $this->pagination->create_links();
-    $data['result'] = $users_record;
-    $data['row'] = $rowno;
-    $data['search'] = $search_text;
-
-    // Load view
-     $this->load->helper('common_helper');
-     getCatergoryList();
-    
-     $this->load->library('Template');
-     $this->template->load('vtemplate', 'product', $data);
-  }
-
-   
-
-
-   	  $cat_id = $this->input->get('category_id');
-   	  
-   	  // $this->input->get is equivalent to $_GET
-      $this->load->model('Mproduct');//model load
-        //$this->load->model('Mcategory');//model load
-   	  $this->load->library('pagination');//pagination load
-
-   	  //pagination style
-      $config['num_tag_open']='<li>';
-      $config['num_tag_close']='</li>';
-      $config['cur_tag_open']='<li class="active"><a href="javascript:void(0);">';
-      $config['cur_tag_close']='</a></li>';
-      $config['num_tag_close']='</li>';
-      $config['next_link']='next';
-      $config['prev_link']='prev';
-      $config['next_tag_open']='<li class"pg-next">';
-      $config['next_tag_close']='</li>';
-      $config['prev_tag_open']='<li class="pg-prev">';
-      $config['prev_tag_close']='</li>';
-      $config['first_tag_open']='<li>';
-      $config['first_tag_close']='</li>';
-      $config['last_tag_open']='<li>';
-      $config['last_tag_close']='</li>';
- 
-      $config['base_url'] = base_url('/Products/product');
-      $config['total_rows'] = $this->Mproduct->getProductCount();
-      $limit=$config['per_page']=4;
-      $this->pagination->initialize($config);
-
-      $d['pagination'] = $this->pagination->create_links();
-      
-      $d['products_l'] = $this->Mproduct->getproduct($limit,$offset,$cat_id);
-
-      if(isset($_GET['search']))
-      {
-         $d['products_l'] = '';
-         $data['pro']  = $this->Mproduct->searchpro($search);
-         print_r($data['pro']);
-         exit();
-      }
-      //$d['category'] = $this->Mcategory->cgetcategory();
-      //print_r($d['category']); die;
-      $this->load->helper('common_helper');
-      getCatergoryList();
-   	   
-   	  $d['body'] = 'Body ...';
-      $this->load->library('Template');
-       
-	    $this->template->load('vtemplate', 'product', $d);
-    }*/
-    
-    
 
     public function addproduct($id=FALSE)  //insert product with validation start
      {  
           $data = []; 
-          $this->load->model('Mcategory');//model load
+          $this->load->model('Mcategory');
           //$d['category'] = $this->Mcategory->cgetcategory();
           $this->load->helper('common_helper');
           getCatergoryList();
           $data['allcat'] = $this->Mcategory->all_category(); 
           
-           $this->load->library('form_validation');//form validation load
+          $this->load->library('form_validation');//form validation load
               
-           //$this->form_validation->set_rules('id','categoryid','required');
-           $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
+           $this->form_validation->set_rules('title','product title');
            $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
@@ -203,22 +100,22 @@ class Products extends CI_Controller
               if($this->form_validation->run() != FALSE)
                {
                     $add['cat_id'] = $this->input->post('id');
+                    $add['sub_category'] = $this->input->post('category');
                     $add['title'] = $this->input->post('title');
                     $add['description']=$this->input->post('description');
-                
-                   if(empty($this->input->post('image')))
+
+                if(empty($this->input->post('image')))
                     {
                       $this->form_validation->set_message('required', '{image} is required <- Please Select image');
                     }
                      $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
                      $config['allowed_types'] = 'jpg|jpeg|jpe|gif|png|zip|svg|bmp';
                      $config['max_size']  = '100000000';
-                     //p('$config');
                      //$config['max_width'] = '1024';
                      //$config['max_height'] = '768';
                     $this->load->library('upload', $config);
 
-                       if (!$this->upload->do_upload('image')) // <input name="image"/>
+                       if (!$this->upload->do_upload('image')) //<input name="image"/>
                         {
                            $add['image'] = 'default.png';
                         }
@@ -227,19 +124,15 @@ class Products extends CI_Controller
                            $data = $this->upload->data(); 
                            $add['image'] = $data['file_name'];
                         } 
-                   //$data = $this->upload->data(); 
-                   //$add['image'] = $data['file_name'];
-                   $add['stock'] = $this->input->post('stock');
+                  $add['stock'] = $this->input->post('stock');
                   //print_r($add);die;
-                   $this->load->model('Mproduct');
-                   $this->Mproduct->add_product($add);
-                  
-                   $this->session->set_flashdata('success','product inerted successfully');
-                   redirect(base_url('products/')); 
-              
-               }
-            
-           } 
+                  $this->load->model('Mproduct');
+                   //P($add);
+                  $this->Mproduct->add_product($add);
+                  $this->session->set_flashdata('success','product inerted successfully');
+                  redirect(base_url('products/')); 
+              }
+            } 
         //eND insert work
 
            if(isset($_GET['id']))   // fetch product by one row in input box using id
@@ -254,7 +147,7 @@ class Products extends CI_Controller
             $this->load->library('form_validation');//form validation load
               
            //$this->form_validation->set_rules('id','categoryid','required');
-            $this->form_validation->set_rules('title','product title', 'required|is_unique[product.title]');
+            $this->form_validation->set_rules('title','product title');
            $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
               //$this->form_validation->set_rules('stock','stock','required');
@@ -293,7 +186,7 @@ class Products extends CI_Controller
                           
                     if(!$this->upload->do_upload('image'))//$add['image'] = $this->input->post('image');
                        { 
-                         $error = array('error' => $this->upload->display_errors());
+                        $error = array('error' => $this->upload->display_errors());
                           //print_r($error);die; 
                         $this->session->set_flashdata('error',$error['error']);
                         // redirect(base_url('cproducts/addproduct')); 
@@ -375,14 +268,13 @@ class Products extends CI_Controller
                  $this->template->load('vtemplate', 'addpro', $data);       
      }
    
-          function get_category()
-          {
-             $this->load->model('Mcategory');
-             $res = $this->input->post('catid');
-             $data['category'] = $this->Mcategory->getsub_category($res);
-             //print_r($data['category']);die;
-             echo json_encode($data);
-         }
+    public function get_category()
+          {    
+               $this->load->model('Mcategory');
+               $res = $this->input->post('cat_id');
+               $data['category'] = $this->Mcategory->getsub_category($res);
+              //p($data['category']);
+               echo json_encode($data);
+          }
 }
 
-?>

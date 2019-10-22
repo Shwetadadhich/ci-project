@@ -259,7 +259,7 @@
 
                   <p>
                     Shweta Dadhich - Web Developer
-                    <small>Member since Nov. 2012</small>
+                    <small>Member since Aug. 2019</small>
                   </p>
                 </li>
                 <!-- Menu Body -->
@@ -345,7 +345,7 @@
                   ?>
                      <li class="<?php echo ($this->router->fetch_method() == 'allcategory'&& $cat->cat_id == $this->uri->segment(3)) ? 'active' : '' ?>">
 
-                     <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><i class="fa fa-female" aria-hidden="true"></i><?php echo $cat->cat_title; ?></a></li>
+                     <a href="<?php echo base_url("categories/allcategory/".$cat->cat_id); ?>"><i style="font-size:15px;" class="<?php echo $cat->icon; ?>"></i><?php echo $cat->cat_title; ?></a></li>
                     
                   <?php 
                     }
@@ -425,11 +425,12 @@
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/demo.js"></script>
-    <!--<script src="<?php echo base_url('assests/jquery/jquery-3.4.1.min.js')?>"></script>-->
+    <script src="<?php echo base_url('assests/jquery/jquery-3.4.1.min.js')?>"></script>
     <script src="<?php echo base_url('assests/DataTables/js/jquery.dataTables.min.js')?>"></script>
 
     <script src="<?php echo base_url('assests/DataTables/js/datatable_maual.js')?>"></script>
      <script src="<?php echo base_url('assests/DataTables/js/cat_status_update.js')?>"></script>
+      <script src="<?php echo base_url('assests/DataTables/js/sub_category.js')?>"></script>
  
  </body>
 </html>

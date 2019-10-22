@@ -1,7 +1,5 @@
 function changestatus(id,status)
-{
-	
-		 //alert(id);
+{//alert(id);
          
          $.ajax({
                 datatype: "json",

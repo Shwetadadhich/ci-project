@@ -29,8 +29,9 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Cat_id</th>
-                    <th>title</th>
+                    <th>Category Name</th>
+                    <th>Sub Category Name</th>
+                    <th>Product Name</th>
                     <th>Description</th>
                     <th>image</th>
                     <th>stock</th>
@@ -98,22 +99,9 @@
 		           	 <td colspan="6">OOPS! NO RECORD FOUND</td>
 		           </tr>
 				<?php } ?>
-			</tbody>
+			</tbody>-->
              
-              </table></div></div>
-              <div class="row">
-              <div class="col-sm-5">
-              	<div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
-              </div>
-              
-              <div class="col-sm-7">
-	              <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-	                 <div class="pagination"><?php echo $pagination; ?></div>
-				 </div>
-            
-             </div>-->
-
-
+             
 
 
 

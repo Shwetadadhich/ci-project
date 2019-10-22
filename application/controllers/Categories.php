@@ -18,7 +18,9 @@ class Categories extends CI_Controller
   {
     if(isset($_POST['submit']))
     {
-       $save = array('cat_title' => $this->input->post('cat_title')
+       $save = array(
+                  'cat_title' => $this->input->post('cat_title'),
+                  'icon' => $this->input->post('icon')
          );
     
       $this->load->model('Mcategory');
