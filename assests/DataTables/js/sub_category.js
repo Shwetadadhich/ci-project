@@ -1,12 +1,9 @@
-
-
 $(document).ready(function(){
            // alert("success");
     $("#id").on("change",(function(){
              var cat_id = $("#id").val();
           
-            
-             var request = $.ajax({
+            var request = $.ajax({
                  url: "get_category",
                  type: "POST",
                  data :{cat_id : cat_id},
@@ -35,4 +32,4 @@ $(document).ready(function(){
 });
 
 
- 
+

@@ -12,6 +12,7 @@
   	      <strong>Error!</strong>'.$this->session->flashdata("Error").'
   	       </div>';
   }
+  
 ?>
 
 

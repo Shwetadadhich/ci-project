@@ -1,3 +1,4 @@
+
 <?php $add_edit =(empty($get_edit))? "Add": "Edit" ?>
 <h1 style="text-align:center;"><?php echo $add_edit; ?> Product</h1>
 
@@ -36,14 +37,19 @@
   	 				<option>select one</option>
 		  	 	<?php if(!empty($allcat)) {
 					foreach ($allcat as $ind => $cat) { 
-						$select=($cat->cat_title == $cat->cat_id)? "selected": "" ?> 
+						$select=($cat->cat_id == $get_edit->cat_id)? "selected": "" ?> 
              <option <?php echo $select;?> value="<?php echo $cat->cat_id?>"><?php echo $cat->cat_title;?></option>
           <?php } }  ?>
   	 			</select>
   	 		</div>
   	 		
   	 		<div id="category" class="form-group">
-  	 		  
+  	 		  <?php if(isset($get_edit->sub_category)){ ?>
+             <label for="cat">Sub category</label>
+             <select class="form-control" id="category" name="category">
+               <option value="<?=$get_edit->sub_category ?>"><?=$get_edit->cname ?></option>
+             </select>
+           <?php } ?> 
         </div>
 
   	 		<div class="form-group">

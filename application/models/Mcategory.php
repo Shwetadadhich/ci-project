@@ -4,13 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  class Mcategory extends CI_Model
  {
     
-     public function all_category()  //fetch all category in table row
+     public function all_category()  //fetch all category in table row select option
      { 
         return $this->db->get('category')
                       ->result();
      }
 
-     public function getsub_category($res)//sub category using jquery
+     public function getsub_category($res)//sub category using jquery select option
     {
         $return = $this->db->where('category_id',$res)
                         ->get('sub_category')

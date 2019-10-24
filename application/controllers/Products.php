@@ -64,13 +64,13 @@ class Products extends CI_Controller
     
     }
  
-    public function get_categorynamebyid($cat_id)//category title name show in productlist
+    public function get_categorynamebyid($cat_id)//category title name show in productlist by id
     {
         $this->load->model('Mproduct');
         return $this->Mproduct->get_categorynamebyid($cat_id);
     }
 
-    public function get_subcategorynamebyid($id)//subcategory title name show in productlist
+    public function get_subcategorynamebyid($id)//subcategory title name show in productlist by id 
     { 
 
         $this->load->model('Mproduct');
@@ -135,7 +135,7 @@ class Products extends CI_Controller
             } 
         //eND insert work
 
-           if(isset($_GET['id']))   // fetch product by one row in input box using id
+           if(isset($_GET['id'])) // fetch product by one row in input box using id
           {
              $id=$_GET['id'];
              $this->load->model('Mproduct');
@@ -143,14 +143,13 @@ class Products extends CI_Controller
              //p($data['get_edit']);
           }
            
-
-            $this->load->library('form_validation');//form validation load
+           $this->load->library('form_validation');//form validation load
               
            //$this->form_validation->set_rules('id','categoryid','required');
-            $this->form_validation->set_rules('title','product title');
+           $this->form_validation->set_rules('title','product title','required');
            $this->form_validation->set_rules('description','descriptoin','required');
               //$this->form_validation->set_rules('image','image','required');
-              //$this->form_validation->set_rules('stock','stock','required');
+           $this->form_validation->set_rules('stock','stock','required');
             
            $this->form_validation->set_message('required', '{field} is required <- Please fill the Box');
            
@@ -159,8 +158,9 @@ class Products extends CI_Controller
 
              if($this->form_validation->run() != FALSE)
               {
-              
                 $update['cat_id'] = $this->input->post('id');
+                $update['sub_category'] = $this->input->post('category');
+                //p($this->input->post('category'));
                 $update['title'] = $this->input->post('title');
                 $update['description']=$this->input->post('description');
                 //$update['image']=$this->input->post('image');
@@ -192,7 +192,7 @@ class Products extends CI_Controller
                         // redirect(base_url('cproducts/addproduct')); 
                        }
                         $data = $this->upload->data(); 
-                        //echo '<pre>'; print_r($data); die;
+                        //echo '<pre>'; p($data);
                         $update['image'] = $data['file_name'];
                 }
                       $update['stock']=$this->input->post('stock');
@@ -218,7 +218,6 @@ class Products extends CI_Controller
           $status=$_POST['status'];
           $this->load->model('Mproduct');
           $res = $this->Mproduct->product_status($id,$status);
-          //print_r($res);
          // p($res);
           if($res>0)
            {
@@ -234,38 +233,36 @@ class Products extends CI_Controller
        }
      }
 
-   public function delete()
+public function delete()
      {
-                $id = NULL;
+        $id = NULL;
               
-                $this->load->model('Mproduct');
-                   if(isset($_GET['id']))
-                    {
-                     $id = $_GET['id'];
-                    }
+        $this->load->model('Mproduct');
+          if(isset($_GET['id']))
+           {
+              $id = $_GET['id'];
+            }
                   
-                 $data = $this->Mproduct->del_product($id);
+       $data = $this->Mproduct->del_product($id);
                  //print_r($data);die;
-                 $this->session->set_flashdata('success','product deleted successfully');
-                 redirect(base_url('products/')); 
+       $this->session->set_flashdata('success','product deleted successfully');
+       redirect(base_url('products/')); 
                  
-                 $check=$_FILES['image']['name'];
+       $check=$_FILES['image']['name'];
                //print_r($imgcheck);die;
-                  if(!empty($check))
-                  { 
-              
-                    $res = $this->db->query("delete image from product where id=$id")->row('image');
-                    //ap($res);
-                      if(!empty($res))
-                      {
-                        $path = FCPATH ."assests/DataTables/images";
-                        unlink($path);
-                        //print_r($path);die;
-                      }
-                    }
+          if(!empty($check))
+           { 
+             $res = $this->db->query("delete image from product where id=$id")->row('image');
+                  if(!empty($res))
+                  {
+                    $path = FCPATH ."assests/DataTables/images";
+                    p($path);
+                    unlink($path);
 
-                 $this->load->library('Template');
-                 $this->template->load('vtemplate', 'addpro', $data);       
+                  }
+            }
+        $this->load->library('Template');
+        $this->template->load('vtemplate', 'addpro', $data);       
      }
    
     public function get_category()

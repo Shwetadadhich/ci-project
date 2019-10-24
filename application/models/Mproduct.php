@@ -10,12 +10,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
      public function edit_getproduct($id)//edit product one row
      { //get one row in EDIT click
-        $return = $this->db->where('id', $id)
+        /*$return = $this->db->where('id', $id)
                           ->get('product') 
                           ->row();
+                  return $return;*/
+            $return = $this->db->select('product.*,category.cat_title,sub_category.cname');
+                  $this->db->from('product');
+                  $this->db->join('category', 'category.cat_id = product.cat_id', 'left');
+                  $this->db->join('sub_category', 'sub_category.id = product.sub_category', 'left');  
+                  $this->db->where('product.id', $id);
+                  $query = $this->db->get();
 
-                  //$ch = $this->db->last_query();
-                  return $return;
+                 if ($query->num_rows() != 0) 
+                 {
+
+                    $result =  $query->row();
+                    //p($result);
+                      return $result;
+                  } 
+                  else 
+                  {
+                     $result = array();
+                     return $result;
+                  }
+
 
      }
 
