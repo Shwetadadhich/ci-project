@@ -52,6 +52,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           return $return;
      }
 
+     public function get_img_name($id)
+     {
+        $this->db->select('image');
+        $this->db->from('product');
+        $this->db->where('id',$id);
+        $query = $this->db->get();
+        $q = $query->row_array();
+         //p($q);
+        return $q;
+
+
+     }
+
      public function product_status($id,$status)//product status
      {  
         //p($id);

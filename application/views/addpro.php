@@ -7,7 +7,7 @@
   if($this->session->flashdata('error')){
   	echo '<div class="alert alert-danger">
   	       <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
-           <strong>Error!</strong>'.$this->session->flashdata("error").'
+           <strong>Error ! </strong>'.$this->session->flashdata("error").'
   	       </div>';
   }
 

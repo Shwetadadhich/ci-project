@@ -3,10 +3,15 @@
  <head>
 
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
     <link href="<?php echo base_url('assests/DataTables/css/jquery.dataTables.min.css')?>" rel="stylesheet">
    <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assests/DataTables/css/bootstrap-tagsinput.css">
+
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/dist/css/app.css">
+  <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/dist/css/style.css">
+  
+  
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -23,12 +28,23 @@
   <!-- Date Picker -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
   <!-- Daterange picker -->
-  <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+  <!--<link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-daterangepicker/daterangepicker.css">-->
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?php echo base_url(); ?>assests/theme/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" />
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  
+  <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  <script src="<?php echo base_url(); ?>assests/DataTables/js/bootstrap-tagsinput.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>   
+
 </head>
   
 <body class="hold-transition skin-blue sidebar-mini">
@@ -367,6 +383,19 @@
             </ul>
           </li>
 
+          <li class="treeview <?php echo ($this->uri->segment(1) == 'UserController') ? 'menu-open active' : '' ?>">
+            <a href="<?php echo base_url('UserController'); ?>">
+              <i class="fa fa-user"></i><span>User</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class="<?php echo ($this->router->fetch_method() == 'adduser') ? 'active' : '' ?>"><a href="<?php echo base_url('UserController/adduser'); ?>"><i class="fa fa-circle-o"></i>Add Users</a></li>
+              <li class="<?php echo ($this->router->fetch_method() == '') ? 'active' : '' ?>"><a href="<?php echo base_url('UserController/'); ?>"><i class="fa fa-circle-o"></i>All User List</a></li>
+            </ul>
+          </li>
+
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -387,17 +416,14 @@
     reserved.
 </footer>
 
-    <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery/dist/jquery.min.js"></script>
 
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
-      $.widget.bridge('uibutton', $.ui.button);
+      //$.widget.bridge('uibutton', $.ui.button);
     </script>
     <!-- Bootstrap 3.3.7 -->
-    <script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!--   <script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
     <!-- Morris.js charts -->
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/raphael/raphael.min.js"></script>
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/morris.js/morris.min.js"></script>
@@ -410,7 +436,7 @@
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
     <!-- daterangepicker -->
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/moment/min/moment.min.js"></script>
-    <script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!--<script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>-->
     <!-- datepicker -->
     <script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <!-- Bootstrap WYSIHTML5 -->
@@ -425,13 +451,16 @@
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url(); ?>assests/theme/dist/js/demo.js"></script>
-    <script src="<?php echo base_url('assests/jquery/jquery-3.4.1.min.js')?>"></script>
+   
     <script src="<?php echo base_url('assests/DataTables/js/jquery.dataTables.min.js')?>"></script>
 
     <script src="<?php echo base_url('assests/DataTables/js/datatable_maual.js')?>"></script>
      <script src="<?php echo base_url('assests/DataTables/js/cat_status_update.js')?>"></script>
       <script src="<?php echo base_url('assests/DataTables/js/sub_category.js')?>"></script>
- 
+      <script src="<?php echo base_url('assests/DataTables/js/user_datatables.js')?>"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sortable/0.9.13/jquery-sortable-min.js"></script>
+      
+      
  </body>
 </html>
 

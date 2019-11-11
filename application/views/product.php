@@ -26,7 +26,7 @@
 				            
  <div class="content">
     <div class="row">
-        <table id="table" class="display" cellspacing="0" width="100%">
+        <table id="table" class="table table-responsive" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th>No</th>
