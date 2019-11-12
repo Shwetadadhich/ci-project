@@ -11,12 +11,21 @@ class HomeDashboard extends CI_Controller
 
    	   $cat_id = $this->input->get('category_id');
    	  // $this->input->get is equivalent to $_GET
+       if($this->session->userdata('email') != '')
+      {
+        //redirect(base_url('HomeDashboard'));
+      }
+      else
+      {
+        redirect(base_url('Authenticate'));
+      }
 
    	   $this->load->model('Dashboard');
    	   $this->load->model('Mcategory');
        $data['category'] = $this->Mcategory->cgetcategory();
        $data['pcount'] = $this->Dashboard->dashboardproduct();
        $data['count'] = $this->Dashboard->dashboardcategory();
+       $data['ucount'] = $this->Dashboard->dashboarduser();
 
    	   $this->load->helper('common_helper');
        getCatergoryList();
@@ -26,6 +35,7 @@ class HomeDashboard extends CI_Controller
    	   $this->template->load('vtemplate', 'home', $data);
    	   
    }
+
 }
 
 ?>

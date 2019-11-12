@@ -16,5 +16,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                           ->num_rows();
                           //->result();
     }
+    public function dashboarduser()
+    {
+      return $this->db->get('users')
+                      ->num_rows();
+    }
  }
 ?>

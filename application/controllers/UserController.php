@@ -83,10 +83,10 @@ public function __construct()
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('name', 'name', 'required');
-      $this->form_validation->set_rules('uname', 'Username', 'required|min_length[5]|max_length[12]|is_unique[users.user_name]');
+      $this->form_validation->set_rules('uname', 'Username', 'required|min_length[5]|is_unique[users.user_name]');
       $this->form_validation->set_rules('password', 'Password', 'required');
       $this->form_validation->set_rules('gender', 'gender', 'required');
-      $this->form_validation->set_rules('dob', 'Birthdate', 'required');
+      $this->form_validation->set_rules('dob', 'B irthdate', 'required');
       $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
       //$this->form_validation->set_message('required', '{field} is required <- Please fill the Box');
 

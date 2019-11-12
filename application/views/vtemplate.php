@@ -281,13 +281,10 @@
                 <!-- Menu Body -->
                 <li class="user-body">
                   <div class="row">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
+                    <div class="col-xs-6 text-center">
                       <a href="#">Sales</a>
                     </div>
-                    <div class="col-xs-4 text-center">
+                    <div class="col-xs-6 text-center">
                       <a href="#">Friends</a>
                     </div>
                   </div>
@@ -299,7 +296,7 @@
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
-                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                    <a href="<?php echo base_url("Authenticate/logout"); ?>" class="btn btn-default btn-flat">Sign out</a>
                   </div>
                 </li>
               </ul>
@@ -412,7 +409,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.18
     </div>
-    <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
+    <strong>Copyright &copy; 2019 <a href="https://adminlte.io">AdminLTE</a>.</strong> All rights
     reserved.
 </footer>
 
