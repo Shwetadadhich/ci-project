@@ -70,7 +70,7 @@
         }
 
         .field-wrapper .field-placeholder{
-            font-size: 16px;
+            font-size: 17px;
             position: absolute;
             /* background: #fff; */
             bottom: 17px;
@@ -107,6 +107,31 @@
         .login-logo, .register-logo {
            padding-left:95px;
         }
+
+         .field-wrapper.field-error{
+          border: 1px solid red;
+        }
+        .field-wrapper.field-error .field-placeholder span{
+          color: red;
+        }
+
+        #message-wrap {
+            padding: 15px;
+            text-align: center;
+            display: none;
+            border-radius: 4px;
+        }
+
+        #message-wrap.success-msg{
+          color:green;
+          background: #e3ffd5;
+        }
+        #message-wrap.error-msg{
+          color:red;
+          background: #ffd5d5;
+        }
+
+
   
 </style>
 
@@ -116,7 +141,7 @@
     <a href=""><b>Admin</b>STORE</a>
   </div>
   <!-- /.login-logo -->
-  <form action="<?php echo base_url('Authenticate/login_validation'); ?>" method="post">
+  <form action="<?php echo base_url('Authenticate/login_validation'); ?>" method="post" id="test-form">
   <div class="form-wrapper-outer">
     <p class="login-box-msg">Sign in to start your session</p>
 
@@ -126,19 +151,33 @@
       <div class="form-greeting">
         <span>It's nice to meet you.</span>
       </div>
-
+ 
       <div class="field-wrapper">
-        <input type="email" name="email" id="" autocomplete="off">
+        <div id="message-wrap">
+          <span></span>
+        </div>
+      </div>
+      
+      <div class="field-wrapper">
+        <input type="email" name="email" value="<?php echo set_value('email'); ?>" class="form-checkfield" id="" autocomplete="off">
         <div class="field-placeholder"><span>Enter your email</span></div>
         <span style="color:red;"><?php echo form_error('email'); ?></span>
       </div>
+      
       <div class="field-wrapper">
-        <input type="password" name="password" id="">
+        <input type="password" name="password" id="" class="form-checkfield">
         <div class="field-placeholder"><span>Enter your password</span></div>
          <span style="color:red;"><?php echo form_error('password'); ?></span>
       </div>
+      
+      <div class="field-wrapper">
+        <div id="google_recaptcha" name="g-recaptcha-response" data-theme="dark"></div>
+        <span style="color:red;"><?php echo form_error('g-recaptcha-response'); ?></span>
+      </div>
+     
       <div class="form-button">
-       <button type="submit" name="login" class="btn btn-primary">Login</button>
+      <input type="submit" id="" value="Submit" name="login" class="btn btn-primary">
+       <!--<button type="submit" name="login" id="" class="btn btn-primary">Login</button>-->
       </div>
       
       <div>
@@ -146,8 +185,8 @@
            echo '<label class="text-danger">'.$this->session->flashdata("error"); 
        ?>
       </div>
-    <!--<a href="#">I forgot my password</a><br>
-    <a href="register.html" class="text-center">Register a new membership</a>-->
+    <a href="<?php echo base_url('Authenticate/forget_password'); ?>">I forgot my password ?</a><br>
+    <!--<a href="register.html" class="text-center">Register a new membership</a>-->
 
   </div>
   <!-- /.form-wrapper-outer -->
@@ -156,20 +195,22 @@
 
 <!-- jQuery 3 -->
 <script src="<?php echo base_url(); ?>assests/theme/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer>
+  </script>
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url(); ?>assests/theme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url(); ?>assests/theme/plugins/iCheck/icheck.min.js"></script>
 
 <script>
-  $(function () {
+  /*$(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' /* optional */
-    });
+    //});
 
-  $(".field-wrapper .field-placeholder").on("click", function () {
+  /*$(".field-wrapper .field-placeholder").on("click", function () {
       $(this).closest(".field-wrapper").find("input").focus();
          });
       $(".field-wrapper input").on("keyup", function () {
@@ -179,8 +220,81 @@
               } else {
              $(this).closest(".field-wrapper").removeClass("hasValue");
                }
-            });
-});
+            });*/
+
+    var onloadCallback = function() {
+        grecaptcha.render('google_recaptcha', {
+          'sitekey' : '6LeWssIUAAAAACq92ZnQPYr_cBLUW-0kvf4Yd0nS'
+        });
+      };
+      
+      $(function () {
+        //Check if required fields are filled
+        function checkifreqfld() {
+                var isFormFilled = true;
+                $("#test-form").find(".form-checkfield:visible").each(function () {
+                    var value = $.trim($(this).val());
+                    if ($(this).prop('required')) {
+                        if (value.length < 1) {
+                          $(this).closest(".field-wrapper").addClass("field-error");
+                          isFormFilled = false;
+                        } else {
+                          $(this).closest(".field-wrapper").removeClass("field-error");
+                        }
+                    } else {
+                        $(this).closest(".field-wrapper").removeClass("field-error");
+                    }
+                });
+                return isFormFilled;
+          }
+
+        //Form Submit Event
+        /*$("#submit-test-form").click(function () {
+            if (checkifreqfld()) {
+              event.preventDefault();
+              var rcres = grecaptcha.getResponse();
+              if(rcres.length){
+                grecaptcha.reset();
+                showHideMsg("Form Submitted!","success");
+              }else{
+                showHideMsg("Please verify reCAPTCHA","error");
+              }
+            } else {
+                showHideMsg("Fill required fields!","error");
+            }
+        });*/
+
+        //Show/Hide Message
+        /*function showHideMsg(message,type){
+          if(type == "success"){
+            $("#message-wrap").addClass("success-msg").removeClass("error-msg");
+          }else if(type == "error"){
+            $("#message-wrap").removeClass("success-msg").addClass("error-msg");
+          }
+
+          $("#message-wrap").stop()
+          .slideDown()
+          .html(message)
+          .delay(1500)
+          .slideUp();
+        }*/
+
+
+        //Google Style InputFields
+        $(".field-wrapper .field-placeholder").on("click", function () {
+          $(this).closest(".field-wrapper").find("input").focus();
+        });
+        $(".field-wrapper input").on("keyup", function () {
+          var value = $.trim($(this).val());
+            if (value) {
+              $(this).closest(".field-wrapper").addClass("hasValue");
+            } else {
+              $(this).closest(".field-wrapper").removeClass("hasValue");
+            }
+        });
+      });
+
+//});
 
 </script>
 </body>
