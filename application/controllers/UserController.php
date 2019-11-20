@@ -28,7 +28,6 @@ public function __construct()
     public function user_list()
     {
       $data = $this->Usermodel->get_user();
-      //p($data);
       $list = array();
       $no = $_POST["start"];
       //$status = '';
@@ -135,7 +134,7 @@ public function __construct()
           else
            {
                 //array ('name'=>'name is required','email'=>'valid email address');
-                $data["errors"] = $this->form_validation->error_array();
+            $data["errors"] = $this->form_validation->error_array();
                 // p($data["errors"]);
            }
        }

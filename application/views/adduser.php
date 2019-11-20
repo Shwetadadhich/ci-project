@@ -64,7 +64,7 @@
 					     echo $errors['email']? $errors['email'] : '' ; 
 					     //p($errors);
 					  } 
-					   ?></span> 
+					  ?></span> 
 				</div>
 			</div>
 
@@ -139,7 +139,6 @@
 					<div class="form-group">
 						<label>Confirm Password<span style="color:red;">*</span></label>
 						<input type="password" name="confirm_password" id="confirm_password" placeholder="****" class="form-control" autocomplete="off"><span id='message'></span>
-						<!--<span style="color:red;"><?php if(isset($errors['c_password'])){ ($errors['c_password']); } ?></span>--> 
 					</div>
 				</div>
 

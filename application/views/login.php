@@ -2,7 +2,15 @@
     if(isset($_SESSION['email'])){
     header('location: HomeDashboard');
  }
+
+  if($this->session->flashdata('success')){
+    echo '<div class="alert alert-success">
+           <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+           <strong>success ! </strong>'.$this->session->flashdata("success").'
+           </div>';
+  }
  ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -186,7 +194,7 @@
        ?>
       </div>
     <a href="<?php echo base_url('Authenticate/forget_password'); ?>">I forgot my password ?</a><br>
-    <!--<a href="register.html" class="text-center">Register a new membership</a>-->
+    <a href="#" class="text-center">Register a new membership</a>
 
   </div>
   <!-- /.form-wrapper-outer -->

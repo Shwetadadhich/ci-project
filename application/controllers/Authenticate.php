@@ -6,7 +6,8 @@ class Authenticate extends CI_Controller
 {
     public function index()
     {
-			$this->load->view('login');
+    	//p(md5('shwetA'));
+		$this->load->view('login');
 	}
 
 	public function login_validation()
@@ -56,12 +57,6 @@ class Authenticate extends CI_Controller
 
 	public function recover_password()
 	{
-
-		//include APPPATH . '/libraries/PHPMailer_Lib.php';
-        //$mail = new PHPMailer;
-		
-		//$email = $_POST['email'] ;
-
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email','Email','required|trim|xss_clean|callback_validate_credentials');
 		
@@ -76,6 +71,8 @@ class Authenticate extends CI_Controller
 		if($this->Authe_Model->email_exist())
 		{
 			$temp_pass = md5(uniqid());
+			$email = ($this->input->post('email'));
+			//p($email);
             $mail->isSMTP();
 	        $mail->Host     = 'smtp.gmail.com';
 	        $mail->SMTPAuth = true;
@@ -83,27 +80,11 @@ class Authenticate extends CI_Controller
 	        $mail->Password = 'tinadadhich3131';
 	        $mail->SMTPSecure = 'ssl';
 	        $mail->Port     = 465;
-				/*if($_SERVER['HTTP_HOST']=="localhost")
-				{
-				  //SMTP configuration
-				  $email_config = array(
-				                'smtp_host'=>'smtp.googlemail.com',
-				                'smtp_user'=>'shwetadadhich31@gmail.com',
-				                'smtp_pass'=>'tinadadhich3131',
-				                'smtp_port'=>587,
-				                'protocol' =>'smtp',
-								'mailtype'  => 'html/text', 
-							    'charset'   => 'iso-8859-1', 
-    				            'smtp_timeout' => 7,
-    				            'value' => 'hello i am codeigniter',
-				            );
-				}*/
-
+				
 			$this->load->library('email');
 			//$this->email->initialize($email_config);
 
-            //$this->email->set_newline('\r\n');
-			$mail->setFrom('shwetadadhich31@gmail.com',"sweta dadich");
+			$mail->setFrom('shwetadadhich31@gmail.com',"shweta dadhich");
 			//$mail->addReplyTo($this->input->post('email'));
 
 			$mail->addAddress($this->input->post('email'));
@@ -113,17 +94,19 @@ class Authenticate extends CI_Controller
             $mail->isHTML(true);
 			
 			$message = "<p>This email has been sent as a request to reset our password</p>";
-			$message .="<p><a href='".base_url()."Authenticate/reset_password/$temp_pass'>Click Here</a>If you want to reset your password, if not, then ignore</p>";
-			//$message = "<h1>Send HTML Email using SMTP in CodeIgniter</h1>
-            //<p>This is a test email sending using SMTP mail server with PHPMailer.</p>";
+			$message .="<p><a href='".base_url()."Authenticate/reset_password/?email=$email&&temp_pass=$temp_pass'>Click Here</a>If you want to reset your password, if not, then ignore</p>";
+			
             $mail->Body = $message;
 			//$this->email->message($message);
             
 			if($mail->send())
 			{
 				$this->load->model('Authe_Model');
-				if($this->Authe_Model->temp_reset_pass($temp_pass))
+
+				if($this->Authe_Model->temp_reset_pass($temp_pass,$email))
 				{
+					//p("successss");
+					//echo $this->email->print_debugger();
 					echo "check your email for instruction , thank you";
 				}
 				else
@@ -131,43 +114,35 @@ class Authenticate extends CI_Controller
                   echo 'Message could not be sent';
                 }
            	}
-           	else
+	    }
+		else
 			{
-				echo "your email is not in our database";
+				$this->session->set_flashdata('msg',"your email is not in our database");
+				$this->load->view('forget_password');
+				//echo "your email is not in our database";
+				//echo $this->email->print_debugger();
 			}
-
-
-           
-           // if(!$mail->send())
-           // {
-           //    echo 'Message could not be sent.';
-           //    echo 'Mailer Error: ' . $mail->ErrorInfo;
-           //  }
-           //  else
-           //  {
-           //    echo 'Message has been sent';
-           //  }
-
-
-        /*else
-           {
-           	//echo "email was not sent , please contact your adminitrator";
-           	   echo $this->email->print_debugger();
-           }
-		}*/
-		
-	}
-	else
-	{
-				p('fdvf');
-	}
 }
 
-	public function reset_password($temp_pass)
+	public function reset_password($temp_pass=null)
 	{
+		$data['temp_pass']=$this->input->get('temp_pass');
+		$_SESSION['temp_pass'] = $data['temp_pass'];
+
+		If(isset($_GET['temp_pass']))
+		{
+			$temp_pass = $_GET['temp_pass'];
+		}
+		if(isset($_GET['email']))
+		{
+			$email = $_GET['email'];
+		}
+       
        $this->load->model('Authe_Model');
+       //p($this->Authe_Model->temp_pass_valid($temp_pass));
        if($this->Authe_Model->temp_pass_valid($temp_pass))
        {
+       	 //p("successss"); 
        	 $this->load->view('reset_password');
        }
        else
@@ -178,17 +153,25 @@ class Authenticate extends CI_Controller
 
 	public function update_pass()
 	{
-		$this->load->library('form_validation');
-		$this->form_validation->set_rules('password','password','required|trim');
-		$this->form_validation->set_rules('cpassword','confirm password','required|trim|matches[password]');
-		if($this->form_validation->run())
-		{
-			echo "password match";
-		}
-		else
-		{
-			echo "password not match";
-		}
+
+		$_SESSION['temp_pass'];
+        
+        //p($this->input->post());
+        $data = $this->input->post();
+
+        if($data['password'] == $data['cpassword'])
+        {
+            $this->db->query("update users set password='".$data['password']."' where password='".$_SESSION['temp_pass']."'");
+            $this->session->set_flashdata('success',"password change successfully");
+        	redirect(base_url("Authenticate/login_validation"));
+        
+        }
+        else
+        	{
+               $this->session->set_flashdata('error',"invalid password");
+               $this->load->view('reset_password');
+        	}
+		
 	}
 
     

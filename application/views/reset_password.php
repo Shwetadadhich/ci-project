@@ -1,4 +1,11 @@
-
+<?php 
+  if($this->session->flashdata('error')){
+    echo '<div class="alert alert-error">
+           <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+           <strong>Error ! </strong>'.$this->session->flashdata("error").'
+           </div>';
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -134,16 +141,17 @@
   </div>
 
   <!-- /.login-logo -->
-   <form id="resetPassword" name="resetPassword" method="post" action="<?php echo base_url();?>Authenticate/reset_password" onsubmit ='return validate()'>
+   <form method="post" action="<?php echo base_url(); ?>Authenticate/update_pass" onsubmit ='return validate()'>
   <div class="form-wrapper-outer">
-    <p class="login-box-msg" style="font-size:30px;"><b>Recover Password</b></p>
+    <p class="login-box-msg" style="font-size:30px;"><b>Change Your Password</b></p>
 
       <div class="field-wrapper">
-        <input type="password" class="form-control" placeholder="password" name="password"/>
+        <input type="password" id="password" class="form-control" placeholder="password" name="password"/>
+        
       </div>
       
       <div class="field-wrapper">
-        <input type="password" class="form-control" placeholder="confirm password" name="cpassword"/>
+        <input type="password" id="confirm_password" class="form-control" placeholder="confirm password" name="cpassword"/>
       </div>
       
 
@@ -163,27 +171,16 @@
 <script src="<?php echo base_url(); ?>assests/theme/plugins/iCheck/icheck.min.js"></script>
 
 <script>
-  /*$(function () {
-     $('#action_forget_password').click(function()
-     {
-        var forget_email = $('#forget_email').val();
-        if(ValidateEmail(forget_email)){
-          $.post("<?php //echo base_url('Authenticate/forget_password'); ?>",
-        {
-          forget_email: forget_email
-        },
+  $(function () {
 
-        function(data){
-            $('#msg').html(data);
-        });
-        }
-        else
-        {
-            $('#msg').html('<strong style="color: red;">Invalid Email Format.</strong>');
-            $("#forget_email").focus();
-        }
+     $('#confirm_password').on('keyup', function () {
+    if ($('#password').val() == $('#confirm_password').val()) {
+        $('#message').html('Matching').css('color', 'green');
+    } else 
+        $('#message').html('Not Matching').css('color', 'red');
     });
-});*/
+
+});
 
 </script>
 </body>

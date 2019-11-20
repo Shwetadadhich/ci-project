@@ -34,20 +34,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           }
 	   }
 
-	   public function temp_reset_pass($temp_pass)
+	   public function temp_reset_pass($temp_pass,$email)
 	   {
+	   	//p("success");
 	   	 $data = array(
-                        'email' => $this->input->post('email'),
+                        'email' => $email,
                         'password' => $temp_pass
                        );
-	   	       $email = $data['email'];
 
+	   	       $email = $data['email'];
+              //p($data);
 	   	 if($data)
 	   	 {
+	   	 	//p($data);
+	   	 	$this->db->set($data);
 	   	 	$this->db->where('email', $email);
-	   	 	$this->db->update('users', $data);
-	   	 	//p($this->db->last_query());
-	   	 	return true;
+	   	 	$this->db->update('users');
+	   	 	//$this->db->last_query();
+	   		return true;
 	   	 }
 	   	 else
 	   	 {
@@ -58,14 +62,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	   public function temp_pass_valid($temp_pass)
 	   {
 	   	   //$this->db->select('*');
-           $this->db->where('password','$temp_pass');
+           $this->db->where('password',$temp_pass);
            $query = $this->db->get('users');
-           //p($this->db->last_query());
+           //p($query);
+           $res = $query->result_array();
+           //p($res);
            if($query->num_rows() == 1)
            {
            	return true;
            }
-           else return false;
+           else 
+           {
+             return false;
+           }
 	   }
  }
 

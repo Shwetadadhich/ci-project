@@ -1,4 +1,11 @@
-
+<?php 
+  if($this->session->flashdata('msg')){
+    echo '<div class="alert alert-error">
+           <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+           <strong>Message ! </strong>'.$this->session->flashdata("msg").'
+           </div>';
+  }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -139,7 +146,7 @@
     <p class="login-box-msg" style="font-size:30px;"><b>Forget Your Password</b></p>
 
       <div class="field-wrapper">
-        <input type="email" class="form-control" placeholder="Email...@" id="email" name="email" required/>
+        <input type="text" class="form-control" placeholder="Email...@" id="email" name="email" required/>
         <span style="color:red;"><?php echo form_error('email'); ?></span>
       </div>
       
