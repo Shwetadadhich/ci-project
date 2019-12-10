@@ -151,7 +151,7 @@
       </div>
       
       <div class="field-wrapper">
-        <input type="password" id="confirm_password" class="form-control" placeholder="confirm password" name="cpassword"/>
+        <input type="password" id="confirm_password" class="form-control" placeholder="confirm password" name="cpassword"/><span id='message'></span>
       </div>
       
 

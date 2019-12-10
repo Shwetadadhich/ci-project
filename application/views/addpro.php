@@ -58,7 +58,7 @@
   	 		</div><br>
   	 		<div class="form-group">
   	 			<label for="Description">Description</label>
-  	 			<input type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo isset($get_edit->description)? $get_edit->description : ''; ?>">
+  	 			<textarea type="text" name="description" placeholder="Description" class="form-control" autocomplete="off" value="<?php echo isset($get_edit->description)? $get_edit->description : ''; ?>"></textarea>
   	 		</div>
   	 		<div class="form-group">
   	 			<label for="image">Image</label>

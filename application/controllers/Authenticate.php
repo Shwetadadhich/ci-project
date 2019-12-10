@@ -1,4 +1,3 @@
-
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -6,6 +5,10 @@ class Authenticate extends CI_Controller
 {
     public function index()
     {
+    if(isset($_SESSION['email']))
+    {
+       header('location: HomeDashboard');
+    }
     	//p(md5('shwetA'));
 		$this->load->view('login');
 	}
@@ -17,7 +20,7 @@ class Authenticate extends CI_Controller
         // here i am creating login validation
 		$this->form_validation->set_rules('email','Email','required|valid_email', 'callback__email_check');
 		$this->form_validation->set_rules('password','Password','required');
-         $this->form_validation->set_rules('g-recaptcha-response','Captcha','required');
+         //$this->form_validation->set_rules('g-recaptcha-response','reCaptcha','required');
 
         // if validation is correct or not
 		if($this->form_validation->run())
@@ -33,7 +36,10 @@ class Authenticate extends CI_Controller
 			{
                 //Create Session
 				$session_data = array(
-                       'email' => $email
+					   'id' => $id,
+					   'name' => $name,
+					   'email' => $email
+                       //'email' => $email
 					);
 				$this->session->set_userdata($session_data);
 				return redirect('HomeDashboard');
@@ -106,7 +112,6 @@ class Authenticate extends CI_Controller
 				if($this->Authe_Model->temp_reset_pass($temp_pass,$email))
 				{
 					//p("successss");
-					//echo $this->email->print_debugger();
 					echo "check your email for instruction , thank you";
 				}
 				else
@@ -129,7 +134,7 @@ class Authenticate extends CI_Controller
 		$data['temp_pass']=$this->input->get('temp_pass');
 		$_SESSION['temp_pass'] = $data['temp_pass'];
 
-		If(isset($_GET['temp_pass']))
+		if(isset($_GET['temp_pass']))
 		{
 			$temp_pass = $_GET['temp_pass'];
 		}
@@ -164,7 +169,6 @@ class Authenticate extends CI_Controller
             $this->db->query("update users set password='".$data['password']."' where password='".$_SESSION['temp_pass']."'");
             $this->session->set_flashdata('success',"password change successfully");
         	redirect(base_url("Authenticate/login_validation"));
-        
         }
         else
         	{
@@ -172,6 +176,29 @@ class Authenticate extends CI_Controller
                $this->load->view('reset_password');
         	}
 		
+	}
+
+	public function register_frm()
+	{
+	   $this->load->view('register');
+	}
+
+	public function register_now()
+	{
+	  $data = [];
+	  if($this->input->post('register'))
+	  {
+	  	$new['name'] = $this->input->post('name');
+	  	$new['user_name'] = $this->input->post('username');
+	  	$new['email'] = $this->input->post('email');
+	  	$new['password'] = $this->input->post('password');
+	  	
+	  	$this->load->Model('Authe_Model');
+        $this->Authe_Model->register_new($new);
+        $this->session->set_flashdata('register','Register successfully');
+        redirect(base_url('Authenticate/index'));
+        $this->load->view('login');
+	  }	
 	}
 
     

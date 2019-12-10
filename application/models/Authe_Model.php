@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          $this->db->where('password',$password);
          $query = $this->db->get('users');
 
-         if($query->num_rows() > 0)
+         if($query->num_rows() == 1)
          {
              return true;
          }
@@ -75,6 +75,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
            {
              return false;
            }
+	   }
+
+	   public function register_new($data)
+	   {
+         $this->db->insert('users',$data);
 	   }
  }
 

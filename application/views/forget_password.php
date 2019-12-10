@@ -146,7 +146,7 @@
     <p class="login-box-msg" style="font-size:30px;"><b>Forget Your Password</b></p>
 
       <div class="field-wrapper">
-        <input type="text" class="form-control" placeholder="Email...@" id="email" name="email" required/>
+        <input type="text" class="form-control" placeholder="abc@example.com" autocomplete="off" id="email" name="email" required/>
         <span style="color:red;"><?php echo form_error('email'); ?></span>
       </div>
       

@@ -3,6 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class HomeDashboard extends CI_Controller 
 {
+  public function __construct()
+  {
+    parent::__construct();
+
+    if(empty($this->session->userdata('email')))
+      {
+        redirect(base_url('Authenticate'));
+      }
+  }
    public function index($offset=0)
    {
    	  //$search = $this->input->get('search');
@@ -11,14 +20,7 @@ class HomeDashboard extends CI_Controller
 
    	   $cat_id = $this->input->get('category_id');
    	  // $this->input->get is equivalent to $_GET
-       if($this->session->userdata('email') != '')
-      {
-        //redirect(base_url('HomeDashboard'));
-      }
-      else
-      {
-        redirect(base_url('Authenticate'));
-      }
+      
 
    	   $this->load->model('Dashboard');
    	   $this->load->model('Mcategory');

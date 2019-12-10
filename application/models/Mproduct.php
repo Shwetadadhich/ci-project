@@ -10,17 +10,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
      
      public function edit_getproduct($id)//edit product one row
      { //get one row in EDIT click
-        /*$return = $this->db->where('id', $id)
-                          ->get('product') 
-                          ->row();
-                  return $return;*/
             $return = $this->db->select('product.*,category.cat_title,sub_category.cname');
                   $this->db->from('product');
                   $this->db->join('category', 'category.cat_id = product.cat_id', 'left');
                   $this->db->join('sub_category', 'sub_category.id = product.sub_category', 'left');  
                   $this->db->where('product.id', $id);
                   $query = $this->db->get();
-
+                  // $this->db->last_query();
                  if ($query->num_rows() != 0) 
                  {
 
@@ -33,9 +29,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                      $result = array();
                      return $result;
                   }
+      }
 
-
-     }
+      public function store_getproduct($id)
+      {
+        // $return = $this->db->where('id', $id)
+        //                   ->get('product') 
+        //                   ->row();
+        //           return $return;
+        $this->db->select("*");
+        //$this->db->join('category', 'category.cat_id = product.cat_id', 'left');
+        $this->db->where('id', $id);
+        $this->db->from('product');  
+        $query = $this->db->get();
+        return $result=$query->row();
+      }
 
      public function update_order($id,$update)//update all product
      {
@@ -166,7 +174,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             $this->db->limit($_POST["length"], $_POST["start"]);
         }
         $query = $this->db->get();
-        //P($query->result());
+        
         return $query->result();
 
     }
@@ -213,7 +221,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
        if($query)
         {
-          //p($result);
           $result = $query->row_array();
           return $result['cname'];
         }
@@ -223,9 +230,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        }
     }
 
+    public function product_detail()//product detail by category wise show
+    {
+
+    }
+
 }
-
-
 
 
 

@@ -1,7 +1,4 @@
 <?php 
-    if(isset($_SESSION['email'])){
-    header('location: HomeDashboard');
- }
 
   if($this->session->flashdata('success')){
     echo '<div class="alert alert-success">
@@ -9,8 +6,13 @@
            <strong>success ! </strong>'.$this->session->flashdata("success").'
            </div>';
   }
- ?>
-
+  if($this->session->flashdata('register')){
+    echo '<div class="alert alert-success">
+           <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+           <strong>success ! </strong>'.$this->session->flashdata("register").'
+           </div>';
+  }
+?>
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +43,7 @@
             border-radius: 8px;
             margin: auto;
             width: 460px;
-            border: 1px solid black;
+            border: 2px solid black;
             background: white;
             margin-top: 7%;
         }
@@ -138,9 +140,6 @@
           color:red;
           background: #ffd5d5;
         }
-
-
-  
 </style>
 
 <body class="hold-transition login-page">
@@ -178,10 +177,10 @@
          <span style="color:red;"><?php echo form_error('password'); ?></span>
       </div>
       
-      <div class="field-wrapper">
+      <!--<div class="field-wrapper">
         <div id="google_recaptcha" name="g-recaptcha-response" data-theme="dark"></div>
         <span style="color:red;"><?php echo form_error('g-recaptcha-response'); ?></span>
-      </div>
+      </div>-->
      
       <div class="form-button">
       <input type="submit" id="" value="Submit" name="login" class="btn btn-primary">
@@ -194,7 +193,7 @@
        ?>
       </div>
     <a href="<?php echo base_url('Authenticate/forget_password'); ?>">I forgot my password ?</a><br>
-    <a href="#" class="text-center">Register a new membership</a>
+    <a href="<?php echo base_url('Authenticate/register_frm'); ?>" class="text-center">Register a New User</a>
 
   </div>
   <!-- /.form-wrapper-outer -->
@@ -211,25 +210,6 @@
 <script src="<?php echo base_url(); ?>assests/theme/plugins/iCheck/icheck.min.js"></script>
 
 <script>
-  /*$(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' /* optional */
-    //});
-
-  /*$(".field-wrapper .field-placeholder").on("click", function () {
-      $(this).closest(".field-wrapper").find("input").focus();
-         });
-      $(".field-wrapper input").on("keyup", function () {
-       var value = $.trim($(this).val());
-          if (value) {
-             $(this).closest(".field-wrapper").addClass("hasValue");
-              } else {
-             $(this).closest(".field-wrapper").removeClass("hasValue");
-               }
-            });*/
-
     var onloadCallback = function() {
         grecaptcha.render('google_recaptcha', {
           'sitekey' : '6LeWssIUAAAAACq92ZnQPYr_cBLUW-0kvf4Yd0nS'
@@ -255,38 +235,6 @@
                 });
                 return isFormFilled;
           }
-
-        //Form Submit Event
-        /*$("#submit-test-form").click(function () {
-            if (checkifreqfld()) {
-              event.preventDefault();
-              var rcres = grecaptcha.getResponse();
-              if(rcres.length){
-                grecaptcha.reset();
-                showHideMsg("Form Submitted!","success");
-              }else{
-                showHideMsg("Please verify reCAPTCHA","error");
-              }
-            } else {
-                showHideMsg("Fill required fields!","error");
-            }
-        });*/
-
-        //Show/Hide Message
-        /*function showHideMsg(message,type){
-          if(type == "success"){
-            $("#message-wrap").addClass("success-msg").removeClass("error-msg");
-          }else if(type == "error"){
-            $("#message-wrap").removeClass("success-msg").addClass("error-msg");
-          }
-
-          $("#message-wrap").stop()
-          .slideDown()
-          .html(message)
-          .delay(1500)
-          .slideUp();
-        }*/
-
 
         //Google Style InputFields
         $(".field-wrapper .field-placeholder").on("click", function () {

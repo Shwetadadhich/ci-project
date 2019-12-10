@@ -150,7 +150,7 @@
             <li class="dropdown notifications-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
-                <span class="label label-warning">5</span>
+                <span class="label label-warning">10</span>
               </a>
               <ul class="dropdown-menu">
                 <li class="header">You have 10 notifications</li>
@@ -189,84 +189,12 @@
               </ul>
             </li>
             <!-- Tasks: style can be found in dropdown.less -->
-            <li class="dropdown tasks-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-flag-o"></i>
-                <span class="label label-danger">9</span>
-              </a>
-              <ul class="dropdown-menu">
-                <li class="header">You have 9 tasks</li>
-                <li>
-                  <!-- inner menu: contains the actual data -->
-                  <ul class="menu">
-                    <li><!-- Task item -->
-                      <a href="#">
-                        <h3>
-                          Design some buttons
-                          <small class="pull-right">20%</small>
-                        </h3>
-                        <div class="progress xs">
-                          <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">20% Complete</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- end task item -->
-                    <li><!-- Task item -->
-                      <a href="#">
-                        <h3>
-                          Create a nice theme
-                          <small class="pull-right">40%</small>
-                        </h3>
-                        <div class="progress xs">
-                          <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">40% Complete</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- end task item -->
-                    <li><!-- Task item -->
-                      <a href="#">
-                        <h3>
-                          Some task I need to do
-                          <small class="pull-right">60%</small>
-                        </h3>
-                        <div class="progress xs">
-                          <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">60% Complete</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- end task item -->
-                    <li><!-- Task item -->
-                      <a href="#">
-                        <h3>
-                          Make beautiful transitions
-                          <small class="pull-right">80%</small>
-                        </h3>
-                        <div class="progress xs">
-                          <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                            <span class="sr-only">80% Complete</span>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- end task item -->
-                  </ul>
-                </li>
-                <li class="footer">
-                  <a href="#">View all tasks</a>
-                </li>
-              </ul>
-            </li>
+            
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="user-image" alt="User Image">
-                <span class="hidden-xs">Shweta Dadhich</span>
+                <span class="hidden-xs"><?php echo $this->session->userdata('email'); ?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
@@ -274,7 +202,7 @@
                   <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
 
                   <p>
-                    Shweta Dadhich - Web Developer
+                    <?php echo $this->session->userdata('email'); ?> - Web Developer
                     <small>Member since Aug. 2019</small>
                   </p>
                 </li>
@@ -320,7 +248,7 @@
             <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p>Shweta Dadhich</p>
+            <p><?php echo $this->session->userdata('email'); ?></p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>
@@ -337,11 +265,10 @@
             </a>
             <ul class="treeview-menu">
               <li class="<?php echo ($this->router->fetch_method() == 'index') ? 'active' : '' ?>"><a href="<?php echo base_url('HomeDashboard'); ?>"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-              <!--<li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
             </ul>
           </li>
 
-          <li class="treeview <?php echo ($this->uri->segment(1) == 'categories') ? 'menu-open active' : '' ?>">
+        <li class="treeview <?php echo ($this->uri->segment(1) == 'categories') ? 'menu-open active' : '' ?>">
           
             <a href="<?php echo base_url('Categories'); ?>">
               <i class="fa fa-list-alt"></i> <span>Categories</span>
@@ -349,7 +276,7 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
-            <ul class="treeview-menu">
+              <ul class="treeview-menu">
                 <?php 
                   $categories = getCatergoryList();
                   if(!empty($categories))  
@@ -365,8 +292,9 @@
                   }
                 ?>
 
-            </ul>
+              </ul>
           </li>
+
           <li class="treeview <?php echo ($this->uri->segment(1) == 'products') ? 'menu-open active' : '' ?>">
             <a href="<?php echo base_url('products'); ?>">
               <i class="fa fa-product-hunt"></i> <span>Product</span>
