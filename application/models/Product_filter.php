@@ -66,11 +66,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		   {
 		    $output .= '
 		    <div class="col-sm-4">
-		    <div style="border:1px solid #ccc; border-radius:5px; padding:16px; margin-bottom:16px; height:390px;">
-		    <img src="'.base_url().'/assests/DataTables/images/'. $row["image"] .'" class="img-responsive" >
-		    <p><strong><a href="'.base_url("Estore/product_detail/").'?id='.$row['id'].'">'. $row["title"] .'</a></strong></p>
-		    <h4 class="text-danger" >'. $row["price"] .'</h4>
-		    <p>Color : '. $row["color"].'<br />
+		    <div style="border:2px solid #ccc; border-radius:50px; padding:16px; margin-bottom:16px; height:390px;">
+		    <img src="'.base_url().'/assests/DataTables/images/'. $row["image"] .'" class="img-responsive" style="border-radius: 15px;">
+		    <p style="margin-bottom:16px; padding-top:10px; text-align:center;"><strong><a href="'.base_url("Estore/product_detail/").'?id='.$row['id'].'">'. $row["title"] .'</a></strong></p>
+		    <h4 class="text-danger" style="text-align: center;">'. $row["price"] .'</h4>
+		    <p style="text-align: center;">Color : '. $row["color"].'<br />
 		       Size : '. $row["size"] .'<br /> </p>
 		       </div>
 		    </div>
@@ -84,8 +84,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		  return $output;
 		 }
 
+public function getRows($id = '')
+     {
+        $this->db->select('*');
+        $this->db->from('product');
+        $res = $this->db->where('status', '1');
+       if($id)
+        {
+            $this->db->where('id', $id);
+            $query = $this->db->get();
+            $result = $query->row_array();
+        }
+        else
+        {
+            $this->db->order_by('title', 'asc');
+            $query = $this->db->get();
+            $result = $query->result_array();
+        }
 
+        return !empty($result)?$result:false;
+    }
 
- }
+    public function order_product($data)
+    {
+       $this->db->insert('product_order', $data);
+    }
+
+    /*public function */
+}
 
 ?>

@@ -9,17 +9,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
          $this->db->where('email',$email);
          $this->db->where('password',$password);
          $query = $this->db->get('users');
-
+         // p($this->db->last_query(),0);
+         // p( $query->row_array());
          if($query->num_rows() == 1)
          {
-             return true;
+             return $query->row_array();
          }
          else
          {
             return false;
          }
 	   }
-
+   
 	   public function email_exist()
 	   {
           $email = $this->input->post('email');

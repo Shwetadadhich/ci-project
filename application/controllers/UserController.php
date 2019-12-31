@@ -157,10 +157,11 @@ public function __construct()
           $update['name'] = $this->input->post('name');
           $update['user_name'] = $this->input->post('uname');
           $update['email'] = $this->input->post('email');
-          $update['password'] = $this->input->post('password');
           $dobb =$this->input->post('dob');
+          
           $newDate = date("Y-m-d", strtotime($dobb));
           $update['dob'] =$newDate;
+          
           $update['number'] = $this->input->post('number');
           //$update['image'] = $this->input->post('image');
             $imgcheck=$_FILES['image']['name'];
@@ -177,8 +178,7 @@ public function __construct()
                    $config['upload_path'] = FCPATH ."assests/DataTables/images";// upload the image upload library insert
                    $config['allowed_types'] = 'jpg|jpeg|jpe|gif|png|zip|svg|bmp';
                    $config['max_size']  = '100000000';
-                   //$config['max_width'] = '1024';
-                   //$config['max_height'] = '768';
+    
                    $this->load->library('upload', $config);
                           
                     if(!$this->upload->do_upload('image'))//$update['image'] = $this->input->post('image');
@@ -196,12 +196,13 @@ public function __construct()
           //p($update);die;
           $this->Usermodel->update_user($id,$update);
           $this->session->set_flashdata('success','User updated successfully');
-          
            redirect(base_url('UserController/')); 
         }
          
          $this->template->load('vtemplate', 'adduser', $data);
     }
+
+
 
     public function delete_user()
     {

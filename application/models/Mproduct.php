@@ -33,12 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       public function store_getproduct($id)
       {
-        // $return = $this->db->where('id', $id)
-        //                   ->get('product') 
-        //                   ->row();
-        //           return $return;
         $this->db->select("*");
-        //$this->db->join('category', 'category.cat_id = product.cat_id', 'left');
         $this->db->where('id', $id);
         $this->db->from('product');  
         $query = $this->db->get();
@@ -228,11 +223,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
        {
          return '';
        }
-    }
-
-    public function product_detail()//product detail by category wise show
-    {
-
     }
 
 }

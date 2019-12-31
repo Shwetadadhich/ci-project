@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-
+<?php //p($this->session->userdata());?>
     <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link href="<?php echo base_url('assests/DataTables/css/jquery.dataTables.min.css')?>" rel="stylesheet">
    <!-- Bootstrap 3.3.7 -->
@@ -45,6 +45,14 @@
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>   
 
+ <style>
+   .user-panel .image img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: #fff;
+   }
+ </style>
 </head>
   
 <body class="hold-transition skin-blue sidebar-mini">
@@ -193,16 +201,16 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="user-image" alt="User Image">
-                <span class="hidden-xs"><?php echo $this->session->userdata('email'); ?></span>
+                <img src="<?php echo base_url(); ?>assests/DataTables/images/<?php echo $_SESSION['image']; ?>" class="user-image" alt="User Image">
+                <span class="hidden-xs"><?php echo $this->session->userdata('name'); ?></span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
+                  <img src="<?php echo base_url(); ?>assests/DataTables/images/<?php echo $_SESSION['image']; ?>" class="img-circle" alt="User Image">
 
                   <p>
-                    <?php echo $this->session->userdata('email'); ?> - Web Developer
+                    <?php echo $this->session->userdata('name'); ?> - Web Developer
                     <small>Member since Aug. 2019</small>
                   </p>
                 </li>
@@ -221,7 +229,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                    <a href="<?php echo base_url('Admin_profile'); ?>" class="btn btn-default btn-flat">Profile</a>
                   </div>
                   <div class="pull-right">
                     <a href="<?php echo base_url("Authenticate/logout"); ?>" class="btn btn-default btn-flat">Sign out</a>
@@ -245,10 +253,10 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
-            <img src="<?php echo base_url('assests/DataTables/images/gohan.jpg'); ?>" class="img-circle" alt="User Image">
+            <img src="<?php echo base_url(); ?>assests/DataTables/images/<?php echo $_SESSION['image']; ?>" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
-            <p><?php echo $this->session->userdata('email'); ?></p>
+            <p><?php echo $this->session->userdata('name'); ?></p>
             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
           </div>
         </div>

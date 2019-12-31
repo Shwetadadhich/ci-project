@@ -9,7 +9,6 @@ class Authenticate extends CI_Controller
     {
        header('location: HomeDashboard');
     }
-    	//p(md5('shwetA'));
 		$this->load->view('login');
 	}
 
@@ -30,22 +29,17 @@ class Authenticate extends CI_Controller
 			
             //check email or password is correct
 			$this->load->model('Authe_Model');
-
+            
 			$login = $this->Authe_Model->login_data($email, $password);
 			if($login)
 			{
-                //Create Session
-				$session_data = array(
-					   'id' => $id,
-					   'name' => $name,
-					   'email' => $email
-                       //'email' => $email
-					);
+			    $session_data = $login;
+			    $this->session->unset_userdata($session_data);
+			    $login = $this->Authe_Model->login_data($email,$password);
 				$this->session->set_userdata($session_data);
 				return redirect('HomeDashboard');
 			}
 			else{
-				// if email or password is wrong show flash message
 				$this->session->set_flashdata('error', 'invalid Email and Password.');
 				return redirect('Authenticate');
 			}

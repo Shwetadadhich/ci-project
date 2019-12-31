@@ -70,8 +70,8 @@
 								<li class="has-dropdown active">
 									<a href="<?php echo base_url("Estore/product_shop"); ?>">Shop</a>
 									<ul class="dropdown">
-										<li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li>
-										<li><a href="cart.html">Shipping Cart</a></li>
+										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
+										<li><a href="<?php echo base_url("Estore/cart"); ?>">Shipping Cart</a></li>
 										<li><a href="checkout.html">Checkout</a></li>
 										<li><a href="order-complete.html">Order Complete</a></li>
 										<li><a href="add-to-wishlist.html">Wishlist</a></li>
@@ -125,7 +125,8 @@
 									 </div>
 							    </ul> 
                         </div>
-				        	  <?php if ($store_category) { ?>
+
+				        	<?php if ($store_category) { ?>
 								<?php foreach ($store_category as $store) { ?>
 							<div class="col-md-4 text-center">
 								<div class="product-entry">

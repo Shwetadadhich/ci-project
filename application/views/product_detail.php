@@ -1,3 +1,12 @@
+<?php 
+  if($this->session->flashdata('success')){
+  	echo '<div class="alert alert-success">
+  	       <a href="#" class="close" data-dismiss="success" aria-label="close">X</a>
+           <strong>success ! </strong>'.$this->session->flashdata("success").'
+  	       </div>';
+  }
+
+  ?>
 
 <!DOCTYPE HTML>
 <html>
@@ -74,7 +83,7 @@
 								<li class="has-dropdown active">
 									<a href="<?php echo base_url("Estore/product_shop"); ?>">Product</a>
 									<ul class="dropdown">
-										<li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li>
+										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
 										<li><a href="cart.html">Shipping Cart</a></li>
 										<li><a href="checkout.html">Checkout</a></li>
 										<li><a href="order-complete.html">Order Complete</a></li>
@@ -164,9 +173,13 @@
 												<a href="#" class="size size-5">xxl</a>
 											</p>
 										</div>
-										<div class="row row-pb-sm">
-											<div class="col-md-4">
-                                    <div class="input-group">
+								<form action="<?php echo base_url("Estore/order_product"); ?>" method="post">
+								<div class="row row-pb-sm">
+									<div class="col-md-4">
+									<div class="input-group">
+										<input type="hidden" name="id" class="form-control" value="<?= $_GET['id']; ?>">
+									</div>
+                                     <div class="input-group">
                                     	<span class="input-group-btn">
                                        	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
                                           <i class="icon-minus2"></i>
@@ -178,13 +191,13 @@
                                             <i class="icon-plus2"></i>
                                         </button>
                                     	</span>
-                                 	</div>
+                                 	 </div>
                         			</div>
-										</div>
-										<p><a href="cart.html" class="btn btn-primary btn-addtocart"><i class="icon-shopping-cart"></i> Add to Cart</a></p>
+								</div>
+										<button type="submit" name="submit" class="btn btn-primary btn-addtocart icon-shopping-cart">Add to Cart</button>
 									</div>
 								</div>
-									
+							</form>
 							</div>
 							
 							<?php } ?>

@@ -6,14 +6,15 @@ class Estore extends CI_Controller
 	 public function __construct()
 	 {
 		  parent::__construct();
+		  $this->load->library('cart');
 	      $this->load->model('Product_filter');
       }
 
     public function index()
     {
-    	$this->load->view('Storeview');    	
-    	//$this->load->view('product_shop');
-    }
+      $this->load->view('Storeview');
+	} 	
+  
 
    public function product_detail($id=NULL)
    {
@@ -91,6 +92,69 @@ class Estore extends CI_Controller
 	      //p($output);
     }
 
+    public function cart($id='')
+    {
+    	$data['cart'] = $this->Product_filter->getRows($id);
+    	//p($data['cart']);
+    	$this->load->view('shopping_cart',$data);
+    }
+
+   public function order_product()
+   {
+   	 $data = [];
+   	 if(isset($_POST['submit']))
+   	 {
+   	 	$id=$_GET['id'];
+        $add['pro_id'] =$this->input->post('id');
+   	 	$add['quantity'] = $this->input->post('quantity');
+   	 	//p($add['quantity']);
+   	 	$this->load->model('Product_filter');
+   	 	$this->Product_filter->order_product($add);
+   	 	$this->session->set_flashdata('success','order inerted successfully');
+         redirect("Estore/cart");  
+   	 }
+   }
+
+   public function login_user()
+   {
+   	 $this->load->library('form_validation');
+
+        // here i am creating login validation
+		$this->form_validation->set_rules('email','Email','required|valid_email', 'callback__email_check');
+		$this->form_validation->set_rules('password','Password','required');
+
+        // if validation is correct or not
+		if($this->form_validation->run())
+		{
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+			
+            //check email or password is correct
+			$this->load->model('Authe_Model');
+            
+			$login = $this->Authe_Model->login_data($email, $password);
+			if($login)
+			{
+			    $session_data = $login;
+			    //p($session_data);
+			    $this->session->unset_userdata($session_data);
+			    $login = $this->Authe_Model->login_data($email,$password);
+				$this->session->set_userdata($session_data);
+				return redirect('Estore');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'invalid Email and Password.');
+				//return redirect('Estore');
+			}
+		}
+   }
+
+   public function user_logout()
+   {
+   	 $this->session->unset_userdata('email');
+     redirect(base_url('Estore'));
+   }
 }
 
 ?>

@@ -55,7 +55,7 @@
                     ?>
               </h3>
 
-              <p>Products</p>
+              <p>Users</p>
             </div>
             <div class="icon">
               <i class="fa fa-user"></i>

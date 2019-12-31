@@ -1,4 +1,3 @@
-
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -57,6 +56,80 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+    <style>
+	    body {font-family: Arial, Helvetica, sans-serif;}
+	* {box-sizing: border-box;}
+
+    .open-button {
+		  background-color: #555;
+		  color: white;
+		  padding: 10px 10px;
+		  border: none;
+		  cursor: pointer;
+		  opacity: 0.8;
+		  position: fixed;
+		  top: 30px;
+		  right: 0px;
+		  width: 100px;
+		}
+
+/* The popup form - hidden by default */
+	.form-popup {
+	  margin:70px;
+	  border-radius: 10px;
+      margin-right:0px;
+	  display: none;
+	  position: fixed;
+	  top: 0;
+	  right: 15px;
+	  border: 3px solid #f1f1f1;
+	  z-index: 9;
+	}
+
+/* Add styles to the form container */
+	.form-container {
+	  max-width: 300px;
+	  padding: 10px;
+	  background-color: #e3e3e3;
+	}
+
+/* Full-width input fields */
+	.form-container input[type=text], .form-container input[type=password] {
+	  width: 100%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  border: none;
+	  background: #f1f1f1;
+	}
+
+/* When the inputs get focus, do something */
+	.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+	  background-color: #ddd;
+	  outline: none;
+	}
+
+/* Set a style for the submit/login button */
+		.form-container .btn {
+		  background-color: #4CAF50;
+		  color: white;
+		  padding: 16px 20px;
+		  border: none;
+		  cursor: pointer;
+		  width: 100%;
+		  margin-bottom:10px;
+		  opacity: 0.8;
+		}
+
+/* Add a red background color to the cancel button */
+		.form-container .cancel {
+		  background-color: red;
+		}
+
+		/* Add some hover effects to buttons */
+		.form-container .btn:hover, .open-button:hover {
+		  opacity: 1;
+		}
+    </style>
 
 	</head>
 	<body>
@@ -71,14 +144,14 @@
 						<div class="col-xs-2">
 							<div id="colorlib-logo"><a href="<?php echo base_url(); ?>Estore">E-Store</a></div>
 						</div>
-						<div class="col-xs-10 text-right menu-1">
+						<div class="col-xs-9 text-right menu-1">
 							<ul>
 								<li class="active"><a href="<?php echo base_url(); ?>Estore">Home</a></li>
 								<li class="has-dropdown">
 									<a href="<?php echo base_url("Estore/product_shop"); ?>">Shop</a>
 									<ul class="dropdown">
-										<li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li>
-										<li><a href="<?php echo base_url(); ?>assests/store/cart.html">Shipping Cart</a></li>
+										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
+										<li><a href="<?php echo base_url(); ?>Estore/cart">Shipping Cart</a></li>
 										<li><a href="<?php echo base_url(); ?>assests/store/checkout.html">Checkout</a></li>
 										<li><a href="<?php echo base_url(); ?>assests/store/order-complete.html">Order Complete</a></li>
 										<li><a href="<?php echo base_url(); ?>assests/store/add-to-wishlist.html">Wishlist</a></li>
@@ -88,7 +161,35 @@
 								<li><a href="<?php echo base_url(); ?>assests/store/about.html">About</a></li>
 								<li><a href="<?php echo base_url(); ?>assests/store/contact.html">Contact</a></li>
 								<li><a href="cart.html"><i class="<?php echo base_url(); ?>assests/store/icon-shopping-cart"></i> Cart [0]</a></li>
+
+								<?php 
+								$email = '';
+								if(!empty($this->session->userdata('email')))
+								{?>
+									<span style="text-transform: uppercase;">
+									<?php echo $this->session->userdata('name'); ?></span>
+								<li> <a href="<?php echo base_url("Estore/user_logout"); ?>" class="btn btn-primary">Sign out</a></li>
+								<?php } ?>
+
 							</ul>
+						</div>
+						<div class="col-md-1">
+						<?php if(empty($this->session->userdata('email')))
+						{?>
+							<button class="open-button" onclick="openForm()">Login</button>
+							<?php } ?>
+							<div class="form-popup" id="myForm">
+								  <form action="<?php echo base_url("Estore/login_user"); ?>" class="form-container" method="post">
+								    <h1 style="text-align:center;border-bottom:1px solid black;margin-bottom:5px;">Login</h1>
+								    <label for="email"><b>Email</b></label>
+								    <input type="text" placeholder="Enter Email" name="email" required autocomplete="off">
+
+								    <label for="psw"><b>Password</b></label>
+								    <input type="password" placeholder="Enter Password" name="password" required>
+
+								    <button type="submit" class="btn">Login</button>
+								  </form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -693,7 +794,26 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="<?php echo base_url(); ?>assests/store/js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="<?php echo base_url(); ?>assests/store/js/main.js"></script>
+   
+   <script>
+	function openForm()
+	{
+		$(document).ready(function() {
+		  var myElement = $("#myForm");
+		  myElement.toggle();
 
+		});
+    }
+
+	// function closeForm() 
+	// {
+	// 	$(document).ready(function() {
+	// 	  var myElement = $("#myForm");
+	// 	  myElement.hide();
+	// 	});
+	// }
+
+   </script>
 	</body>
 </html>
 
