@@ -18,12 +18,15 @@ class Estore extends CI_Controller
 
    public function product_detail($id=NULL)
    {
+   	 echo $this->uri->segment(2);
+   	 $this->load->view('product_detail');
    	if(isset($_GET['id'])) 
         {
            $id=$_GET['id'];
            $this->load->model('Mproduct');
            $data['get_oneproduct'] = $this->Mproduct->store_getproduct($id);
            //p($data['get_oneproduct']);
+           
            $this->load->view('product_detail',$data);
         }
     
@@ -31,6 +34,7 @@ class Estore extends CI_Controller
 
     public function product_shop($cat_id=NULL)
     {
+
     	$ci =& get_instance();
         $ci->load->helper('common_helper');
   	    $category= getCatergoryList();
