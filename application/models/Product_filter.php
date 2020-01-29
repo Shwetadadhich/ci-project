@@ -86,31 +86,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 public function getRows($id = '')
      {
-        $this->db->select('*');
-        $this->db->from('product');
-        $res = $this->db->where('status', '1');
-       if($id)
-        {
-            $this->db->where('id', $id);
-            $query = $this->db->get();
-            $result = $query->row_array();
-        }
-        else
-        {
-            $this->db->order_by('title', 'asc');
-            $query = $this->db->get();
-            $result = $query->result_array();
-        }
-
-        return !empty($result)?$result:false;
+     	$sql=$this->db->query("select product_order.id as order_id,product.title,product.price,product.image,product_order.quantity,product_order.sub_total from product INNER JOIN product_order on product.id=product_order.pro_id")->result_array();
+     	
+     	return $sql;
+     	return !empty($sql)?$sql:false;  
     }
 
     public function order_product($data)
     {
        $this->db->insert('product_order', $data);
     }
+    
+    public function order_delete($id)
+    {
+    	 $return = $this->db->where('id', $id)
+                         ->delete('product_order');
+          //p($this->db->last_query());
+          return $return;
+    }
 
-    /*public function */
+    public function count_cart_num()
+    {
+    	if(isset($_SESSION['id']))
+    	{
+    	 $this->db->select('*');
+    	 $this->db->from('product_order');
+    	 $this->db->where('user_id',$_SESSION['id']);
+         return $this->db->get()->num_rows();
+        }
+        else
+        {
+        	return false;
+        }
+    }
+
+    public function billing_detail($data)
+    {
+    	$this->db->insert('billing_details',$data);
+    }
 }
 
 ?>

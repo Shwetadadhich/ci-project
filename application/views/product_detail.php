@@ -1,13 +1,3 @@
-<?php 
-  if($this->session->flashdata('success')){
-  	echo '<div class="alert alert-success">
-  	       <a href="#" class="close" data-dismiss="success" aria-label="close">X</a>
-           <strong>success ! </strong>'.$this->session->flashdata("success").'
-  	       </div>';
-  }
-
-  ?>
-
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -75,17 +65,17 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-2">
-							<div id="colorlib-logo"><a href="index.html">Store</a></div>
+							<div id="colorlib-logo"><a href="<?php echo base_url("Estore"); ?>">Store</a></div>
 						</div>
-						<div class="col-xs-10 text-right menu-1">
+						<div class="col-xs-9 text-right menu-1">
 							<ul>
 								<li><a href="<?php echo base_url("Estore"); ?>">Home</a></li>
 								<li class="has-dropdown active">
 									<a href="<?php echo base_url("Estore/product_shop"); ?>">Product</a>
 									<ul class="dropdown">
 										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
-										<li><a href="cart.html">Shipping Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="<?php echo base_url("Estore/cart"); ?>">Shipping Cart</a></li>
+										<li><a href="<?php echo base_url("Estore/checkout"); ?>">Checkout</a></li>
 										<li><a href="order-complete.html">Order Complete</a></li>
 										<li><a href="add-to-wishlist.html">Wishlist</a></li>
 									</ul>
@@ -93,8 +83,18 @@
 								<li><a href="blog.html">Blog</a></li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
-								<li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+								<li><a href="<?= base_url("Estore/cart"); ?>"><i class="assests/store/icon-shopping-cart"></i> Cart [<?php echo $count_cart; ?>]</a></li>
+
+								<?php 
+								$email = '';
+								if(!empty($this->session->userdata('email')))
+								{?>
+									<span style="text-transform: uppercase;">
+									<?php echo $this->session->userdata('name'); ?></span>
+								<li> <a href="<?php echo base_url("Estore/user_logout"); ?>" class="btn btn-primary">Sign out</a></li>
+								<?php } ?>
 							</ul>
+							
 						</div>
 					</div>
 				</div>
@@ -177,8 +177,9 @@
 								<div class="row row-pb-sm">
 									<div class="col-md-4">
 									<div class="input-group">
-										<input type="hidden" name="id" class="form-control" value="<?= $_GET['id']; ?>">
+										<input type="hidden" name="id" class="form-control" value="<?= $_GET['id'];  ?>">
 									</div>
+									
                                      <div class="input-group">
                                     	<span class="input-group-btn">
                                        	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
@@ -194,6 +195,8 @@
                                  	 </div>
                         			</div>
 								</div>
+								<?php 
+								?>
 										<button type="submit" name="submit" class="btn btn-primary btn-addtocart icon-shopping-cart">Add to Cart</button>
 									</div>
 								</div>
@@ -204,6 +207,9 @@
 						</div>
 					</div>
 				</div>
+    
+
+
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
 						<div class="row">
@@ -235,7 +241,7 @@
 								   		<div class="col-md-7">
 								   			<h3>23 Reviews</h3>
 								   			<div class="review">
-										   		<div class="user-img" style="background-image: url('<?php echo base_url("assests/store/images/person1.jpg"); ?>')"></div>
+										   		<div class="user-img" style="background-image: url('<?php echo base_url("assests/store/images/person1.jpg"); ?>'	)"></div>
 										   		<div class="desc">
 										   			<h4>
 										   				<span class="text-left">Jacob Webb</span>
@@ -582,6 +588,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="<?php echo base_url(); ?>assests/store/js/jquery.stellar.min.js"></script>
 	<!-- Main -->
 	<script src="<?php echo base_url(); ?>assests/store/js/main.js"></script>
+	<script type="text/javascript" src="<?php echo base_url().'assets/js/jquery-3.2.1.js'?>"></script>
+<script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'?>"></script>
 
 	<script>
 		$(document).ready(function(){
@@ -616,10 +624,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		            $('#quantity').val(quantity - 1);
 		            }
 		    });
-		    
 		});
 	</script>
 
 	</body>
 </html>
+
 

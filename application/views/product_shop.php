@@ -1,3 +1,12 @@
+<?php 
+  if($this->session->flashdata('alert')){
+  	echo '<div class="alert alert-success">
+  	      <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+  	      <strong>Alert!</strong>'.$this->session->flashdata("alert").'
+  	       </div>';
+  }
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -72,7 +81,7 @@
 									<ul class="dropdown">
 										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
 										<li><a href="<?php echo base_url("Estore/cart"); ?>">Shipping Cart</a></li>
-										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="<?php echo base_url("Estore/checkout"); ?>">Checkout</a></li>
 										<li><a href="order-complete.html">Order Complete</a></li>
 										<li><a href="add-to-wishlist.html">Wishlist</a></li>
 									</ul>
@@ -80,7 +89,16 @@
 								<li><a href="blog.html">Blog</a></li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
-								<li><a href="cart.html"><i class="icon-shopping-cart"></i> Cart [0]</a></li>
+								<li><a href="<?= base_url("Estore/cart"); ?>"><i class="assests/store/icon-shopping-cart"></i> Cart [<?php echo $count_cart; ?>]</a></li>
+
+								<?php 
+								$email = '';
+								if(!empty($this->session->userdata('email')))
+								{?>
+									<span style="text-transform: uppercase;">
+									<?php echo $this->session->userdata('name'); ?></span>
+								<li> <a href="<?php echo base_url("Estore/user_logout"); ?>" class="btn btn-primary">Sign out</a></li>
+								<?php } ?>
 							</ul>
 						</div>
 					</div>
@@ -134,7 +152,7 @@
 										<p class="tag"><span class="new">New</span></p>
 										<div class="cart">
 											<p>
-												<span class="addtocart"><a href="cart.html"><i class="icon-shopping-cart"></i></a></span> 
+												<span class="addtocart"><a href="<?= base_url("Estore/cart"); ?>"><i class="icon-shopping-cart"></i></a></span> 
 												<span><a href="<?php echo base_url("Estore/product_detail"); ?>"><i class="icon-eye"></i></a></span> 
 												<span><a href="#"><i class="icon-heart3"></i></a></span>
 												<span><a href="add-to-wishlist.html"><i class="icon-bar-chart"></i></a></span>
@@ -152,13 +170,6 @@
 							 <?php } ?>
 								<?php } ?>
                         </div>
-
-                        
-
-						<!-- <div class="row">
-							<div class="col-md-12">
-															</div>
-						</div> -->
 					</div>
 
 					<div class="col-md-2 col-md-pull-10">

@@ -7,41 +7,44 @@ class Estore extends CI_Controller
 	 {
 		  parent::__construct();
 		  $this->load->library('cart');
-	      $this->load->model('Product_filter');
-      }
+	    $this->load->model('Product_filter');
+   }
 
     public function index()
     {
-      $this->load->view('Storeview');
+      $this->session->unset_userdata('user_id');
+      $data['count_cart'] = $this->Product_filter->count_cart_num();
+      $data['count_cart'] =  $data['count_cart'] ==''? 0: $data['count_cart'] ;
+        //p($data['count_cart']);
+      $this->load->view('Storeview',$data);
 	} 	
   
 
    public function product_detail($id=NULL)
    {
-   	 echo $this->uri->segment(2);
-   	 $this->load->view('product_detail');
    	if(isset($_GET['id'])) 
         {
            $id=$_GET['id'];
            $this->load->model('Mproduct');
            $data['get_oneproduct'] = $this->Mproduct->store_getproduct($id);
+           $data['count_cart'] = $this->Product_filter->count_cart_num();
            //p($data['get_oneproduct']);
-           
+           $this->session->set_flashdata('success',"Please Login First");
            $this->load->view('product_detail',$data);
         }
-    
+     
    }
 
     public function product_shop($cat_id=NULL)
     {
-
-    	$ci =& get_instance();
+        $ci =& get_instance();
         $ci->load->helper('common_helper');
   	    $category= getCatergoryList();
         $ci->load->model('Mcategory');
         $data['store_category'] = $ci->Mcategory->category_product($cat_id);
         $data['color'] = $this->Product_filter->fetch_filter_type('color');
         $data['size'] = $this->Product_filter->fetch_filter_type('size');
+        $data['count_cart'] = $this->Product_filter->count_cart_num();
         return $this->load->view('product_shop',$data);
     }
 
@@ -96,27 +99,75 @@ class Estore extends CI_Controller
 	      //p($output);
     }
 
+public function order_product()
+  {
+     $data = [];
+   	 if(isset($_POST['submit']) && ($_SESSION['id']))
+   	{
+      //p('bgb');
+   	 	$id=isset($_GET['id']);
+   	 	$add['pro_id'] = $this->input->post('id');
+    
+       $user_id= NULL;
+       if(isset($_SESSION['id']))
+       {
+        $user_id=$_SESSION['id'];
+       }
+       $price = $this->db->select('price')->from('product')->where('id',$add['pro_id'])->get()->row_array();
+       $price = $price!=''?$price['price']:'0';
+        //p($add['pro_id']);
+       $add['price'] =$price;
+       $add['user_id'] = $user_id;
+       $add['quantity'] = $this->input->post('quantity');
+       $add['sub_total'] =$this->input->post('quantity')*$price;
+     // p($add['price']);
+       $this->load->model('Product_filter');
+       $this->Product_filter->order_product($add);
+       
+       $this->session->set_flashdata('success','order inerted successfully');
+    }    	 
+            else
+          {
+            $this->session->set_flashdata('alert','Please First Login');
+            redirect(base_url("Estore/product_shop"));
+          }
+
+   	 redirect("Estore/cart");
+   }
+
     public function cart($id='')
     {
     	$data['cart'] = $this->Product_filter->getRows($id);
-    	//p($data['cart']);
+    	$data['count_cart'] = $this->Product_filter->count_cart_num();
     	$this->load->view('shopping_cart',$data);
     }
 
-   public function order_product()
+    public function order_delete($id=NULL)
+   { 
+   	    if(isset($_GET['id']))
+        {
+            $id=$_GET['id'];
+        }
+	     
+	   	 $this->Product_filter->order_delete($id);
+
+	   	 return redirect(base_url('Estore/cart'));
+   	  
+   }
+
+   public function checkout()
    {
-   	 $data = [];
-   	 if(isset($_POST['submit']))
-   	 {
-   	 	$id=$_GET['id'];
-        $add['pro_id'] =$this->input->post('id');
-   	 	$add['quantity'] = $this->input->post('quantity');
-   	 	//p($add['quantity']);
-   	 	$this->load->model('Product_filter');
-   	 	$this->Product_filter->order_product($add);
-   	 	$this->session->set_flashdata('success','order inerted successfully');
-         redirect("Estore/cart");  
-   	 }
+    $data = [];
+
+    if(isset($_POST['submit']))
+    {
+      echo "successfully";
+    }
+
+   	$data['count_cart'] = $this->Product_filter->count_cart_num();
+
+   	$this->load->view("checkout",$data);
+   	 //echo "successfully";
    }
 
    public function login_user()
@@ -143,13 +194,13 @@ class Estore extends CI_Controller
 			    //p($session_data);
 			    $this->session->unset_userdata($session_data);
 			    $login = $this->Authe_Model->login_data($email,$password);
-				$this->session->set_userdata($session_data);
-				return redirect('Estore');
+  				$this->session->set_userdata($session_data);
+  				return redirect('Estore');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'invalid Email and Password.');
-				//return redirect('Estore');
+				return redirect('Estore');
 			}
 		}
    }
@@ -157,6 +208,7 @@ class Estore extends CI_Controller
    public function user_logout()
    {
    	 $this->session->unset_userdata('email');
+     $this->session->unset_userdata('id');
      redirect(base_url('Estore'));
    }
 }

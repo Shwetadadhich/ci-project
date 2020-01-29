@@ -1,3 +1,11 @@
+<?php 
+  if($this->session->flashdata('error')){
+  	echo '<div class="alert alert-danger">
+  	      <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
+  	      <strong>Error!</strong>'.$this->session->flashdata("error").'
+  	       </div>';
+  }
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -67,7 +75,6 @@
 		  border: none;
 		  cursor: pointer;
 		  opacity: 0.8;
-		  position: fixed;
 		  top: 30px;
 		  right: 0px;
 		  width: 100px;
@@ -152,7 +159,7 @@
 									<ul class="dropdown">
 										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
 										<li><a href="<?php echo base_url(); ?>Estore/cart">Shipping Cart</a></li>
-										<li><a href="<?php echo base_url(); ?>assests/store/checkout.html">Checkout</a></li>
+										<li><a href="<?php echo base_url(); ?>Estore/checkout">Checkout</a></li>
 										<li><a href="<?php echo base_url(); ?>assests/store/order-complete.html">Order Complete</a></li>
 										<li><a href="<?php echo base_url(); ?>assests/store/add-to-wishlist.html">Wishlist</a></li>
 									</ul>
@@ -160,7 +167,7 @@
 								<li><a href="<?php echo base_url(); ?>assests/store/blog.html">Blog</a></li>
 								<li><a href="<?php echo base_url(); ?>assests/store/about.html">About</a></li>
 								<li><a href="<?php echo base_url(); ?>assests/store/contact.html">Contact</a></li>
-								<li><a href="cart.html"><i class="<?php echo base_url(); ?>assests/store/icon-shopping-cart"></i> Cart [0]</a></li>
+								<li><a href="<?= base_url("Estore/cart"); ?>"><i class="assests/store/icon-shopping-cart"></i> Cart [<?php echo $count_cart; ?>]</a></li>
 
 								<?php 
 								$email = '';
@@ -187,7 +194,7 @@
 								    <label for="psw"><b>Password</b></label>
 								    <input type="password" placeholder="Enter Password" name="password" required>
 
-								    <button type="submit" class="btn">Login</button>
+								    <button type="submit" class="btn" value="login">Login</button>
 								  </form>
 							</div>
 						</div>

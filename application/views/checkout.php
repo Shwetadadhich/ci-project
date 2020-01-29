@@ -1,12 +1,3 @@
-<?php 
-  if($this->session->flashdata('success')){
-  	echo '<div class="alert alert-success">
-  	      <a href="#" class="close" data-dismiss="alert" aria-label="close">X</a>
-  	      <strong>Success!</strong>'.$this->session->flashdata("success").'
-  	       </div>';
-  }
-
-?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -58,11 +49,6 @@
 
 	<!-- Modernizr JS -->
 	<script src="<?php echo base_url(); ?>assests/store/js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-
 	</head>
 	<body>
 		
@@ -74,17 +60,17 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-2">
-							<div id="colorlib-logo"><a href="<?php echo base_url("Estore"); ?>">Store</a></div>
-						</div>
+							<div id="colorlib-logo"><a href="<?php echo base_url("Estore"); ?>">E-Store</a></div>
+						</div> 
 						<div class="col-xs-10 text-right menu-1">
 							<ul>
 								<li><a href="<?php echo base_url("Estore"); ?>">Home</a></li>
 								<li class="has-dropdown active">
 									<a href="<?php echo base_url("Estore/product_shop"); ?>">Shop</a>
 									<ul class="dropdown">
-									<!-- 	<li><a href="product-detail.html">Product Detail</a></li> -->
+										<!-- <li><a href="<?php echo base_url("Estore/product_detail"); ?>">Product Detail</a></li> -->
 										<li><a href="<?php echo base_url("Estore/cart"); ?>">Shipping Cart</a></li>
-										<li><a href="<?php echo base_url("Estore/checkout"); ?>">Checkout</a></li>
+										<li><a href="checkout.html">Checkout</a></li>
 										<li><a href="order-complete.html">Order Complete</a></li>
 										<li><a href="add-to-wishlist.html">Wishlist</a></li>
 									</ul>
@@ -92,7 +78,7 @@
 								<li><a href="blog.html">Blog</a></li>
 								<li><a href="about.html">About</a></li>
 								<li><a href="contact.html">Contact</a></li>
-								<li><a href="<? base_url("Estore/cart"); ?><i class="assests/store/icon-shopping-cart"></i> Cart [<?php echo $count_cart; ?>]</a></li>
+								<li><a href="<?= base_url("Estore/cart"); ?>"><i class="assests/store/icon-shopping-cart"></i> Cart [<?php echo $count_cart; ?>]</a></li>
 
 								<?php 
 								$email = '';
@@ -117,8 +103,8 @@
 			   			<div class="row">
 				   			<div class="col-md-6 col-md-offset-3 col-sm-12 col-xs-12 slider-text">
 				   				<div class="slider-text-inner text-center">
-				   					<h1>Shopping Cart</h1>
-				   					<h2 class="bread"><span><a href="<?php echo base_url("Estore"); ?>">Home</a></span> <span><a href="<?php echo base_url("Estore/product_shop"); ?>">Product</a></span> <span>Shopping Cart</span></h2>
+				   					<h1>Checkout</h1>
+				   					<h2 class="bread"><span><a href="<?php echo base_url("Estore"); ?>">Home</a></span> <span><a href="<?php echo base_url("Estore/cart"); ?>">Shopping Cart</a></span> <span>Checkout</span></h2>
 				   				</div>
 				   			</div>
 				   		</div>
@@ -137,7 +123,7 @@
 								<p><span>01</span></p>
 								<h3>Shopping Cart</h3>
 							</div>
-							<div class="process text-center">
+							<div class="process text-center active">
 								<p><span>02</span></p>
 								<h3>Checkout</h3>
 							</div>
@@ -148,99 +134,138 @@
 						</div>
 					</div>
 				</div>
-			
-			  <!--   <?php if(!empty($cart)){ foreach($cart as $val){ ?>
-							<?php echo $val['title']; ?> //pass by array
-							<?php echo $val['image']; ?>
-							<?php //echo $val->title; ?>//pass by object
-					<?php } ?>
-				<?php } ?> -->
-			
-				<div class="row row-pb-md">
-					<div class="col-md-10 col-md-offset-1">
-						<div class="product-name">
-							<div class="one-forth text-center">
-								<span>Product Details</span>
-							</div>
-							<div class="one-eight text-center">
-								<span>Price</span>
-							</div>
-							<div class="one-eight text-center">
-								<span>Quantity</span>
-							</div>
-							<div class="one-eight text-center">
-								<span>Total</span>
-							</div>
-							<div class="one-eight text-center">
-								<span>Remove</span>
-							</div>
-						</div>
-         
-                        <?php if($cart) { ?>
-							<?php foreach ($cart as $val) { ?>
-						<div class="product-cart"> 
-						    <div class="one-forth">
-							   <div class="product-img" style="background-image: url(<?php echo base_url('assests/DataTables/images/'.$val['image']); ?>" );">
-								</div>
-								<div class="display-tc">
-									<h3><?php echo $val['title']; ?> </h3>
-								</div>							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<span class="price">₹<?php echo $val['price']; ?></span>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<label><?= $val['quantity']; ?></label>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<span class="price">$<?php echo $val['sub_total']; ?></span>
-								</div>
-							</div>
-							<div class="one-eight text-center">
-								<div class="display-tc">
-									<?php $idd = $val['order_id']; ?>
-									<a class="closed" href='<?= base_url("Estore/order_delete?id=$idd");?>'></a> 
-								</div>
-							</div>
-						</div>
-					<?php } ?>
-					<?php } ?>
-				</div>
-				
-	
-
 				<div class="row">
-					<div class="col-md-10 col-md-offset-1">
-						<div class="total-wrap">
-							<div class="row">
-								<div class="col-md-8">
-									<form action="#">
-										<div class="row form-group">
-											<div class="col-md-9">
-												<input type="text" name="quantity" class="form-control input-number" placeholder="Your Coupon Number...">
-											</div>
-											<div class="col-md-3">
-												<input type="submit" value="Apply Coupon" class="btn btn-primary">
-											</div>
-										</div>
-									</form>
+					<div class="col-md-7">
+						<form action="<?php echo base_url("Estore/checkout"); ?>" method="post" class="colorlib-form" id="form">
+							<h2>Billing Details</h2>
+		              	<div class="row">
+			               <div class="col-md-12">
+			                  <div class="form-group">
+			                  	<label for="country">Select Country</label>
+			                     <div class="form-field">
+			                     	<i class="icon icon-arrow-down3"></i>
+			                        <select name="country" id="people" class="form-control">
+				                      	<option value="#">Select country</option>
+				                        <option value="#">India</option>
+				                        <option value="#">China</option>
+				                        <option value="#">Japan</option>
+				                        <option value="#">Korea</option>
+				                        <option value="#">Philippines</option>
+			                        </select>
+			                     </div>
+			                  </div>
+			               </div>
+			               <div class="form-group">
+									<div class="col-md-6">
+										<label for="fname">First Name</label>
+										<input type="text" id="fname" class="form-control" placeholder="Your firstname" name="fname" autocomplete="off">
+									</div>
+									<div class="col-md-6">
+										<label for="lname">Last Name</label>
+										<input type="text" id="lname" class="form-control" placeholder="Your lastname" name="lname" autocomplete="off">
+									</div>
 								</div>
-								<div class="col-md-3 col-md-push-1 text-center">
-									<div class="total">
-										<div class="sub">
-											<p><span>Subtotal:</span> <span>$200.00</span></p>
-											<p><span>Delivery:</span> <span>$0.00</span></p>
-											<p><span>Discount:</span> <span>$45.00</span></p>
-										</div>
-										<div class="grand-total">
-											<p><span><strong>Total:</strong></span> <span>$450.00</span></p>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="companyname">Company Name</label>
+			                    	<input type="text" id="companyname" class="form-control" placeholder="Company Name" name="company" autocomplete="off">
+			                  </div>
+			               </div>
+			               <div class="col-md-12">
+									<div class="form-group">
+										<label for="fname">Address</label>
+			                    	<input type="text" id="address" class="form-control" placeholder="Enter Your Address" name="address" autocomplete="off">
+			                  </div>
+			                  <div class="form-group">
+			                    	<input type="text" id="address2" class="form-control" placeholder="Second Address" name="address2">
+			                  </div>
+			               </div>
+			               <div class="col-md-12">
+									<div class="form-group">
+										<label for="companyname">Town/City</label>
+			                    	<input type="text" id="towncity" class="form-control" placeholder="Town or City" name="city">
+			                  </div>
+			               </div>
+			               <div class="form-group">
+									<div class="col-md-6">
+										<label for="stateprovince">State/Province</label>
+										<input type="text" id="fname" class="form-control" placeholder="State Province" name="state">
+									</div>
+									<div class="col-md-6">
+										<label for="lname">Zip/Postal Code</label>
+										<input type="text" id="zippostalcode" class="form-control" placeholder="Zip / Postal" name="code">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-6">
+										<label for="email">E-mail Address</label>
+										<input type="text" id="email" class="form-control" placeholder="State Province" name="email" placeholder="abc@example.com">
+									</div>
+									<div class="col-md-6">
+										<label for="Phone">Phone Number</label>
+										<input type="text" id="zippostalcode" class="form-control" name="phone">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<div class="radio">
+										  <label><input type="radio" name="optradio">Create an Account? </label>
+										  <label><input type="radio" name="optradio"> Ship to different address</label>
 										</div>
 									</div>
 								</div>
+		              </div>
+		            </form>
+					</div>
+					<div class="col-md-5">
+						<div class="cart-detail">
+							<h2>Cart Total</h2>
+							<ul>
+								<li>
+									<span>Subtotal</span> <span>$100.00</span>
+									<ul>
+										<li><span>1 x Product Name</span> <span>$99.00</span></li>
+										<li><span>1 x Product Name</span> <span>$78.00</span></li>
+									</ul>
+								</li>
+								<li><span>Shipping</span> <span>$0.00</span></li>
+								<li><span>Order Total</span> <span>$180.00</span></li>
+							</ul>
+						</div>
+						<div class="cart-detail">
+							<h2>Payment Method</h2>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+									   <label><input type="radio" name="optradio">Direct Bank Tranfer</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+									   <label><input type="radio" name="optradio">Check Payment</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="radio">
+									   <label><input type="radio" name="optradio">Paypal</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-12">
+									<div class="checkbox">
+									   <label><input type="checkbox" value="">I have read and accept the terms and conditions</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p id="submit"><a href="<?= base_url("Estore/checkout"); ?>" class="btn btn-primary">Place an order</a></p>
 							</div>
 						</div>
 					</div>
@@ -417,7 +442,7 @@
 					<div class="col-md-3">
 						<h4>Contact Information</h4>
 						<ul class="colorlib-footer-links">
-							<li>291 South 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li>126 Ram nagar II, <br> Pal Road Jodhpur</li>
 							<li><a href="tel://1234567920">+ 1235 2355 98</a></li>
 							<li><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
 							<li><a href="#">yoursite.com</a></li>
@@ -431,7 +456,7 @@
 						<p>
 							
 							<span class="block"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart2" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart2" aria-hidden="true"></i> by Shweta Dadhich<a href="https://colorlib.com" target="_blank">Colorlib</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span> 
 							<span class="block">Demo Images: <a href="http://unsplash.co/" target="_blank">Unsplash</a> , <a href="http://pexels.com/" target="_blank">Pexels.com</a></span>
 						</p>
@@ -467,7 +492,13 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<!-- Main -->
 	<script src="<?php echo base_url(); ?>assests/store/js/main.js"></script>
 	</script>
-
+    <script>
+    	$(document).ready(function(){
+			$("#submit").click(function(){
+			$("#form").submit();  // jQuey's submit function applied on form.
+			});
+		})
+    </script>
 	</body>
 </html>
 

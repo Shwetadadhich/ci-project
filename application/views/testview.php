@@ -8,11 +8,7 @@
   <p>testing of routing</p>
 
   <table style="border:2px solid black;" class="table-responsive">
-  	<tr>
-  		<td><?=$product_test['title']?></td>
-  		<td><?=$product_test['description']?></td>
-  	</tr>
-  	<tr>
+  	<tr style="border:1px solid orange;">
   		<td><?=$product_test['title']?></td>
   		<td><?=$product_test['description']?></td>
   	</tr>
